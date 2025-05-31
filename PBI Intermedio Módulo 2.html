@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Nivel Intermedio - Módulo II: Gráficos Avanzados y Personalización</title>
+    <style>
+        :root {
+            --primary-color: #F2C811; /* Amarillo Power BI */
+            --secondary-color: #2A2E30; /* Gris oscuro Power BI */
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --code-font-family: 'Consolas', 'Courier New', Courier, monospace;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5em 2em;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        header h1 svg.powerbi-logo { /* Clase específica para el logo de PBI */
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            fill: var(--primary-color);
+        }
+
+        nav {
+            background-color: var(--card-bg-color);
+            padding: 1em 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto; 
+            white-space: nowrap; 
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0 1em; 
+            margin: 0;
+            display: flex;
+            flex-wrap: nowrap; 
+        }
+
+        nav li {
+            margin: 0.5em 0.6em; /* Espacio ligeramente reducido */
+            flex-shrink: 0; 
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 0.85em; /* Tamaño de fuente ligeramente reducido */
+        }
+        
+        nav a svg.nav-icon { /* Iconos de navegación */
+            width: 18px; 
+            height: 18px;
+            margin-right: 6px;
+            fill: var(--secondary-color);
+            transition: fill 0.3s;
+        }
+
+        nav a:hover, nav a.active-nav {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        nav a:hover svg.nav-icon, nav a.active-nav svg.nav-icon {
+            fill: var(--secondary-color);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 2em;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pagina {
+            display: none;
+            background-color: var(--card-bg-color);
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .pagina.activa {
+            display: block;
+        }
+        
+        #portada-mod2 { /* ID específico para la portada del módulo 2 */
+            text-align: center;
+        }
+        #portada-mod2 h2 {
+            font-size: 2.5em;
+            color: var(--secondary-color);
+        }
+        #portada-mod2 h3 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+        }
+        #portada-mod2 .module-icon svg {
+            width: 100px;
+            height: 100px;
+            fill: var(--secondary-color); /* Color principal del icono de portada */
+            margin-bottom: 1em;
+        }
+        #portada-mod2 .brand-mention {
+            margin-top: 1.5em;
+            font-size: 1.1em;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pagina h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5em;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+        }
+        
+        .pagina h2 svg.section-icon { /* Iconos de título de sección */
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+            fill: var(--secondary-color);
+        }
+
+        .pagina h3 {
+            color: var(--secondary-color);
+            opacity: 0.9;
+            margin-top: 1.5em;
+            font-size: 1.4em;
+        }
+        
+        .pagina h4 {
+            color: var(--primary-color);
+            opacity: 0.95;
+            margin-top: 1.2em;
+            font-size: 1.15em;
+        }
+
+        p, li {
+            font-size: 1.05em;
+            margin-bottom: 1em;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        code.pbi-field { /* Para nombres de campos, slicers, etc. */
+            background-color: #e0eefd; 
+            color: #0b57a2;
+            padding: 0.2em 0.4em;
+            margin: 0 1px;
+            font-size: 0.9em;
+            border-radius: 3px;
+            font-family: var(--code-font-family);
+            border: 1px solid #c0dffd;
+        }
+        
+        .config-fields { /* Para listas de campos de configuración */
+            background-color: #f7f7f7;
+            border: 1px solid #e7e7e7;
+            padding: 1em;
+            border-radius: 5px;
+            margin: 1em 0;
+        }
+        .config-fields strong {
+            display: inline-block;
+            min-width: 100px; /* Para alinear los nombres de los "pozos" */
+        }
+
+        pre { /* Para bloques de código DAX si los hubiera */
+            background-color: #2d2d2d; 
+            color: #f2f2f2; 
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: var(--code-font-family);
+            font-size: 0.95em;
+            margin: 1em 0;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        pre code { 
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+        }
+        /* (Estilos de resaltado DAX se omiten aquí si no hay código DAX, pero se podrían re-añadir) */
+
+
+        .tip {
+            background-color: #fff8e1; 
+            border-left: 5px solid var(--primary-color);
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+        .tip strong { color: var(--primary-color); opacity: 0.8;}
+
+        .warning {
+            background-color: #fce4ec; 
+            border-left: 5px solid #e91e63; 
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+        .warning strong { color: #c2185b; }
+
+        /* Estilos de Quiz (iguales al módulo anterior) */
+        .quiz-container { margin-top: 2em; }
+        .question-block { margin-bottom: 2em; padding: 1.5em; border: 1px solid var(--border-color); border-radius: 6px; background-color: #fdfdff;}
+        .question-block p { font-weight: bold; margin-bottom: 1em;}
+        .options label { display: block; margin-bottom: 0.8em; padding: 0.8em; border-radius: 4px; background-color: #f0f0f0; cursor: pointer; transition: background-color 0.2s;}
+        .options label:hover { background-color: #e0e0e0;}
+        .options input[type="radio"] { margin-right: 10px; vertical-align: middle;}
+        .feedback { padding: 0.8em; margin-top: 1em; border-radius: 4px; font-weight: bold; display: none; }
+        .feedback.correct { background-color: #d4edda; color: var(--success-color); border: 1px solid #c3e6cb;}
+        .feedback.incorrect { background-color: #f8d7da; color: var(--danger-color); border: 1px solid #f5c6cb;}
+        #quiz-submit-btn { background-color: var(--primary-color); color: var(--secondary-color); border: none; padding: 0.8em 1.5em; font-size: 1.1em; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; display: block; margin: 2em auto 0; font-weight: bold;}
+        #quiz-submit-btn:hover { background-color: #e0b000; }
+        #quiz-result { margin-top: 1.5em; padding: 1em; text-align: center; font-size: 1.2em; font-weight: bold; border-radius: 5px;}
+        #quiz-result.success { background-color: #d4edda; color: var(--success-color); }
+        #quiz-result.fail { background-color: #f8d7da; color: var(--danger-color); }
+
+        footer {
+            text-align: center;
+            padding: 1.5em;
+            background-color: var(--secondary-color);
+            color: #adb5bd;
+            margin-top: auto;
+            font-size: 0.9em;
+        }
+        footer .brand-name {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* Estilos de impresión (iguales, podrían necesitar ajustes si el contenido es muy diferente) */
+        @media print {
+            body { font-size: 10pt; color: #000; background-color: #fff; }
+            header, nav, footer, #quiz-submit-btn { display: none !important; } 
+            main { padding: 0; max-width: 100%; box-shadow: none; }
+            .pagina { display: block !important; box-shadow: none; border: none; padding: 1em 0; margin-bottom: 20px; page-break-after: always; }
+            #portada-mod2 { text-align: left; page-break-after: always; } /* Ajustado ID */
+            #portada-mod2 h2, #portada-mod2 h3, #portada-mod2 .brand-mention { text-align: center; }
+            #portada-mod2 .module-icon svg { display: block; margin-left: auto; margin-right: auto; }
+            .pagina:last-child { page-break-after: auto; }
+            .pagina h2 { font-size: 16pt; border-bottom: 1px solid #ccc; color: #000; }
+            .pagina h2 svg.section-icon { display: none; }
+            pre { background-color: #f0f0f0; color: #000; border: 1px solid #ccc; white-space: pre-wrap; word-wrap: break-word; font-size: 9pt;}
+            code.pbi-field { background-color: #eee; color: #000; border: 1px solid #ddd; padding: 1px 3px; font-size: 0.9em; }
+            .tip, .warning { border-left-width: 2px; padding: 0.5em; background-color: #f9f9f9; border-color: #ccc;}
+            .quiz-container .question-block { page-break-inside: avoid; }
+            .options label { background-color: #fff; border: 1px solid #ccc; }
+            .quiz-container .feedback { 
+                display: block !important; background-color: #efefef !important; color: #000 !important; 
+                border: 1px dashed #bbb !important; margin-top: 8px; padding: 6px; font-size: 9pt; font-weight: normal;
+            }
+            .quiz-container .feedback.correct, .quiz-container .feedback.incorrect {
+                background-color: #efefef !important; border: 1px dashed #bbb !important;
+            }
+            .quiz-container .feedback strong { font-weight: bold; }
+            a { text-decoration: none; color: #000; }
+            a[href^="http"]:after, a[href^="https"]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>
+            <svg class="powerbi-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 17.27V20h2.73L17.27 9.46l-2.73-2.73L4 17.27zM6.18 18H5v-1.18l8.04-8.04 1.18 1.18L6.18 18z"/><path d="M20.71 6.73l-2.44-2.44a.996.996 0 00-1.41 0l-1.83 1.83 2.73 2.73 1.83-1.83a.996.996 0 000-1.41zM4 4h2v10H4V4zm5 3h2v7H9V7zm5-2h2v9h-2V5z"/></svg>
+            Power BI Nivel Intermedio
+        </h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" data-target="portada-mod2" class="active-nav">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Portada M2</a></li>
+            <li><a href="#" data-target="gauge">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 2a10 10 0 00-7.52 16.06A10 10 0 1019.52 6.06 9.94 9.94 0 0012 2zm0 18a8 8 0 115.66-2.34A7.95 7.95 0 0112 20a8 8 0 01-5.66-13.66A8 8 0 0112 4a8 8 0 015.66 13.66A7.95 7.95 0 0112 20zm0-14a.99.99 0 00-1 .99V12a1 1 0 102 0V6.99a.99.99 0 00-1-.99zm-4.24 8.54l-.7.7a1 1 0 101.4 1.42l.7-.71a1 1 0 10-1.4-1.41zM15.53 10.2l.71-.7a1 1 0 00-1.41-1.42l-.71.71a1 1 0 101.41 1.41z"/></svg>
+                Gauge</a></li>
+            <li><a href="#" data-target="embudo">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 4h18v2H3V4zm2 14h14v2H5v-2zm4-7h6v2H9v-2z"/></svg>
+                Embudo</a></li>
+            <li><a href="#" data-target="esquema">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 15l-6 6-6-6h12zm-1.41-3.59L12 5.83l-5.59 5.58L5 10l7-7 7 7-1.41 1.41z"/></svg> <!-- Icono simple de arbol/jerarquía -->
+                Esquema Jerárquico</a></li>
+            <li><a href="#" data-target="combinada">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h2v16H4V4zm5 8h2v8H9v-8zm5-4h2v12h-2V8zm5-3h2v15h-2V5zM4 20h16v2H4v-2z"/></svg> <!-- Icono genérico de barras -->
+                Gráf. Combinada</a></li>
+            <li><a href="#" data-target="cascada">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4h3v16h-3V4zM3 12h3v8H3v-8zm5-7h3v15H8V5zm5 3h3v12h-3V8z"/></svg>
+                Cascada</a></li>
+            <li><a href="#" data-target="ribbon">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.41 7.41L15 3H9L4.59 7.41A2 2 0 004 8.83V20a2 2 0 002 2h12a2 2 0 002-2V8.83a2 2 0 00-.59-1.42zM12 5.83L14.17 8H9.83L12 5.83zM18 20H6V9h2.17L10 10.17V14h4v-3.83L15.83 9H18v11z"/></svg>
+                Ribbon</a></li>
+            <li><a href="#" data-target="personalizacion">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.42 10.42L16.58 7.58c-.78-.78-2.05-.78-2.83 0l-1.83 1.83c-.39.39-.39 1.02 0 1.41L16.17 15c.39.39 1.02.39 1.41 0l1.83-1.83c.79-.78.79-2.05.01-2.83zM4 20h9.59l3-3H4v3zm4.41-13.59L2.83 8.83A2.001 2.001 0 002 10.24V15h4.76l2.09-2.09L4.41 6.41z"/></svg> <!-- Icono de paleta/ajustes -->
+                Personalización</a></li>
+            <li><a href="#" data-target="quiz-mod2">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                Quiz M2</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="portada-mod2" class="pagina activa">
+            <div class="module-icon">
+                <!-- Icono para Módulo de Gráficos: Combinación de barras y línea -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill-rule="evenodd" clip-rule="evenodd">
+                    <path fill="#646464" d="M12 54h8V32h-8v22zm12-14h8V24h-8v16zm12 8h8V18h-8v22z"/>
+                    <path stroke="#F2C811" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" d="M8 50l10-12 8 6 10-15 12 8"/>
+                    <rect x="4" y="6" width="56" height="52" rx="4" ry="4" fill="none" stroke="#646464" stroke-width="3"/>
+                </svg>
+            </div>
+            <h2>Power BI Nivel Intermedio</h2>
+            <h3>Módulo II: Gráficos Avanzados y Personalización 🎨</h3>
+            <p>¡Continuamos nuestro viaje en Power BI! En este segundo módulo, explorarás una variedad de **gráficos avanzados** para comunicar tus datos de maneras más efectivas y matizadas.</p>
+            <p>Además, profundizaremos en las **opciones de personalización** que Power BI ofrece para que tus visualizaciones no solo sean informativas, sino también visualmente atractivas y alineadas con tus necesidades específicas. ¡Prepárate para dar vida a tus dashboards! ✨</p>
+            <div class="brand-mention">
+                <p><strong>Reinventa Consultoría y Capacitación</strong></p>
+            </div>
+        </section>
+
+        <!-- Secciones de Contenido para Módulo 2 -->
+        <section id="gauge" class="pagina">
+            <h2>
+                <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 2a10 10 0 00-7.52 16.06A10 10 0 1019.52 6.06 9.94 9.94 0 0012 2zm0 18a8 8 0 115.66-2.34A7.95 7.95 0 0112 20a8 8 0 01-5.66-13.66A8 8 0 0112 4a8 8 0 015.66 13.66A7.95 7.95 0 0112 20zm0-14a.99.99 0 00-1 .99V12a1 1 0 102 0V6.99a.99.99 0 00-1-.99zm-4.24 8.54l-.7.7a1 1 0 101.4 1.42l.7-.71a1 1 0 10-1.4-1.41zM15.53 10.2l.71-.7a1 1 0 00-1.41-1.42l-.71.71a1 1 0 101.41 1.41z"/></svg>
+                Gráfico Gauge (Medidor) 🌡️
+            </h2>
+            <p>El gráfico Gauge, también conocido como medidor o velocímetro, se utiliza para mostrar el estado de un único indicador clave de rendimiento (KPI) en relación con un objetivo o un rango de valores.</p>
+            
+            <h3>¿Cuándo usarlo?</h3>
+            <ul>
+                <li>Para medir el progreso hacia un objetivo (ej. Ventas actuales vs. Objetivo de ventas).</li>
+                <li>Para mostrar un valor dentro de un rango aceptable, de advertencia o crítico (ej. Nivel de satisfacción del cliente).</li>
+                <li>Para una visualización rápida y sencilla de un KPI individual.</li>
+            </ul>
+
+            <h3>Configuración en Power BI</h3>
+            <p>Los campos principales que se configuran en un gráfico Gauge son:</p>
+            <div class="config-fields">
+                <p><strong>Valor:</strong> La medida o campo numérico que quieres mostrar (ej. <code class="pbi-field">SUM(Ventas[Monto])</code>).</p>
+                <p><strong>Valor mínimo:</strong> El límite inferior del medidor (puede ser un valor fijo o una medida).</p>
+                <p><strong>Valor máximo:</strong> El límite superior del medidor (puede ser un valor fijo o una medida).</p>
+                <p><strong>Valor objetivo:</strong> Un valor objetivo que se marcará en el medidor (opcional, ej. <code class="pbi-field">ObjetivoVentas</code>).</p>
+            </div>
+
+            <h3>Consejos Clave</h3>
+            <ul>
+                <li><strong>Simplicidad:</strong> Es más efectivo para un solo KPI. Evita sobrecargarlo.</li>
+                <li><strong>Rangos de color:</strong> Utiliza los colores de los ejes de datos para definir zonas (ej. rojo, amarillo, verde) que indiquen el rendimiento.</li>
+                <li><strong>Claridad del objetivo:</strong> Si usas un valor objetivo, asegúrate de que sea claramente visible.</li>
+                <li><strong>Contexto:</strong> Aunque muestra un solo valor, acompáñalo de contexto (ej. título claro, período de tiempo) para que sea interpretable.</li>
+            </ul>
+            <div class="tip">
+                <strong>¡Cuidado con el abuso!</strong> Un dashboard lleno de gauges puede ser abrumador y menos informativo que otros tipos de gráficos que muestran tendencias o comparaciones. Úsalo con moderación para KPIs muy importantes.
+            </div>
+        </section>
+
+        <section id="embudo" class="pagina">
+            <h2>
+                <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 4h18v2H3V4zm2 14h14v2H5v-2zm4-7h6v2H9v-2z"/></svg>
+                Gráfico de Embudo (Funnel) ⏳
+            </h2>
+            <p>El gráfico de embudo se utiliza para visualizar las etapas secuenciales de un proceso y la progresiva reducción o "caída" de elementos a medida que avanzan por esas etapas.</p>
+
+            <h3>¿Cuándo usarlo?</h3>
+            <ul>
+                <li>Para analizar procesos de ventas (ej. Prospectos > Contactados > Propuestas > Cierres).</li>
+                <li>Para rastrear la conversión de usuarios en un sitio web (ej. Visitas > Registros > Compras).</li>
+                <li>Para identificar cuellos de botella en un proceso.</li>
+                <li>Cuando el proceso tiene etapas claras y secuenciales, y se espera una disminución en cada paso.</li>
+            </ul>
+
+            <h3>Configuración en Power BI</h3>
+            <div class="config-fields">
+                <p><strong>Grupo (o Categoría):</strong> El campo que define las etapas del embudo (ej. <code class="pbi-field">'EtapasVenta'[NombreEtapa]</code>).</p>
+                <p><strong>Valores:</strong> La medida o campo numérico que representa la cantidad en cada etapa (ej. <code class="pbi-field">COUNT(Oportunidades[ID])</code>).</p>
+            </div>
+            <p>Power BI calculará automáticamente el porcentaje del total y el porcentaje de conversión de la etapa anterior.</p>
+
+            <h3>Consejos Clave</h3>
+            <ul>
+                <li><strong>Orden lógico:</strong> Asegúrate de que las etapas estén ordenadas correctamente en el campo de "Grupo".</li>
+                <li><strong>Claridad en las etiquetas:</strong> Muestra los valores y los porcentajes de conversión para facilitar la interpretación.</li>
+                <li><strong>Análisis de abandono:</strong> El principal valor del embudo es ver dónde se pierden más elementos.</li>
+                <li><strong>Comparaciones:</strong> Puedes usar múltiples embudos (filtrados por diferentes dimensiones) para comparar el rendimiento de diferentes segmentos.</li>
+            </ul>
+        </section>
+
+        <section id="esquema" class="pagina">
+            <h2>
+                 <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 15l-6 6-6-6h12zm-1.41-3.59L12 5.83l-5.59 5.58L5 10l7-7 7 7-1.41 1.41z"/></svg>
+                Esquema Jerárquico (Decomposition Tree) 🌳
+            </h2>
+            <p>El esquema jerárquico es una visualización de inteligencia artificial (IA) que permite desglosar una métrica principal a través de múltiples dimensiones de forma jerárquica e interactiva. Es excelente para el análisis de causa raíz.</p>
+
+            <h3>¿Cuándo usarlo?</h3>
+            <ul>
+                <li>Para entender los factores que contribuyen a un valor alto o bajo de una métrica.</li>
+                <li>Para realizar análisis ad-hoc y explorar datos sin una estructura jerárquica predefinida.</li>
+                <li>Para permitir a los usuarios finales explorar diferentes rutas de desglose de los datos.</li>
+            </ul>
+
+            <h3>Configuración en Power BI</h3>
+            <div class="config-fields">
+                <p><strong>Analizar:</strong> La medida principal que quieres desglosar (ej. <code class="pbi-field">[Total Ingresos]</code>).</p>
+                <p><strong>Explicar por:</strong> Uno o más campos dimensionales que se utilizarán para desglosar la medida (ej. <code class="pbi-field">'Producto'[Categoría]</code>, <code class="pbi-field">'Cliente'[Región]</code>, <code class="pbi-field">'Tiempo'[Año]</code>).</p>
+            </div>
+            <p>El usuario puede hacer clic en los nodos "+" para elegir interactivamente por cuál de los campos de "Explicar por" desea continuar el desglose.</p>
+
+            <h3>Consejos Clave</h3>
+            <ul>
+                <li><strong>Selección de Dimensiones:</strong> Elige dimensiones relevantes y que puedan ofrecer insights al ser desglosadas.</li>
+                <li><strong>Interactivo por Naturaleza:</strong> Anima a los usuarios a explorar diferentes rutas. Power BI también puede sugerir divisiones "altas" o "bajas" basadas en IA.</li>
+                <li><strong>No para dashboards estáticos:</strong> Su mayor valor reside en la exploración interactiva, no tanto en una vista fija.</li>
+                <li><strong>Rendimiento:</strong> Con muchas dimensiones y datos, la interactividad puede verse afectada. Considera el volumen de datos.</li>
+            </ul>
+        </section>
+
+        <section id="combinada" class="pagina">
+             <h2>
+                <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 18.27V21h2.73L20.27 10.46l-2.73-2.73L7 18.27zM16.5 6L18 7.5 9.5 16H8v-1.5L16.5 6zM4 4h2v10H4V4zm15 3h2v7h-2V7zm-5-2h2v9h-2V5z"/></svg> <!-- Icono más parecido a combo -->
+                Gráfica Combinada (Combo Chart) 📊📈
+            </h2>
+            <p>Una gráfica combinada permite mostrar dos o más tipos de visualizaciones en un solo gráfico, compartiendo un eje común. Lo más usual es combinar columnas y líneas.</p>
+
+            <h3>¿Cuándo usarlo?</h3>
+            <ul>
+                <li>Para comparar dos medidas con diferentes escalas (ej. Ventas en columnas y % Margen en línea, usando un eje Y secundario para el margen).</li>
+                <li>Para mostrar una medida principal (ej. Ventas) y una tendencia o promedio relacionado (ej. Promedio móvil de ventas) como una línea.</li>
+                <li>Para resaltar la relación entre una cantidad y una tasa.</li>
+            </ul>
+            <p>Existen dos tipos principales en Power BI: "Gráfico de columnas agrupadas y de líneas" y "Gráfico de columnas apiladas y de líneas".</p>
+
+            <h3>Configuración en Power BI (Columnas agrupadas y líneas)</h3>
+            <div class="config-fields">
+                <p><strong>Eje compartido:</strong> El campo categórico para el eje X (ej. <code class="pbi-field">'Tiempo'[Mes]</code>).</p>
+                <p><strong>Valores de columna:</strong> La medida(s) a mostrar como columnas (ej. <code class="pbi-field">[Total Ventas]</code>).</p>
+                <p><strong>Valores de línea:</strong> La medida(s) a mostrar como líneas (ej. <code class="pbi-field">[% Crecimiento Ventas]</code> o <code class="pbi-field">[Objetivo de Ventas]</code>).</p>
+            </div>
+            <p>En el panel de formato, puedes habilitar un **eje Y secundario** para las líneas si sus escalas son muy diferentes a las de las columnas.</p>
+
+            <h3>Consejos Clave</h3>
+            <ul>
+                <li><strong>Evita la sobrecarga:</strong> No combines demasiadas medidas, ya que puede volverse confuso. Dos o tres suelen ser suficientes.</li>
+                <li><strong>Uso del eje secundario:</strong> Úsalo con precaución y asegúrate de que esté claramente etiquetado para no inducir a error.</li>
+                <li><strong>Colores y leyendas:</strong> Utiliza colores distintivos y una leyenda clara.</li>
+                <li><strong>Propósito claro:</strong> La combinación debe tener un propósito analítico claro, no solo por estética.</li>
+            </ul>
+        </section>
+
+        <section id="cascada" class="pagina">
+            <h2>
+                <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4h3v16h-3V4zM3 12h3v8H3v-8zm5-7h3v15H8V5zm5 3h3v12h-3V8zM2 20h20v2H2v-2z"/></svg>
+                Gráfico de Cascada (Waterfall) 🌊
+            </h2>
+            <p>El gráfico de cascada muestra cómo un valor inicial es afectado por una serie de valores intermedios positivos o negativos, resultando en un valor final. Es ideal para visualizar contribuciones o detracciones.</p>
+
+            <h3>¿Cuándo usarlo?</h3>
+            <ul>
+                <li>Para mostrar la composición de una ganancia o pérdida neta (ej. Ingresos - Costos = Beneficio).</li>
+                <li>Para analizar cambios en una métrica a lo largo del tiempo o entre categorías (ej. Saldo inicial + Entradas - Salidas = Saldo final).</li>
+                <li>Para visualizar el desglose de un total en sus componentes principales.</li>
+            </ul>
+
+            <h3>Configuración en Power BI</h3>
+            <div class="config-fields">
+                <p><strong>Categoría:</strong> El campo que define las diferentes etapas o componentes de la cascada (ej. <code class="pbi-field">'TipoMovimiento'[Concepto]</code>).</p>
+                <p><strong>Valores:</strong> La medida que representa el cambio o valor en cada categoría (ej. <code class="pbi-field">[Monto Movimiento]</code>).</p>
+                <p><strong>Desglose (Opcional):</strong> Puedes usar este campo para añadir más detalle dentro de cada barra de categoría (ej. si una categoría es "Gastos Operativos", el desglose podría ser "Alquiler", "Salarios", etc.).</p>
+            </div>
+            <p>Power BI automáticamente colorea los aumentos (usualmente verde) y disminuciones (usualmente rojo) y puede mostrar totales.</p>
+
+            <h3>Consejos Clave</h3>
+            <ul>
+                <li><strong>Orden de categorías:</strong> El orden de las categorías es crucial para la narrativa del gráfico.</li>
+                <li><strong>Subtotales:</strong> Puedes configurar ciertas barras como "Total" en el panel de formato para mostrar subtotales en puntos clave.</li>
+                <li><strong>Claridad en los cambios:</strong> Asegúrate de que sea fácil ver qué barras representan incrementos y cuáles decrementos.</li>
+                <li><strong>Inicio y Fin:</strong> Es común empezar con un valor total inicial y terminar con un valor total final.</li>
+            </ul>
+        </section>
+
+        <section id="ribbon" class="pagina">
+            <h2>
+                <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.41 7.41L15 3H9L4.59 7.41A2 2 0 004 8.83V20a2 2 0 002 2h12a2 2 0 002-2V8.83a2 2 0 00-.59-1.42zM12 5.83L14.17 8H9.83L12 5.83zM18 20H6V9h2.17L10 10.17V14h4v-3.83L15.83 9H18v11z"/></svg>
+                Gráfico de Cinta (Ribbon Chart) 🎀
+            </h2>
+            <p>El gráfico de cinta es similar a un gráfico de columnas apiladas, pero con una característica distintiva: las "cintas" conectan los segmentos de las columnas a través de las categorías del eje X, mostrando cómo cambia el ranking o la participación de cada serie.</p>
+
+            <h3>¿Cuándo usarlo?</h3>
+            <ul>
+                <li>Para visualizar cómo cambia el ranking de diferentes categorías (series) a lo largo del tiempo o a través de otra dimensión categórica.</li>
+                <li>Para mostrar la magnitud y el cambio de ranking simultáneamente.</li>
+                <li>Cuando quieres destacar qué serie es la principal en cada punto del eje X y cómo evoluciona esa dominancia.</li>
+            </ul>
+
+            <h3>Configuración en Power BI</h3>
+            <div class="config-fields">
+                <p><strong>Eje:</strong> El campo categórico para el eje X (ej. <code class="pbi-field">'Tiempo'[MesAño]</code>).</p>
+                <p><strong>Leyenda (Series):</strong> El campo que define las diferentes series o categorías que se apilan y cuyas cintas se mostrarán (ej. <code class="pbi-field">'Producto'[CategoríaProducto]</code>).</p>
+                <p><strong>Valores:</strong> La medida que determina la altura de los segmentos de columna (ej. <code class="pbi-field">[Total Ventas]</code>).</p>
+            </div>
+
+            <h3>Consejos Clave</h3>
+            <ul>
+                <li><strong>Número de series:</strong> Funciona mejor con un número moderado de series (leyenda). Demasiadas series pueden hacer que las cintas sean difíciles de seguir.</li>
+                <li><strong>Cambios de ranking:</strong> El principal atractivo es ver cómo las cintas se cruzan, indicando cambios de ranking.</li>
+                <li><strong>Interpretación del ancho de la cinta:</strong> El ancho de la cinta en un punto del eje X representa la magnitud de esa serie en ese punto.</li>
+                <li><strong>Alternativa a columnas apiladas:</strong> Considera el gráfico de cinta cuando la evolución del ranking es tan importante como la magnitud.</li>
+            </ul>
+            <div class="tip">
+                <strong>Distinguir de Área Apilada:</strong> Mientras un gráfico de área apilada muestra la acumulación total y la contribución de cada serie, el Ribbon enfatiza el cambio de orden entre las series.
+            </div>
+        </section>
+
+        <section id="personalizacion" class="pagina">
+            <h2>
+                <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.42 10.42L16.58 7.58c-.78-.78-2.05-.78-2.83 0l-1.83 1.83c-.39.39-.39 1.02 0 1.41L16.17 15c.39.39 1.02.39 1.41 0l1.83-1.83c.79-.78.79-2.05.01-2.83zM4 20h9.59l3-3H4v3zm4.41-13.59L2.83 8.83A2.001 2.001 0 002 10.24V15h4.76l2.09-2.09L4.41 6.41z"/></svg>
+                Personalización Avanzada de Visualizaciones 🖌️⚙️
+            </h2>
+            <p>Power BI ofrece una amplia gama de opciones de personalización para que tus visualizaciones se ajusten exactamente a tus necesidades estéticas y de comunicación. Estas opciones se encuentran principalmente en el **Panel de Formato** (el icono del rodillo de pintura 🖌️) cuando una visualización está seleccionada.</p>
+
+            <h3>Áreas Comunes de Personalización:</h3>
+            <ul>
+                <li>
+                    <h4>General:</h4>
+                    <ul>
+                        <li><strong>Propiedades:</strong> Tamaño, posición, opciones de capa (traer adelante, enviar atrás).</li>
+                        <li><strong>Título:</strong> Texto del título, fuente, color, alineación, fondo. Es crucial tener títulos descriptivos.</li>
+                        <li><strong>Efectos:</strong> Fondo (color, transparencia, imagen), Borde visual, Sombra.</li>
+                        <li><strong>Encabezado del objeto visual:</strong> Iconos que aparecen al pasar el mouse (filtro, modo enfoque, etc.), personalización de su color y fondo.</li>
+                        <li><strong>Información sobre herramientas (Tooltips):</strong> Personalizar la información que aparece al pasar el mouse sobre un punto de datos. Puedes usar la página de informe como tooltip para mostrar visualizaciones completas.</li>
+                        <li><strong>Texto alternativo:</strong> Para accesibilidad.</li>
+                    </ul>
+                </li>
+                <li>
+                    <h4>Específico del Objeto Visual:</h4> Estas opciones varían mucho según el tipo de gráfico.
+                    <ul>
+                        <li><strong>Eje X / Eje Y:</strong>
+                            <ul>
+                                <li>Tipo de eje (continuo, categórico).</li>
+                                <li>Color, tamaño de fuente, formato de unidades (ej. miles, millones).</li>
+                                <li>Título del eje.</li>
+                                <li>Líneas de cuadrícula.</li>
+                                <li>Rango (mínimo y máximo, especialmente para ejes continuos).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Leyenda:</strong> Posición, título, color y tamaño de fuente.</li>
+                        <li><strong>Colores de datos:</strong> Asignar colores específicos a series o categorías. Puedes usar lógica condicional para colorear basado en valores.</li>
+                        <li><strong>Etiquetas de datos:</strong> Mostrar valores directamente en los elementos del gráfico, con opciones de posición, formato, color y fondo.</li>
+                        <li><strong>Forma (para gráficos de dispersión):</strong> Cambiar marcadores.</li>
+                        <li><strong>Líneas (para gráficos de líneas):</strong> Estilo de línea (sólida, discontinua), grosor, forma de unión.</li>
+                        <li>Opciones específicas del gráfico (ej. "Segmentos" en un gráfico de anillos, "Cintas" en un gráfico de cinta, "Sentimiento de color" en una cascada).</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <h3>Temas (Themes) JSON 🎨</h3>
+            <p>Para una personalización consistente en todo el informe (o múltiples informes), puedes importar o crear **Temas de Informe**. Un tema es un archivo JSON que define colores, fuentes, propiedades de página y valores predeterminados para los objetos visuales.</p>
+            <ul>
+                <li>Puedes exportar el tema actual, modificar el JSON y volver a importarlo.</li>
+                <li>Existen herramientas comunitarias y generadores de temas para facilitar este proceso.</li>
+            </ul>
+
+            <h3>Consejos Clave para la Personalización</h3>
+            <ul>
+                <li><strong>Consistencia:</strong> Usa colores y fuentes de manera consistente en todo el informe.</li>
+                <li><strong>Claridad ante todo:</strong> La personalización debe mejorar la comprensión, no complicarla. Evita el "ruido visual".</li>
+                <li><strong>Accesibilidad:</strong> Considera el contraste de colores y el tamaño de las fuentes para usuarios con dificultades visuales. Usa texto alternativo.</li>
+                <li><strong>Prueba en diferentes dispositivos:</strong> Asegúrate de que tus personalizaciones se vean bien en diferentes tamaños de pantalla.</li>
+                <li><strong>Información sobre herramientas personalizada:</strong> Puede añadir mucho valor contextual sin saturar el gráfico principal.</li>
+            </ul>
+            <div class="warning">
+                <strong>Menos es más:</strong> Es fácil caer en la tentación de usar demasiados colores, fuentes o efectos. Prioriza la legibilidad y el mensaje que quieres transmitir.
+            </div>
+        </section>
+
+        <section id="quiz-mod2" class="pagina">
+            <h2>
+                <svg class="section-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                Quiz Final Módulo II: Gráficos y Personalización 🧠
+            </h2>
+            <p>¡Demuestra tus conocimientos sobre los gráficos avanzados y las opciones de personalización de Power BI!</p>
+            <form id="quizForm-mod2">
+                <div class="quiz-container">
+                    <!-- Preguntas del Quiz del Módulo 2 se insertarán aquí -->
+                </div>
+                <button type="button" id="quiz-submit-btn">Verificar Respuestas</button>
+                <div id="quiz-result" style="display: none;"></div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYearMod2"></span> Tutorial Power BI Intermedio - Módulo II. <br/> Un recurso de <span class="brand-name">Reinventa Consultoría y Capacitación</span>.</p>
+    </footer>
+
+    <script>
+        // SPA Navigation
+        const navLinksMod2 = document.querySelectorAll('nav a'); // Asegurar selectores únicos si es necesario
+        const pagesMod2 = document.querySelectorAll('main .pagina'); // Contenedor de páginas del módulo actual
+
+        navLinksMod2.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute('data-target');
+
+                pagesMod2.forEach(page => {
+                    page.classList.remove('activa');
+                    if (page.id === targetId) {
+                        page.classList.add('activa');
+                    }
+                });
+
+                navLinksMod2.forEach(navLink => navLink.classList.remove('active-nav'));
+                link.classList.add('active-nav');
+                
+                window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
+            });
+        });
+
+        document.getElementById('currentYearMod2').textContent = new Date().getFullYear();
+
+        // Quiz Data and Logic for Module 2
+        const quizDataMod2 = [
+            {
+                question: "¿Cuál es el propósito principal de un gráfico de Embudo (Funnel Chart) en Power BI?",
+                options: [
+                    "A) Comparar el rendimiento de múltiples KPIs individuales contra sus objetivos.",
+                    "B) Mostrar la distribución de una métrica a lo largo de diferentes categorías jerárquicas.",
+                    "C) Visualizar la progresiva reducción de elementos a través de etapas secuenciales de un proceso.",
+                    "D) Indicar el cambio de ranking de diferentes series a lo largo de un eje categórico."
+                ],
+                answer: "C)",
+                explanation: "El gráfico de embudo es ideal para mostrar cómo las cantidades disminuyen a medida que pasan por las distintas fases de un proceso, como un embudo de ventas o un proceso de conversión web."
+            },
+            {
+                question: "En un Gráfico Combinado (Combo Chart), ¿cuándo es más apropiado utilizar un eje Y secundario?",
+                options: [
+                    "A) Siempre que se utilicen más de dos medidas en el gráfico.",
+                    "B) Cuando se quiere mostrar una línea de tendencia para los valores de columna.",
+                    "C) Cuando las escalas de las medidas representadas como columnas y líneas son significativamente diferentes.",
+                    "D) Para añadir una tercera dimensión categórica al gráfico."
+                ],
+                answer: "C)",
+                explanation: "Un eje Y secundario es útil en gráficos combinados cuando las medidas tienen escalas muy dispares (ej. ventas en millones y porcentaje de margen). Esto permite que ambas series sean legibles sin que una eclipse a la otra."
+            },
+            {
+                question: "¿Qué característica distintiva ofrece un Gráfico de Cinta (Ribbon Chart) en comparación con un gráfico de columnas apiladas estándar?",
+                options: [
+                    "A) Permite mostrar valores negativos y positivos en la misma columna.",
+                    "B) Visualiza cómo cambia el ranking de las series (leyenda) entre las categorías del eje X.",
+                    "C) Es más adecuado para mostrar la composición porcentual de un total.",
+                    "D) Soporta la adición de múltiples líneas de tendencia y pronósticos."
+                ],
+                answer: "B)",
+                explanation: "La principal ventaja del gráfico de cinta es que las 'cintas' conectan los segmentos, mostrando claramente cómo el ranking de cada serie (elemento de la leyenda) cambia a través del eje X, además de su magnitud."
+            },
+            {
+                question: "Estás analizando las causas de una caída en las ventas. Quieres explorar interactivamente cómo diferentes dimensiones (Producto, Región, Canal) contribuyen a la métrica 'Ventas'. ¿Qué visualización de Power BI sería la más adecuada para este análisis de causa raíz ad-hoc?",
+                options: [
+                    "A) Gráfico de Cascada (Waterfall Chart)",
+                    "B) Gráfico Gauge (Medidor)",
+                    "C) Esquema Jerárquico (Decomposition Tree)",
+                    "D) Gráfico de Dispersión (Scatter Chart)"
+                ],
+                answer: "C)",
+                explanation: "El Esquema Jerárquico está diseñado específicamente para el análisis de causa raíz, permitiendo desglosar interactivamente una métrica principal ('Analizar') por múltiples dimensiones ('Explicar por') para entender las contribuciones."
+            },
+            {
+                question: "Para asegurar una personalización visual consistente (colores, fuentes, tamaños) a lo largo de todas las páginas de un informe de Power BI, ¿cuál es la práctica más eficiente?",
+                options: [
+                    "A) Aplicar manualmente el formato a cada objeto visual en cada página.",
+                    "B) Usar la opción 'Copiar formato' para replicar estilos entre visualizaciones similares.",
+                    "C) Crear y aplicar un Tema de Informe (JSON) personalizado.",
+                    "D) Ajustar las opciones de 'Cuadrícula y ajuste a objetos' en la configuración de página."
+                ],
+                answer: "C)",
+                explanation: "Los Temas de Informe (archivos .json) permiten definir un conjunto de opciones de formato (colores, fuentes, propiedades de objetos visuales, etc.) que se aplican globalmente a todo el informe, asegurando consistencia y ahorrando tiempo."
+            }
+        ];
+
+        const quizFormMod2 = document.getElementById('quizForm-mod2'); // Específico para el Módulo 2
+        const quizContainerMod2 = quizFormMod2.querySelector('.quiz-container');
+        const submitButtonMod2 = quizFormMod2.querySelector('#quiz-submit-btn'); // Asumimos que el ID es único o se ajusta
+        const quizResultDivMod2 = quizFormMod2.querySelector('#quiz-result'); // Asumimos que el ID es único o se ajusta
+
+        function renderQuizMod2() {
+            let quizHTML = '';
+            quizDataMod2.forEach((q, index) => {
+                quizHTML += `
+                    <div class="question-block" id="q2-${index}"> <!-- Prefijo para IDs -->
+                        <p>${index + 1}. ${q.question}</p>
+                        <div class="options">
+                `;
+                q.options.forEach(optionText => {
+                    const optionValue = optionText.substring(0, optionText.indexOf(')') + 1);
+                    quizHTML += `
+                        <label>
+                            <input type="radio" name="q2-${index}" value="${optionValue}"> 
+                            ${optionText}
+                        </label>
+                    `;
+                });
+                quizHTML += `
+                        </div>
+                        <div class="feedback" id="fdbk2-${index}">
+                           <strong>Explicación:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            quizContainerMod2.innerHTML = quizHTML;
+        }
+        
+        if (quizContainerMod2) { // Solo renderizar si el contenedor existe
+            renderQuizMod2();
+
+            quizDataMod2.forEach((q, index) => {
+                const radioButtons = quizFormMod2.querySelectorAll(`input[name="q2-${index}"]`);
+                const feedbackDiv = quizFormMod2.querySelector(`#fdbk2-${index}`);
+                
+                radioButtons.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        feedbackDiv.style.display = 'none';
+                        feedbackDiv.classList.remove('correct', 'incorrect');
+                        radioButtons.forEach(rb => rb.disabled = true);
+
+                        document.querySelectorAll(`input[name="q2-${index}"]`).forEach(rb => {
+                            rb.parentElement.style.backgroundColor = '#f0f0f0';
+                            rb.parentElement.style.border = 'none';
+                        });
+
+                        if (radio.value === q.answer ) {
+                            feedbackDiv.classList.add('correct');
+                            radio.parentElement.style.backgroundColor = '#d4edda';
+                            radio.parentElement.style.border = '2px solid var(--success-color)';
+                        } else {
+                            feedbackDiv.classList.add('incorrect');
+                            radio.parentElement.style.backgroundColor = '#f8d7da';
+                            radio.parentElement.style.border = '2px solid var(--danger-color)';
+                            radioButtons.forEach(rb => {
+                                if (rb.value === q.answer) {
+                                    rb.parentElement.style.backgroundColor = '#d4edda';
+                                    rb.parentElement.style.fontWeight = 'bold';
+                                }
+                            });
+                        }
+                        feedbackDiv.style.display = 'block';
+                    });
+                });
+            });
+
+            if (submitButtonMod2) {
+                submitButtonMod2.addEventListener('click', () => {
+                    let score = 0;
+                    quizDataMod2.forEach((q, index) => {
+                        const selectedOption = quizFormMod2.querySelector(`input[name="q2-${index}"]:checked`);
+                        const feedbackDiv = quizFormMod2.querySelector(`#fdbk2-${index}`);
+                        
+                        if (selectedOption) {
+                            if (selectedOption.value === q.answer) {
+                                score++;
+                            }
+                        }
+                        if (feedbackDiv && feedbackDiv.style.display !== 'block'){ // Verificar feedbackDiv
+                             feedbackDiv.style.display = 'block';
+                        }
+                    });
+
+                    if(quizResultDivMod2){ // Verificar quizResultDivMod2
+                        quizResultDivMod2.innerHTML = `Has acertado ${score} de ${quizDataMod2.length} preguntas.`;
+                        quizResultDivMod2.style.display = 'block';
+                        if (score >= quizDataMod2.length * 0.6) { 
+                            quizResultDivMod2.className = 'success';
+                        } else {
+                            quizResultDivMod2.className = 'fail';
+                        }
+                    }
+                    // submitButtonMod2.style.display = 'none'; // Opcional
+                });
+            }
+        }
+
+    </script>
+</body>
+</html>

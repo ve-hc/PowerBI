@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Nivel Intermedio - Módulo I: Lenguaje DAX</title>
+    <style>
+        :root {
+            --primary-color: #F2C811; /* Amarillo Power BI */
+            --secondary-color: #2A2E30; /* Gris oscuro Power BI */
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --code-font-family: 'Consolas', 'Courier New', Courier, monospace;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5em 2em;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        header h1 svg {
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            fill: var(--primary-color);
+        }
+
+        nav {
+            background-color: var(--card-bg-color);
+            padding: 1em 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto; 
+            white-space: nowrap; 
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0 1em; 
+            margin: 0;
+            display: flex;
+            flex-wrap: nowrap; 
+        }
+
+        nav li {
+            margin: 0.5em 0.8em; 
+            flex-shrink: 0; 
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 0.9em; 
+        }
+        
+        nav a svg {
+            width: 18px; 
+            height: 18px;
+            margin-right: 6px;
+            fill: var(--secondary-color);
+            transition: fill 0.3s;
+        }
+
+        nav a:hover, nav a.active-nav {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+        
+        nav a:hover svg, nav a.active-nav svg {
+            fill: var(--secondary-color);
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 2em;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pagina {
+            display: none;
+            background-color: var(--card-bg-color);
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .pagina.activa {
+            display: block;
+        }
+        
+        #portada {
+            text-align: center;
+        }
+        #portada h2 {
+            font-size: 2.5em;
+            color: var(--secondary-color);
+        }
+        #portada h3 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+        }
+        #portada .module-icon svg {
+            width: 100px;
+            height: 100px;
+            fill: var(--secondary-color);
+            margin-bottom: 1em;
+        }
+        #portada .brand-mention { /* Cambiado de brand-logo a brand-mention */
+            margin-top: 1.5em;
+            font-size: 1.1em;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pagina h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5em;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+        }
+        
+        .pagina h2 svg {
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+            fill: var(--secondary-color);
+        }
+
+        .pagina h3 {
+            color: var(--secondary-color);
+            opacity: 0.9;
+            margin-top: 1.5em;
+            font-size: 1.4em;
+        }
+        
+        .pagina h4 {
+            color: var(--primary-color);
+            margin-top: 1.2em;
+            font-size: 1.1em;
+        }
+
+        p, li {
+            font-size: 1.05em;
+            margin-bottom: 1em;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        code.dax { 
+            background-color: #e0e0e0; 
+            color: #1a1a1a;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 0.9em;
+            border-radius: 3px;
+            font-family: var(--code-font-family);
+        }
+
+        pre {
+            background-color: #2d2d2d; 
+            color: #f2f2f2; 
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: var(--code-font-family);
+            font-size: 0.95em;
+            margin: 1em 0;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        pre code { 
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            border-radius: 0;
+            margin: 0;
+        }
+        
+        pre code .keyword { color: #569cd6; font-weight: bold; } 
+        pre code .function { color: #dcdcaa; } 
+        pre code .comment { color: #6a9955; font-style: italic; } 
+        pre code .string { color: #ce9178; } 
+        pre code .number { color: #b5cea8; } 
+        pre code .operator { color: #d4d4d4; } 
+        pre code .table { color: #4ec9b0; } 
+        pre code .column { color: #9cdcfe; }
+        pre code .variableName { color: #C586C0; } 
+
+
+        .tip {
+            background-color: #fff8e1; 
+            border-left: 5px solid var(--primary-color);
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+        .tip strong { color: var(--primary-color); opacity: 0.8;}
+
+        .warning {
+            background-color: #fce4ec; 
+            border-left: 5px solid #e91e63; 
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+        .warning strong { color: #c2185b; }
+
+        .quiz-container { margin-top: 2em; }
+        .question-block { margin-bottom: 2em; padding: 1.5em; border: 1px solid var(--border-color); border-radius: 6px; background-color: #fdfdff;}
+        .question-block p { font-weight: bold; margin-bottom: 1em;}
+        .options label { display: block; margin-bottom: 0.8em; padding: 0.8em; border-radius: 4px; background-color: #f0f0f0; cursor: pointer; transition: background-color 0.2s;}
+        .options label:hover { background-color: #e0e0e0;}
+        .options input[type="radio"] { margin-right: 10px; vertical-align: middle;}
+        .feedback { padding: 0.8em; margin-top: 1em; border-radius: 4px; font-weight: bold; display: none; }
+        .feedback.correct { background-color: #d4edda; color: var(--success-color); border: 1px solid #c3e6cb;}
+        .feedback.incorrect { background-color: #f8d7da; color: var(--danger-color); border: 1px solid #f5c6cb;}
+        #quiz-submit-btn { background-color: var(--primary-color); color: var(--secondary-color); border: none; padding: 0.8em 1.5em; font-size: 1.1em; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; display: block; margin: 2em auto 0; font-weight: bold;}
+        #quiz-submit-btn:hover { background-color: #e0b000; }
+        #quiz-result { margin-top: 1.5em; padding: 1em; text-align: center; font-size: 1.2em; font-weight: bold; border-radius: 5px;}
+        #quiz-result.success { background-color: #d4edda; color: var(--success-color); }
+        #quiz-result.fail { background-color: #f8d7da; color: var(--danger-color); }
+
+        footer {
+            text-align: center;
+            padding: 1.5em;
+            background-color: var(--secondary-color);
+            color: #adb5bd;
+            margin-top: auto;
+            font-size: 0.9em;
+        }
+        footer .brand-name {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+
+        .icon { fill: currentColor; }
+        
+        @media print {
+            body { font-size: 10pt; color: #000; background-color: #fff; }
+            header, nav, footer, #quiz-submit-btn { display: none !important; } 
+            main { padding: 0; max-width: 100%; box-shadow: none; }
+            .pagina { display: block !important; box-shadow: none; border: none; padding: 1em 0; margin-bottom: 20px; page-break-after: always; }
+            #portada { text-align: left; page-break-after: always; }
+            #portada h2, #portada h3, #portada .brand-mention { text-align: center; }
+            #portada .module-icon svg { display: block; margin-left: auto; margin-right: auto; }
+            .pagina:last-child { page-break-after: auto; }
+            .pagina h2 { font-size: 16pt; border-bottom: 1px solid #ccc; color: #000; }
+            .pagina h2 svg { display: none; }
+            pre { background-color: #f0f0f0; color: #000; border: 1px solid #ccc; white-space: pre-wrap; word-wrap: break-word; font-size: 9pt;}
+            pre code .keyword { color: #000000; font-weight: bold; }
+            pre code .function { color: #000000; }
+            pre code .comment { color: #505050; font-style: italic; }
+            pre code .string, pre code .number, pre code .operator, pre code .table, pre code .column, pre code .variableName { color: #000000; font-style: normal; font-weight: normal; }
+            code.dax { background-color: #eee; color: #000; padding: 1px 3px; font-size: 0.9em; }
+            .tip, .warning { border-left-width: 2px; padding: 0.5em; background-color: #f9f9f9; border-color: #ccc;}
+            .quiz-container .question-block { page-break-inside: avoid; }
+            .options label { background-color: #fff; border: 1px solid #ccc; }
+            .quiz-container .feedback { 
+                display: block !important; 
+                background-color: #efefef !important; 
+                color: #000 !important; 
+                border: 1px dashed #bbb !important; 
+                margin-top: 8px; 
+                padding: 6px; 
+                font-size: 9pt;
+                font-weight: normal;
+            }
+             .quiz-container .feedback.correct, .quiz-container .feedback.incorrect { 
+                background-color: #efefef !important;
+                border: 1px dashed #bbb !important;
+            }
+            .quiz-container .feedback strong { font-weight: bold; }
+
+            a { text-decoration: none; color: #000; }
+            a[href^="http"]:after, a[href^="https"]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>
+            <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path d="M4 17.27V20h2.73L17.27 9.46l-2.73-2.73L4 17.27zM6.18 18H5v-1.18l8.04-8.04 1.18 1.18L6.18 18z"/><path d="M20.71 6.73l-2.44-2.44a.996.996 0 00-1.41 0l-1.83 1.83 2.73 2.73 1.83-1.83a.996.996 0 000-1.41zM4 4h2v10H4V4zm5 3h2v7H9V7zm5-2h2v9h-2V5z"/></svg>
+            Power BI Nivel Intermedio
+        </h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" data-target="portada" class="active-nav">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                Portada</a></li>
+            <li><a href="#" data-target="contexto">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+                Contextos</a></li>
+            <li><a href="#" data-target="funcionesVariables">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                Funciones y Variables</a></li>
+            <li><a href="#" data-target="patronesDax">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+                Patrones DAX</a></li>
+            <li><a href="#" data-target="tablaParametrica">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 15H5v-2h2v2zm0-4H5V9h2v2zm0-4H5V5h2v2zm4 8H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm5 10h-3V5h3v14zm2-14h-1V5h1v2zm0 4h-1V9h1v2zm0 4h-1v-2h1v2zM7 19v-2h2v2H7zm4 0v-2h2v2h-2z"/></svg>
+                Tabla Paramétrica</a></li>
+            <li><a href="#" data-target="totalAcumulado">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
+                Total Acumulado</a></li>
+            <li><a href="#" data-target="clasificacionAbc">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
+                Clasificación ABC</a></li>
+            <li><a href="#" data-target="calculosTiempo">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                Cálculos de Tiempo</a></li>
+            <li><a href="#" data-target="quiz">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                Quiz Final</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="portada" class="pagina activa">
+            <div class="module-icon">
+                <svg class="icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M51.93 4H12.07C7.62 4 4 7.62 4 12.07V51.93C4 56.38 7.62 60 12.07 60H51.93C56.38 60 60 56.38 60 51.93V12.07C60 7.62 56.38 4 51.93 4zM49 16H15v-3h34v3zm0 6H15v-3h34v3zm-15.32 10.95l-7.55 7.55-7.55-7.55-2.12 2.12 7.55 7.55-7.55 7.55 2.12 2.12 7.55-7.55 7.55 7.55 2.12-2.12-7.55-7.55 7.55-7.55-2.12-2.12zM49 38H37.23v-3H49v3z" fill-rule="nonzero"/></svg>
+            </div>
+            <h2>Power BI Nivel Intermedio</h2>
+            <h3>Módulo I: Lenguaje DAX (Data Analysis Expressions) 📊</h3>
+            <p>¡Bienvenido/a al primer módulo de nuestro curso de Power BI Nivel Intermedio!</p>
+            <p>En este módulo, nos sumergiremos en el corazón de la inteligencia de negocio en Power BI: el lenguaje <strong>DAX</strong>. Aprenderás a ir más allá de las visualizaciones básicas y a crear cálculos personalizados, medidas complejas y análisis sofisticados que transformarán tus datos en conocimiento accionable.</p>
+            <p>Exploraremos desde los conceptos fundamentales como los contextos de evaluación, hasta patrones avanzados y funciones de inteligencia de tiempo. ¡Prepárate para potenciar tus informes! 🚀</p>
+            <div class="brand-mention">
+                <p><strong>Reinventa Consultoría y Capacitación</strong></p>
+            </div>
+        </section>
+
+        <section id="contexto" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+                Contexto de Fila y Contexto de Filtro 🧐
+            </h2>
+            <p>Entender los contextos de evaluación es <strong>crucial</strong> en DAX. Son la base sobre la cual todas tus fórmulas operan.</p>
+            <h3>Contexto de Fila (Row Context)</h3>
+            <p>El contexto de fila "itera" sobre las filas de una tabla, una por una. Permite acceder a los valores de las columnas de la fila actual durante el cálculo.</p>
+            <h4>Ejemplo: Columna Calculada</h4>
+            <pre><code class="language-dax">-- En la tabla 'Ventas'
+[Ingreso Total] = 'Ventas'[Cantidad] * 'Ventas'[Precio Unidad]</code></pre>
+            <h3>Contexto de Filtro (Filter Context)</h3>
+            <p>El contexto de filtro es el conjunto de filtros activos que se aplican a tu modelo de datos antes de que una medida DAX sea evaluada.</p>
+            <h4>Ejemplo: Medida en una Matriz</h4>
+            <pre><code class="language-dax">Total Ventas = SUM('Ventas'[Ingreso Total])</code></pre>
+            <h3>Transición de Contexto 🔄</h3>
+            <p>Ocurre cuando una expresión que opera en un contexto de fila invoca una medida o usa <code class="dax">CALCULATE</code>.</p>
+            <pre><code class="language-dax">-- Columna Calculada en la tabla 'Productos'
+Ventas Por Producto = CALCULATE(SUM('Ventas'[Ingreso Total]))</code></pre>
+        </section>
+
+        <section id="funcionesVariables" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                Uso de Funciones y Variables 🛠️
+            </h2>
+            <p>DAX cuenta con una extensa biblioteca de funciones. Las variables, por otro lado, te permiten escribir código más legible y eficiente.</p>
+            <h3>Funciones Comunes en DAX</h3>
+            <p>Agregación (<code class="dax">SUM</code>, <code class="dax">AVERAGE</code>, <code class="dax">COUNTROWS</code>), Iteradoras (<code class="dax">SUMX</code>, <code class="dax">FILTER</code>), Manipulación de Filtros (<code class="dax">CALCULATE</code>, <code class="dax">ALL</code>, <code class="dax">ALLEXCEPT</code>), Lógicas (<code class="dax">IF</code>, <code class="dax">SWITCH</code>), Relacionales (<code class="dax">RELATED</code>, <code class="dax">RELATEDTABLE</code>).</p>
+            <h3>Variables en DAX (VAR ... RETURN)</h3>
+            <p>Mejoran legibilidad, rendimiento y depuración.</p>
+            <h4>Sintaxis:</h4>
+            <pre><code class="language-dax">NombreMedida =
+VAR NombreVariable1 = -- Expresión para la variable 1
+VAR NombreVariable2 = -- Expresión para la variable 2
+RETURN
+    -- Expresión final que usa las variables
+    IF(NombreVariable1 > 0, NombreVariable2 * 1.1, 0)</code></pre>
+        </section>
+
+        <section id="patronesDax" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+                Patrones Comunes en DAX 🧩
+            </h2>
+            <p>Reconocer patrones comunes agiliza el desarrollo en DAX.</p>
+            <h3>1. Porcentaje del Total General (% Grand Total)</h3>
+            <pre><code class="language-dax">% Ventas del Total =
+DIVIDE(
+    SUM('Ventas'[MontoVenta]),
+    CALCULATE(
+        SUM('Ventas'[MontoVenta]),
+        ALL('Ventas') 
+    ),
+    0 
+)</code></pre>
+            <h3>2. Ratios y Tasas</h3>
+            <pre><code class="language-dax">Margen Bruto % =
+VAR IngresosTotales = SUM('Ventas'[MontoVenta])
+VAR CostoTotal = SUM('Ventas'[CostoProducto])
+VAR GananciaBruta = IngresosTotales - CostoTotal
+RETURN
+    DIVIDE(GananciaBruta, IngresosTotales, 0)</code></pre>
+        </section>
+
+        <section id="tablaParametrica" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 15H5v-2h2v2zm0-4H5V9h2v2zm0-4H5V5h2v2zm4 8H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm5 10h-3V5h3v14zm2-14h-1V5h1v2zm0 4h-1V9h1v2zm0 4h-1v-2h1v2zM7 19v-2h2v2H7zm4 0v-2h2v2h-2z"/></svg>
+                Tabla Paramétrica (Análisis "What-if") 📈❓
+            </h2>
+            <p>Permiten simular el impacto de cambiar valores en los cálculos.</p>
+            <h4>Ejemplo: Parámetro de Incremento de Precio (%)</h4>
+            <p>Se crea con "Nuevo Parámetro" o <code class="dax">GENERATESERIES</code>. Luego se captura el valor con <code class="dax">SELECTEDVALUE</code>.</p>
+            <pre><code class="language-dax">Valor Incremento Seleccionado =
+SELECTEDVALUE('Incremento Precio % Table'[Value], 0)</code></pre>
+            <pre><code class="language-dax">Ingresos Proyectados con Incremento =
+VAR Incremento = [Valor Incremento Seleccionado]
+RETURN
+    SUMX(
+        'Ventas',
+        'Ventas'[Cantidad] * ('Ventas'[Precio Unidad] * (1 + Incremento))
+    )</code></pre>
+        </section>
+
+        <section id="totalAcumulado" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
+                Total Acumulado (YTD, MTD, QTD) 🗓️➕
+            </h2>
+            <p>Se requiere una tabla de calendario marcada como tal.</p>
+            <h3>Funciones de Inteligencia de Tiempo para Acumulados</h3>
+            <p><code class="dax">TOTALYTD</code>, <code class="dax">TOTALMTD</code>, <code class="dax">TOTALQTD</code>.</p>
+            <pre><code class="language-dax">Ventas YTD =
+TOTALYTD(
+    SUM('Ventas'[MontoVenta]),
+    'Calendario'[Fecha]
+)</code></pre>
+            <h3>Patrón Manual para Acumulados</h3>
+            <pre><code class="language-dax">Ventas YTD Manual =
+CALCULATE(
+    SUM('Ventas'[MontoVenta]),
+    FILTER(
+        ALL('Calendario'[Fecha]), 
+        'Calendario'[Fecha] &lt;= MAX('Calendario'[Fecha]) && 
+        'Calendario'[Año] = MAX('Calendario'[Año])     
+    )
+)</code></pre>
+        </section>
+
+        <section id="clasificacionAbc" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
+                Clasificación ABC (Análisis de Pareto) 🅰️🅱️️C️
+            </h2>
+            <p>Categorización basada en el principio de Pareto (80/20).</p>
+            <h3>Pasos para Implementar un Análisis ABC en DAX:</h3>
+            <p>1. Métrica base. 2. Acumulado de la métrica (ordenado). 3. % acumulado. 4. Asignar clase.</p>
+            
+            <h4>Paso 1: Medida Base (ya la tenemos)</h4>
+            <pre><code class="language-dax">Total Ventas = SUM('Ventas'[MontoVenta])</code></pre>
+
+            <h4>Paso 2 y 3: Porcentaje Acumulado de Ventas (en una columna calculada en 'Productos')</h4>
+            <p>Usando <code class="dax">RANKX</code> para ordenar y luego acumular.</p>
+            <pre><code class="language-dax">-- Columna Calculada en 'Productos'
+Ranking Ventas Prod = RANKX(ALL('Productos'), [Total Ventas], , DESC)
+
+-- Columna Calculada en 'Productos'
+% Acumulado Ventas (con Rank) =
+VAR RankingActual = [Ranking Ventas Prod]
+VAR VentasAcumuladas =
+    CALCULATE(
+        [Total Ventas],
+        FILTER(
+            ALL('Productos'),
+            [Ranking Ventas Prod] &lt;= RankingActual
+        )
+    )
+VAR VentasGlobales = CALCULATE([Total Ventas], ALL('Productos'))
+RETURN
+    DIVIDE(VentasAcumuladas, VentasGlobales)</code></pre>
+
+            <h4>Paso 4: Asignar Clase ABC (columna calculada)</h4>
+            <pre><code class="language-dax">Clase ABC Producto =
+VAR PctAcumulado = [% Acumulado Ventas (con Rank)] 
+RETURN
+    SWITCH(TRUE(),
+        PctAcumulado &lt;= 0.70, "A", 
+        PctAcumulado &lt;= 0.90, "B", 
+        "C"                      
+    )</code></pre>
+        </section>
+
+        <section id="calculosTiempo" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+                Cálculos con Funciones de Tiempo 🕰️📊
+            </h2>
+            <p>Esencial tener una tabla de calendario marcada como "tabla de fechas".</p>
+            <h3>Funciones Clave:</h3>
+            <p><code class="dax">SAMEPERIODLASTYEAR</code>, <code class="dax">PREVIOUSYEAR</code>, <code class="dax">DATEADD</code>, <code class="dax">DATESBETWEEN</code>.</p>
+            <h4>Ejemplo 1: Ventas del Año Anterior (Sales LY)</h4>
+            <pre><code class="language-dax">Ventas LY =
+CALCULATE(
+    [Total Ventas], 
+    SAMEPERIODLASTYEAR('Calendario'[Fecha])
+)</code></pre>
+            <h4>Ejemplo 2: Crecimiento Año Sobre Año (YoY Growth %)</h4>
+            <pre><code class="language-dax">Crecimiento Ventas YoY % =
+VAR VentasActuales = [Total Ventas]
+VAR VentasAnioAnterior = [Ventas LY]
+RETURN
+    IF(
+        NOT ISBLANK(VentasAnioAnterior),
+        DIVIDE(VentasActuales - VentasAnioAnterior, VentasAnioAnterior)
+    )</code></pre>
+        </section>
+
+        <section id="quiz" class="pagina">
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+                Quiz Final: Pon a Prueba tus Conocimientos de DAX 🧠
+            </h2>
+            <p>¡Es hora de ver cuánto has aprendido sobre DAX! Selecciona la respuesta que consideres correcta.</p>
+            <form id="quizForm">
+                <div class="quiz-container">
+                    <!-- Preguntas se insertarán aquí por JS -->
+                </div>
+                <button type="button" id="quiz-submit-btn">Verificar Respuestas</button>
+                <div id="quiz-result" style="display: none;"></div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Tutorial Power BI Intermedio - Módulo I: Lenguaje DAX. <br/> Un recurso de <span class="brand-name">Reinventa Consultoría y Capacitación</span>.</p>
+    </footer>
+
+    <script>
+        // SPA Navigation
+        const navLinks = document.querySelectorAll('nav a');
+        const pages = document.querySelectorAll('.pagina');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute('data-target');
+
+                pages.forEach(page => {
+                    page.classList.remove('activa');
+                    if (page.id === targetId) {
+                        page.classList.add('activa');
+                    }
+                });
+
+                navLinks.forEach(navLink => navLink.classList.remove('active-nav'));
+                link.classList.add('active-nav');
+                
+                window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
+            });
+        });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        function highlightDaxCode() {
+            const daxCodeBlocks = document.querySelectorAll('pre code.language-dax');
+            daxCodeBlocks.forEach(block => {
+                let code = block.innerHTML; 
+                code = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+                code = code.replace(/(--.*?)(\n|$|&lt;)/g, '<span class="comment">$1</span>$2');
+                code = code.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$1</span>');
+                code = code.replace(/(".*?")/g, '<span class="string">$1</span>');
+                code = code.replace(/\b(VAR|RETURN|TRUE|FALSE|BLANK|AND|OR|NOT|IN|ASC|DESC|YEAR|MONTH|QUARTER|DAY)\b/gi, '<span class="keyword">$&</span>');
+                code = code.replace(/\b(SUM|SUMX|AVERAGE|AVERAGEX|MIN|MINX|MAX|MAXX|COUNT|COUNTROWS|DISTINCTCOUNT|CALCULATE|FILTER|ALL|ALLEXCEPT|ALLSELECTED|KEEPFILTERS|RELATED|RELATEDTABLE|DIVIDE|VALUES|SELECTEDVALUE|GENERATESERIES|TOTALYTD|TOTALMTD|TOTALQTD|SAMEPERIODLASTYEAR|PREVIOUSYEAR|PREVIOUSMONTH|PREVIOUSQUARTER|DATEADD|DATESBETWEEN|DATESINPERIOD|STARTOFYEAR|ENDOFYEAR|RANKX|ADDCOLUMNS|SUMMARIZE|USERELATIONSHIP|FORMAT|IF|SWITCH|ISBLANK|IFERROR|REMOVEFILTERS)\b/gi, '<span class="function">$&</span>');
+                code = code.replace(/(<span class="keyword">VAR<\/span>\s+)(\w+)/gi, '$1<span class="variableName">$2</span>');
+                code = code.replace(/('[\w\s\$\%\&\*\@\#\.\-\/\\]+?')(?=\[|&lt;\/span&gt;\s*\(|&lt;\/span&gt;\s*,|\s*\(|\s*,|\s*$|\s*\)|&lt;\/code&gt;)/g, '<span class="table">$1</span>');
+                code = code.replace(/(\[[\w\s\$\%\&\*\@\#\.\-\/\\]+?\])/g, '<span class="column">$1</span>');
+                code = code.replace(/\b(\d+\.?\d*|\.\d+)\b/g, '<span class="number">$1</span>');
+                code = code.replace(/(&amp;&amp;|\|\||&lt;=|&gt;=|[=+\-*\/&lt;&gt;%^&amp;])/g, '<span class="operator">$1</span>');
+
+                block.innerHTML = code;
+            });
+        }
+        highlightDaxCode(); 
+
+        const quizData = [
+            {
+                question: "En DAX, ¿cuál es la principal diferencia entre el contexto de fila y el contexto de filtro?",
+                options: [
+                    "A) El contexto de fila solo existe en columnas calculadas y el de filtro solo en medidas.",
+                    "B) El contexto de fila itera fila por fila y permite acceso directo a valores de columna de la fila actual; el contexto de filtro es el conjunto de filtros activos que acotan los datos antes de una agregación.",
+                    "C) El contexto de filtro siempre anula el contexto de fila cuando ambos están presentes.",
+                    "D) El contexto de fila se usa para filtrar tablas y el contexto de filtro para crear nuevas columnas."
+                ],
+                answer: "B)",
+                explanation: "El contexto de fila permite cálculos a nivel de fila, mientras que el contexto de filtro define qué subconjunto de datos se considera para una medida. Ambos pueden coexistir e interactuar, especialmente con CALCULATE (transición de contexto)."
+            },
+            {
+                question: "Dada la medida: `Ventas LY = CALCULATE(SUM('Ventas'[Monto]), SAMEPERIODLASTYEAR('Calendario'[Fecha]))`. Si se usa en una matriz con Meses en las filas, ¿qué hace `SAMEPERIODLASTYEAR('Calendario'[Fecha])`?",
+                options: [
+                    "A) Filtra la tabla 'Ventas' para incluir solo las ventas del año anterior completo.",
+                    "B) Modifica el contexto de filtro para que `SUM('Ventas'[Monto])` se evalúe sobre las fechas del mismo período (ej. mismo mes) pero del año anterior.",
+                    "C) Devuelve el valor de 'Ventas'[Monto] de la misma fecha exacta del año pasado.",
+                    "D) Crea una nueva tabla 'Calendario' con las fechas del año anterior."
+                ],
+                answer: "B)",
+                explanation: "SAMEPERIODLASTYEAR es una función de manipulación de contexto que toma el conjunto de fechas actual en el contexto de filtro y lo desplaza un año atrás, permitiendo que la expresión (SUM) se calcule sobre ese nuevo conjunto de fechas."
+            },
+            {
+                question: "Considera la expresión DAX: `VAR TotalIngresos = SUM('Ventas'[Ingresos]) RETURN IF(TotalIngresos > 1000, TotalIngresos * 0.1, 0)`. ¿Cuál es la principal ventaja de usar la variable `TotalIngresos` aquí?",
+                options: [
+                    "A) Permite que `SUM('Ventas'[Ingresos])` se calcule dos veces, una para la condición y otra para el resultado, asegurando precisión.",
+                    "B) Mejora significativamente la velocidad de actualización del modelo de datos.",
+                    "C) Aumenta el tamaño del archivo PBIX al almacenar el valor de la variable.",
+                    "D) Mejora la legibilidad y asegura que `SUM('Ventas'[Ingresos])` se calcule una sola vez, optimizando el rendimiento de la medida."
+                ],
+                answer: "D)",
+                explanation: "Las variables en DAX (VAR...RETURN) calculan la expresión asignada una sola vez y almacenan su resultado para ser reutilizado. Esto mejora la legibilidad y puede optimizar el rendimiento si la expresión es compleja o se usa múltiples veces."
+            },
+            {
+                question: "Para un análisis ABC de productos, necesitas calcular el porcentaje acumulado de ventas. ¿Qué combinación de funciones DAX es más adecuada para obtener el total de ventas de productos 'mejores o iguales' al producto actual en términos de ventas, para luego calcular el acumulado?",
+                options: [
+                    "A) `SUMX(FILTER('Productos', 'Productos'[Ventas] >= CURRENT()), 'Productos'[Ventas])` donde CURRENT() es el producto actual.",
+                    "B) `CALCULATE(SUM('Ventas'[Monto]), FILTER(ALL('Productos'), RANKX(ALL('Productos'), CALCULATE(SUM('Ventas'[Monto])), , DESC) <= RANKX(VALUES('Productos'), CALCULATE(SUM('Ventas'[Monto])), , DESC)))`",
+                    "C) `TOTALYTD(SUM('Ventas'[Monto]), 'Productos'[FechaLanzamiento])`",
+                    "D) `RELATEDTABLE('Ventas')` y luego un `SUMX`."
+                ],
+                answer: "B)",
+                explanation: "La opción B, aunque compleja, describe la lógica de rankear todos los productos, obtener el ranking del producto actual en contexto, y luego sumar las ventas de todos los productos cuyo ranking sea menor o igual al actual. Esto es un enfoque común para acumulados en análisis ABC. La A es conceptualmente correcta pero `CURRENT()` no es una función DAX. C es para inteligencia de tiempo. D no realiza el acumulado por ranking."
+            },
+            {
+                question: "Al usar una tabla paramétrica (What-if) para simular un descuento porcentual, la tabla del parámetro (`'Descuento % Tabla'`) no tiene relaciones con la tabla de `Ventas`. ¿Cómo se utiliza el valor seleccionado del segmentador del parámetro en una medida que calcula `Ventas con Descuento`?",
+                options: [
+                    "A) Creando una relación activa entre `'Descuento % Tabla'` y `'Ventas'` basada en una columna común.",
+                    "B) Usando `RELATED('Descuento % Tabla'[Valor])` dentro de la medida de `Ventas con Descuento`.",
+                    "C) Usando `SELECTEDVALUE('Descuento % Tabla'[Valor])` para capturar el valor del parámetro y aplicándolo matemáticamente a las ventas.",
+                    "D) Agregando una columna calculada a la tabla `Ventas` que use `LOOKUPVALUE` para traer el valor del parámetro."
+                ],
+                answer: "C)",
+                explanation: "Las tablas paramétricas son desconectadas. El valor seleccionado en su segmentador se captura con `SELECTEDVALUE` (o `MIN`/`MAX`/`AVERAGE` si se permite selección múltiple y se quiere un comportamiento específico) y luego se usa aritméticamente dentro de las medidas que necesitan ese parámetro."
+            }
+        ];
+
+        const quizContainer = document.querySelector('.quiz-container');
+        const quizForm = document.getElementById('quizForm');
+        const submitButton = document.getElementById('quiz-submit-btn');
+        const quizResultDiv = document.getElementById('quiz-result');
+
+        function renderQuiz() {
+            let quizHTML = '';
+            quizData.forEach((q, index) => {
+                quizHTML += `
+                    <div class="question-block" id="question-${index}">
+                        <p>${index + 1}. ${q.question}</p>
+                        <div class="options">
+                `;
+                q.options.forEach(optionText => { 
+                    const optionValue = optionText.substring(0, optionText.indexOf(')') + 1); 
+                    quizHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${optionValue}"> 
+                            ${optionText}
+                        </label>
+                    `;
+                });
+                quizHTML += `
+                        </div>
+                        <div class="feedback" id="feedback-${index}">
+                           <strong>Explicación:</strong> ${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            quizContainer.innerHTML = quizHTML;
+        }
+        
+        renderQuiz();
+
+        quizData.forEach((q, index) => {
+            const radioButtons = document.querySelectorAll(`input[name="question${index}"]`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    feedbackDiv.style.display = 'none';
+                    feedbackDiv.classList.remove('correct', 'incorrect');
+                    radioButtons.forEach(rb => rb.disabled = true);
+
+                    document.querySelectorAll(`input[name="question${index}"]`).forEach(rb => {
+                        rb.parentElement.style.backgroundColor = '#f0f0f0';
+                        rb.parentElement.style.border = 'none';
+                    });
+
+                    if (radio.value === q.answer ) { 
+                        feedbackDiv.classList.add('correct');
+                        radio.parentElement.style.backgroundColor = '#d4edda';
+                        radio.parentElement.style.border = '2px solid var(--success-color)';
+                    } else {
+                        feedbackDiv.classList.add('incorrect');
+                        radio.parentElement.style.backgroundColor = '#f8d7da';
+                        radio.parentElement.style.border = '2px solid var(--danger-color)';
+                        radioButtons.forEach(rb => {
+                            if (rb.value === q.answer) {
+                                rb.parentElement.style.backgroundColor = '#d4edda';
+                                rb.parentElement.style.fontWeight = 'bold';
+                            }
+                        });
+                    }
+                    feedbackDiv.style.display = 'block';
+                });
+            });
+        });
+
+        submitButton.addEventListener('click', () => {
+            let score = 0;
+            quizData.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                    }
+                }
+                if (feedbackDiv.style.display !== 'block'){
+                     feedbackDiv.style.display = 'block';
+                }
+            });
+
+            quizResultDiv.innerHTML = `Has acertado ${score} de ${quizData.length} preguntas.`;
+            quizResultDiv.style.display = 'block';
+            if (score >= quizData.length * 0.6) { 
+                quizResultDiv.className = 'success';
+            } else {
+                quizResultDiv.className = 'fail';
+            }
+        });
+
+    </script>
+</body>
+</html>

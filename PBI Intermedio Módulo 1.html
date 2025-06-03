@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Power BI Nivel Intermedio - Módulo I: Lenguaje DAX</title>
+    <title>Módulo I: Lenguaje DAX</title>
     <style>
         :root {
             --primary-color: #F2C811; /* Amarillo Power BI */
@@ -86,7 +86,6 @@
             align-items: center;
             font-size: 0.9em; 
         }
-        
         nav a svg {
             width: 18px; 
             height: 18px;
@@ -94,7 +93,6 @@
             fill: var(--secondary-color);
             transition: fill 0.3s;
         }
-
         nav a:hover, nav a.active-nav {
             background-color: var(--primary-color);
             color: var(--secondary-color);
@@ -103,7 +101,6 @@
         nav a:hover svg, nav a.active-nav svg {
             fill: var(--secondary-color);
         }
-
         main {
             flex-grow: 1;
             padding: 2em;
@@ -124,35 +121,28 @@
 
         .pagina.activa {
             display: block;
-        }
-        
-        #portada {
-            text-align: center;
-        }
-        #portada h2 {
-            font-size: 2.5em;
-            color: var(--secondary-color);
-        }
-        #portada h3 {
-            font-size: 1.8em;
-            color: var(--primary-color);
-            margin-top: 0.5em;
-            margin-bottom: 1em;
-        }
-        #portada .module-icon svg {
-            width: 100px;
-            height: 100px;
-            fill: var(--secondary-color);
-            margin-bottom: 1em;
-        }
-        #portada .brand-mention { /* Cambiado de brand-logo a brand-mention */
-            margin-top: 1.5em;
-            font-size: 1.1em;
-            color: var(--text-color);
-            opacity: 0.8;
+        }        
+                main {
+            flex-grow: 1;
+            padding: 2em;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
         }
 
+        .pagina {
+            display: none;
+            background-color: var(--card-bg-color);
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
 
+        .pagina.activa {
+            display: block;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -196,50 +186,6 @@
         ul, ol {
             padding-left: 20px;
         }
-
-        code.dax { 
-            background-color: #e0e0e0; 
-            color: #1a1a1a;
-            padding: 0.2em 0.4em;
-            margin: 0;
-            font-size: 0.9em;
-            border-radius: 3px;
-            font-family: var(--code-font-family);
-        }
-
-        pre {
-            background-color: #2d2d2d; 
-            color: #f2f2f2; 
-            padding: 1em;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-family: var(--code-font-family);
-            font-size: 0.95em;
-            margin: 1em 0;
-            border-left: 5px solid var(--primary-color);
-        }
-        
-        pre code { 
-            background-color: transparent;
-            padding: 0;
-            color: inherit;
-            font-family: inherit;
-            font-size: inherit;
-            border-radius: 0;
-            margin: 0;
-        }
-        
-        pre code .keyword { color: #569cd6; font-weight: bold; } 
-        pre code .function { color: #dcdcaa; } 
-        pre code .comment { color: #6a9955; font-style: italic; } 
-        pre code .string { color: #ce9178; } 
-        pre code .number { color: #b5cea8; } 
-        pre code .operator { color: #d4d4d4; } 
-        pre code .table { color: #4ec9b0; } 
-        pre code .column { color: #9cdcfe; }
-        pre code .variableName { color: #C586C0; } 
-
-
         .tip {
             background-color: #fff8e1; 
             border-left: 5px solid var(--primary-color);
@@ -300,12 +246,58 @@
             .pagina:last-child { page-break-after: auto; }
             .pagina h2 { font-size: 16pt; border-bottom: 1px solid #ccc; color: #000; }
             .pagina h2 svg { display: none; }
-            pre { background-color: #f0f0f0; color: #000; border: 1px solid #ccc; white-space: pre-wrap; word-wrap: break-word; font-size: 9pt;}
-            pre code .keyword { color: #000000; font-weight: bold; }
-            pre code .function { color: #000000; }
-            pre code .comment { color: #505050; font-style: italic; }
-            pre code .string, pre code .number, pre code .operator, pre code .table, pre code .column, pre code .variableName { color: #000000; font-style: normal; font-weight: normal; }
-            code.dax { background-color: #eee; color: #000; padding: 1px 3px; font-size: 0.9em; }
+            section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            h1, h2, h3 {
+            color: #0056b3;
+            }
+            h2 {
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-top: 0;
+            }
+            h3 {
+            color: #004085;
+            }
+            ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            }
+            code {
+            background-color: #e9e9e9;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            display: block;
+            white-space: pre-wrap;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            }
+            pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            }
+            .note {
+            background-color: #e6f2ff;
+            border-left: 5px solid #0056b3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            }
+            hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 30px 0;
+            }
             .tip, .warning { border-left-width: 2px; padding: 0.5em; background-color: #f9f9f9; border-color: #ccc;}
             .quiz-container .question-block { page-break-inside: avoid; }
             .options label { background-color: #fff; border: 1px solid #ccc; }
@@ -327,11 +319,12 @@
 
             a { text-decoration: none; color: #000; }
             a[href^="http"]:after, a[href^="https"]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
-        }
+        }        
+        
+        
     </style>
 </head>
 <body>
-
     <header>
         <h1>
             <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><path d="M4 17.27V20h2.73L17.27 9.46l-2.73-2.73L4 17.27zM6.18 18H5v-1.18l8.04-8.04 1.18 1.18L6.18 18z"/><path d="M20.71 6.73l-2.44-2.44a.996.996 0 00-1.41 0l-1.83 1.83 2.73 2.73 1.83-1.83a.996.996 0 000-1.41zM4 4h2v10H4V4zm5 3h2v7H9V7zm5-2h2v9h-2V5z"/></svg>
@@ -374,7 +367,7 @@
     <main>
         <section id="portada" class="pagina activa">
             <div class="module-icon">
-                <svg class="icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M51.93 4H12.07C7.62 4 4 7.62 4 12.07V51.93C4 56.38 7.62 60 12.07 60H51.93C56.38 60 60 56.38 60 51.93V12.07C60 7.62 56.38 4 51.93 4zM49 16H15v-3h34v3zm0 6H15v-3h34v3zm-15.32 10.95l-7.55 7.55-7.55-7.55-2.12 2.12 7.55 7.55-7.55 7.55 2.12 2.12 7.55-7.55 7.55-7.55-2.12-2.12zM49 38H37.23v-3H49v3z" fill-rule="nonzero"/></svg>
+                
             </div>
             <h2>Power BI Nivel Intermedio</h2>
             <h3>Módulo I: Lenguaje DAX (Data Analysis Expressions) 📊</h3>
@@ -386,179 +379,526 @@
             </div>
         </section>
 
+
         <section id="contexto" class="pagina">
-            <h2>
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-                Contexto de Fila y Contexto de Filtro 🧐
-            </h2>
-            <p>Entender los contextos de evaluación es **crucial** en DAX. Son la base sobre la cual todas tus fórmulas operan.</p>
-            <h3>Contexto de Fila (Row Context)</h3>
-            <p>El contexto de fila "itera" sobre las filas de una tabla, una por una. Permite acceder a los valores de las columnas de la fila actual durante el cálculo.</p>
-            <h4>Ejemplo: Columna Calculada</h4>
-            <pre><code class="language-dax">-- En la tabla 'Ventas'
-[Ingreso Total] = 'Ventas'[Cantidad] * 'Ventas'[Precio Unidad]</code></pre>
-            <h3>Contexto de Filtro (Filter Context)</h3>
-            <p>El contexto de filtro es el conjunto de filtros activos que se aplican a tu modelo de datos antes de que una medida DAX sea evaluada.</p>
-            <h4>Ejemplo: Medida en una Matriz</h4>
-            <pre><code class="language-dax">Total Ventas = SUM('Ventas'[Ingreso Total])</code></pre>
-            <h3>Transición de Contexto 🔄</h3>
-            <p>Ocurre cuando una expresión que opera en un contexto de fila invoca una medida o usa <code class="dax">CALCULATE</code>.</p>
-            <pre><code class="language-dax">-- Columna Calculada en la tabla 'Productos'
-Ventas Por Producto = CALCULATE(SUM('Ventas'[Ingreso Total]))</code></pre>
+            <h2>Contexto de Fila y Contexto de Filtro</h2>
+            <p>El entendimiento de los contextos de fila y filtro es la base para dominar DAX. Son dos conceptos distintos pero que interactúan constantemente.</p>
+
+            <h3>Contexto de Fila (Row Context):</h3>
+            <ul>
+                <li><strong>Qué es:</strong> Imagina que estás recorriendo una tabla fila por fila. El contexto de fila opera sobre una única fila a la vez dentro de una tabla.</li>
+                <li><strong>Cuándo se crea:</strong> Principalmente se crea al usar funciones iteradoras (como SUMX, AVERAGEX, FILTER, etc.) o al crear columnas calculadas. En una columna calculada, la fórmula se evalúa para cada fila individualmente.</li>
+                <li><strong>Cómo funciona:</strong> Dentro de un contexto de fila, puedes referenciar directamente los valores de las columnas de esa fila específica. Por ejemplo, si tienes una tabla de 'Ventas' con columnas 'Cantidad' y 'Precio Unitario', en una columna calculada podrías escribir <code>[Cantidad] * [Precio Unitario]</code> y DAX sabría que te refieres a los valores de la fila actual.</li>
+                <li><strong>Ejemplo simple:</strong> Crear una columna calculada en una tabla de ventas llamada "Ingreso Total" con la fórmula:
+                    <pre><code>='TablaVentas'[Cantidad] * 'TablaVentas'[PrecioUnitario]</code></pre>
+                    Aquí, para cada fila, DAX toma la cantidad y el precio de esa fila.
+                </li>
+            </ul>
+
+            <h3>Contexto de Filtro (Filter Context):</h3>
+            <ul>
+                <li><strong>Qué es:</strong> Es el conjunto de filtros activos que se aplican a tus datos antes de que se evalúe una medida o una expresión DAX. Estos filtros pueden provenir de varias fuentes:
+                    <ul>
+                        <li>Filas y columnas en una tabla dinámica o visualización.</li>
+                        <li>Segmentaciones de datos (Slicers).</li>
+                        <li>Otros filtros aplicados en el panel de filtros de Power BI.</li>
+                        <li>Filtros dentro de otras medidas (usando CALCULATE por ejemplo).</li>
+                    </ul>
+                </li>
+                <li><strong>Cuándo se crea:</strong> Se crea automáticamente por las interacciones en el informe (selecciones en gráficos, slicers) o explícitamente mediante funciones DAX como CALCULATE, FILTER, ALL, etc.</li>
+                <li><strong>Cómo funciona:</strong> El contexto de filtro reduce el subconjunto de datos sobre el cual se realizará el cálculo. Por ejemplo, si seleccionas "Año = 2023" en un slicer, el contexto de filtro para cualquier medida que uses será solo sobre los datos de 2023.</li>
+                <li><strong>Ejemplo simple:</strong> Una medida como:
+                    <pre><code>Total Ventas = SUM('TablaVentas'[Ingreso Total])</code></pre>
+                    Si pones esta medida en una tarjeta y tienes un slicer de "Año" con "2023" seleccionado, la medida Total Ventas solo sumará los ingresos de las ventas del año 2023. El slicer define el contexto de filtro.
+                </li>
+            </ul>
+            <p><strong>Interacción Clave:</strong> La magia (y a veces la confusión) de DAX ocurre cuando estos dos contextos interactúan. Por ejemplo, una función iteradora como SUMX primero establece un contexto de fila para recorrer una tabla. Si esta tabla ya está siendo afectada por un contexto de filtro (por ejemplo, un slicer de año), SUMX solo recorrerá las filas que cumplen con ese filtro. Además, dentro de la expresión de SUMX, puedes modificar el contexto de filtro usando CALCULATE.</p>
         </section>
+
+
 
         <section id="funcionesVariables" class="pagina">
-            <h2>
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-                Uso de Funciones y Variables 🛠️
-            </h2>
-            <p>DAX cuenta con una extensa biblioteca de funciones. Las variables, por otro lado, te permiten escribir código más legible y eficiente.</p>
-            <h3>Funciones Comunes en DAX</h3>
-            <p>Agregación (<code class="dax">SUM</code>, <code class="dax">AVERAGE</code>, <code class="dax">COUNTROWS</code>), Iteradoras (<code class="dax">SUMX</code>, <code class="dax">FILTER</code>), Manipulación de Filtros (<code class="dax">CALCULATE</code>, <code class="dax">ALL</code>, <code class="dax">ALLEXCEPT</code>), Lógicas (<code class="dax">IF</code>, <code class="dax">SWITCH</code>), Relacionales (<code class="dax">RELATED</code>, <code class="dax">RELATEDTABLE</code>).</p>
+            <h2>Uso de Funciones y Variables</h2>
+            <h3>Funciones en DAX</h3>
+            <p>Las funciones son el corazón de DAX. Son fórmulas predefinidas que realizan cálculos sobre los valores que se les proporcionan, conocidos como argumentos. DAX tiene una extensa biblioteca de funciones que cubren una amplia gama de necesidades:</p>
+            <ol>
+                <li><strong>Funciones de Agregación:</strong> SUM(), AVERAGE(), MIN(), MAX(), COUNT(), DISTINCTCOUNT()</li>
+                <li><strong>Funciones Lógicas:</strong> IF(), AND(), OR(), NOT(), SWITCH()</li>
+                <li><strong>Funciones de Texto:</strong> CONCATENATE() o &, LEFT(), RIGHT(), MID(), LEN(), UPPER(), LOWER(), FORMAT(), FIND(), SEARCH()</li>
+                <li><strong>Funciones de Fecha y Hora (Inteligencia de Tiempo):</strong> TODAY(), NOW(), YEAR(), MONTH(), DAY(), DATE(), DATEDIFF()</li>
+                <li><strong>Funciones de Filtro y Valor:</strong> CALCULATE(), FILTER(), ALL(), RELATED(), LOOKUPVALUE()</li>
+                <li><strong>Funciones de Tabla:</strong> FILTER(), ALL(), VALUES(), DISTINCT(), ADDCOLUMNS(), SUMMARIZE()</li>
+                <li><strong>Funciones Iteradoras (funciones "X"):</strong> SUMX(), AVERAGEX(), MINX(), MAXX(), RANKX(), CONCATENATEX(), FILTER()</li>
+            </ol>
+
             <h3>Variables en DAX (VAR ... RETURN)</h3>
-            <p>Mejoran legibilidad, rendimiento y depuración.</p>
-            <h4>Sintaxis:</h4>
-            NombreDeMedida&nbsp;=<br><span class="Keyword" style="color:#035aca">VAR</span>&nbsp;<span class="Variable" style="color:#49b0af">NombreVariable1</span>&nbsp;=&nbsp;Expresion1<br><span class="Keyword" style="color:#035aca">VAR</span>&nbsp;<span class="Variable" style="color:#49b0af">NombreVariable2</span>&nbsp;=&nbsp;Expresion2&nbsp;<span class="Comment" style="color:#39a03b">--&nbsp;Puedes&nbsp;declarar&nbsp;múltiples&nbsp;variables</span><br><span class="Keyword" style="color:#035aca">RETURN</span><br><span class="indent4">&nbsp;&nbsp;&nbsp;&nbsp;</span>ExpresionFinalQueUsaLasVariables<br>
-        </section>
-
-        <section id="patronesDax" class="pagina">
-            <h2>
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
-                Patrones Comunes en DAX 🧩
-            </h2>
-            <p>Reconocer patrones comunes agiliza el desarrollo en DAX.</p>
-            <h3>1. Porcentaje del Total General (% Grand Total)</h3>
-            <pre><code class="language-dax">% Ventas del Total =
-DIVIDE(
-    SUM('Ventas'[MontoVenta]),
+            <p>Las variables son una herramienta extremadamente útil en DAX para mejorar la legibilidad, eficiencia y organización de tus fórmulas, especialmente las más complejas.</p>
+            <ul>
+                <li><strong>Sintaxis:</strong>
+                    <pre><code>NombreDeMedida =
+VAR NombreVariable1 = Expresion1
+VAR NombreVariable2 = Expresion2
+-- Puedes declarar múltiples variables
+RETURN
+    ExpresionFinalQueUsaLasVariables</code></pre>
+                </li>
+                <li><strong>Beneficios:</strong> Legibilidad, Eficiencia, Depuración, Reusabilidad (dentro de la misma medida).</li>
+                <li><strong>Ejemplo:</strong> Imagina que quieres calcular la "Variación de Ventas Año Anterior %":
+                    <pre><code>Variacion Ventas AA % =
+VAR VentasActuales = SUM('Ventas'[Importe])
+VAR VentasAnioAnterior =
     CALCULATE(
-        SUM('Ventas'[MontoVenta]),
-        ALL('Ventas') 
-    ),
-    0 
-)</code></pre>
-            <h3>2. Ratios y Tasas</h3>
-            <pre><code class="language-dax">Margen Bruto % =
-VAR IngresosTotales = SUM('Ventas'[MontoVenta])
-VAR CostoTotal = SUM('Ventas'[CostoProducto])
-VAR GananciaBruta = IngresosTotales - CostoTotal
-RETURN
-    DIVIDE(GananciaBruta, IngresosTotales, 0)</code></pre>
-        </section>
-
-        <section id="tablaParametrica" class="pagina">
-            <h2>
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7 15H5v-2h2v2zm0-4H5V9h2v2zm0-4H5V5h2v2zm4 8H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm5 10h-3V5h3v14zm2-14h-1V5h1v2zm0 4h-1V9h1v2zm0 4h-1v-2h1v2zM7 19v-2h2v2H7zm4 0v-2h2v2h-2z"/></svg>
-                Tabla Paramétrica (Análisis "What-if") 📈❓
-            </h2>
-            <p>Permiten simular el impacto de cambiar valores en los cálculos.</p>
-            <h4>Ejemplo: Parámetro de Incremento de Precio (%)</h4>
-            <p>Se crea con "Nuevo Parámetro" o <code class="dax">GENERATESERIES</code>. Luego se captura el valor con <code class="dax">SELECTEDVALUE</code>.</p>
-            <pre><code class="language-dax">Valor Incremento Seleccionado =
-SELECTEDVALUE('Incremento Precio % Table'[Value], 0)</code></pre>
-            <pre><code class="language-dax">Ingresos Proyectados con Incremento =
-VAR Incremento = [Valor Incremento Seleccionado]
-RETURN
-    SUMX(
-        'Ventas',
-        'Ventas'[Cantidad] * ('Ventas'[Precio Unidad] * (1 + Incremento))
-    )</code></pre>
-        </section>
-
-        <section id="totalAcumulado" class="pagina">
-            <h2>
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
-                Total Acumulado (YTD, MTD, QTD) 🗓️➕
-            </h2>
-            <p>Se requiere una tabla de calendario marcada como tal.</p>
-            <h3>Funciones de Inteligencia de Tiempo para Acumulados</h3>
-            <p><code class="dax">TOTALYTD</code>, <code class="dax">TOTALMTD</code>, <code class="dax">TOTALQTD</code>.</p>
-            <pre><code class="language-dax">Ventas YTD =
-TOTALYTD(
-    SUM('Ventas'[MontoVenta]),
-    'Calendario'[Fecha]
-)</code></pre>
-            <h3>Patrón Manual para Acumulados</h3>
-            <pre><code class="language-dax">Ventas YTD Manual =
-CALCULATE(
-    SUM('Ventas'[MontoVenta]),
-    FILTER(
-        ALL('Calendario'[Fecha]), 
-        'Calendario'[Fecha] <= MAX('Calendario'[Fecha]) && 
-        'Calendario'[Año] = MAX('Calendario'[Año])    
+        SUM('Ventas'[Importe]),
+        SAMEPERIODLASTYEAR('Calendario'[Fecha])
     )
-)</code></pre>
-        </section>
-
-        <section id="clasificacionAbc" class="pagina">
-            <h2>
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>
-                Clasificación ABC (Análisis de Pareto) 🅰️🅱️️C️
-            </h2>
-            <p>Categorización basada en el principio de Pareto (80/20).</p>
-            <h3>Pasos para Implementar un Análisis ABC en DAX:</h3>
-            <p>1. Métrica base. 2. Acumulado de la métrica (ordenado). 3. % acumulado. 4. Asignar clase.</p>
-            
-            <h4>Paso 1: Medida Base (ya la tenemos)</h4>
-            <pre><code class="language-dax">Total Ventas = SUM('Ventas'[MontoVenta])</code></pre>
-
-            <h4>Paso 2 y 3: Porcentaje Acumulado de Ventas (en una columna calculada en 'Productos')</h4>
-            <p>Usando <code class="dax">RANKX</code> para ordenar y luego acumular.</p>
-            <pre><code class="language-dax">-- Columna Calculada en 'Productos'
-Ranking Ventas Prod = RANKX(ALL('Productos'), [Total Ventas], , DESC)
-
--- Columna Calculada en 'Productos'
-% Acumulado Ventas (con Rank) =
-VAR RankingActual = [Ranking Ventas Prod]
-VAR VentasAcumuladas =
-    CALCULATE(
-        [Total Ventas],
-        FILTER(
-            ALL('Productos'),
-            [Ranking Ventas Prod] <= RankingActual
-        )
-    )
-VAR VentasGlobales = CALCULATE([Total Ventas], ALL('Productos'))
-RETURN
-    DIVIDE(VentasAcumuladas, VentasGlobales)</code></pre>
-
-            <h4>Paso 4: Asignar Clase ABC (columna calculada)</h4>
-            <pre><code class="language-dax">Clase ABC Producto =
-VAR PctAcumulado = [% Acumulado Ventas (con Rank)] 
-RETURN
-    SWITCH(TRUE(),
-        PctAcumulado <= 0.70, "A", 
-        PctAcumulado <= 0.90, "B", 
-        "C"                          
-    )</code></pre>
-        </section>
-
-        <section id="calculosTiempo" class="pagina">
-            <h2>
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-                Cálculos con Funciones de Tiempo 🕰️📊
-            </h2>
-            <p>Esencial tener una tabla de calendario marcada como "tabla de fechas".</p>
-            <h3>Funciones Clave:</h3>
-            <p><code class="dax">SAMEPERIODLASTYEAR</code>, <code class="dax">PREVIOUSYEAR</code>, <code class="dax">DATEADD</code>, <code class="dax">DATESBETWEEN</code>.</p>
-            <h4>Ejemplo 1: Ventas del Año Anterior (Sales LY)</h4>
-            <pre><code class="language-dax">Ventas LY =
-CALCULATE(
-    [Total Ventas], 
-    SAMEPERIODLASTYEAR('Calendario'[Fecha])
-)</code></pre>
-            <h4>Ejemplo 2: Crecimiento Año Sobre Año (YoY Growth %)</h4>
-            <pre><code class="language-dax">Crecimiento Ventas YoY % =
-VAR VentasActuales = [Total Ventas]
-VAR VentasAnioAnterior = [Ventas LY]
 RETURN
     IF(
         NOT ISBLANK(VentasAnioAnterior),
-        DIVIDE(VentasActuales - VentasAnioAnterior, VentasAnioAnterior)
+        DIVIDE(VentasActuales - VentasAnioAnterior, VentasAnioAnterior),
+        BLANK()
     )</code></pre>
+                    Aquí, <strong>VentasActuales</strong> y <strong>VentasAnioAnterior</strong> son variables que almacenan cálculos intermedios, haciendo la lógica de la expresión RETURN mucho más clara y asegurando que cada cálculo se realice solo una vez.
+                </li>
+            </ul>
+            <div class="note">Esta sección cubre los fundamentos del uso de funciones y variables en DAX. Son herramientas que usarás constantemente.</div>
         </section>
 
-        <section id="quiz" class="pagina">
+
+
+        <section id="patronesDax" class="pagina">
+            <h2>Patrones DAX</h2>
+            <p>A medida que trabajas más con DAX, notarás que ciertos tipos de cálculos o problemas se resuelven de maneras similares repetidamente. Estas soluciones reutilizables y probadas se conocen como <strong>Patrones DAX</strong>. Comprender y utilizar estos patrones te ahorrará mucho tiempo, te ayudará a escribir código más eficiente y te permitirá abordar problemas complejos con mayor confianza.</p>
+            <p>Aquí algunos de los patrones más importantes y utilizados:</p>
+
+            <h3>1. Cálculos sobre un Periodo Anterior (Year-to-Date, Month-to-Date, Quarter-to-Date, Same Period Last Year):</h3>
+            <ul>
+                <li><strong>Ejemplo (Ventas Acumuladas en el Año - YTD):</strong>
+                    <pre><code>Ventas YTD = TOTALYTD(SUM('Ventas'[Importe]), 'Calendario'[Fecha])</code></pre>
+                    O una versión más explícita y flexible usando CALCULATE y DATESYTD:
+                    <pre><code>Ventas YTD (Calculate) =
+CALCULATE(
+    SUM('Ventas'[Importe]),
+    DATESYTD('Calendario'[Fecha])
+)</code></pre>
+                </li>
+                <li><strong>Ejemplo (Ventas Mismo Periodo Año Anterior - SPLY):</strong>
+                    <pre><code>Ventas SPLY =
+CALCULATE(
+    SUM('Ventas'[Importe]),
+    SAMEPERIODLASTYEAR('Calendario'[Fecha])
+)</code></pre>
+                </li>
+            </ul>
+
+            <h3>2. Porcentaje del Total (Ratio to Parent, Ratio to Grand Total):</h3>
+            <ul>
+                <li><strong>Ejemplo (% del Total General de Ventas para una Categoría de Producto):</strong>
+                    <pre><code>% Ventas sobre Total General =
+DIVIDE(
+    SUM('Ventas'[Importe]),
+    CALCULATE(
+        SUM('Ventas'[Importe]),
+        ALL('Productos') // O ALL('Ventas') si quieres remover todos los filtros
+    )
+)</code></pre>
+                </li>
+            </ul>
+
+            <h3>3. Promedios Móviles (Moving Averages):</h3>
+            <ul>
+                <li><strong>Ejemplo (Promedio Móvil de Ventas de 30 días):</strong>
+                    <pre><code>Ventas Promedio Movil 30D =
+VAR FechaActual = MAX('Calendario'[Fecha])
+VAR PeriodoTreintaDias =
+    DATESINPERIOD(
+        'Calendario'[Fecha],
+        FechaActual,
+        -30,
+        DAY
+    )
+RETURN
+    CALCULATE(
+        AVERAGEX(PeriodoTreintaDias, SUM('Ventas'[Importe])),
+        REMOVEFILTERS('Calendario') // O ALL('Calendario')
+    )</code></pre>
+                </li>
+            </ul>
+
+            <h3>4. Ranking:</h3>
+            <ul>
+                <li><strong>Ejemplo (Ranking de Productos por Ventas):</strong>
+                    <pre><code>Ranking Producto por Ventas =
+RANKX(
+    ALLSELECTED('Productos'[NombreProducto]), // Tabla sobre la cual rankear
+    CALCULATE(SUM('Ventas'[Importe])), // Expresión a rankear
+    , // Valor (opcional, usualmente se omite para usar la expresión)
+    DESC, // Orden (DESC para mayor a menor, ASC para menor a mayor)
+    DENSE // Manejo de empates (DENSE o SKIP)
+)</code></pre>
+                </li>
+            </ul>
+
+            <h3>5. Segmentación Dinámica (Disconnected Slicers / What-if Parameters):</h3>
+            <ul>
+                <li><strong>Ejemplo (Ventas Top N Productos):</strong>
+                    <pre><code>Ventas Top N Productos =
+VAR NSeleccionado = SELECTEDVALUE('Parametro TopN'[Valor N], 5) // Default 5
+VAR TablaTopNProductos = TOPN(NSeleccionado, VALUES('Productos'[NombreProducto]), CALCULATE(SUM('Ventas'[Importe])), DESC)
+RETURN
+    CALCULATE(
+        SUM('Ventas'[Importe]),
+        KEEPFILTERS(TablaTopNProductos)
+    )</code></pre>
+                </li>
+            </ul>
+
+            <h3>6. Manejo de Relaciones Muchos a Muchos (Many-to-Many):</h3>
+            <p>Permite modelar escenarios de negocio más complejos utilizando una tabla puente y medidas que filtren correctamente a través de ella.</p>
+            <div class="note">Los patrones DAX son como bloques de construcción. Una vez que los conoces, puedes empezar a combinarlos para crear soluciones analíticas muy sofisticadas.</div>
+        </section>
+
+
+
+        <section id="tablaParametrica" class="pagina">
+            <h2>Tabla Paramétrica (Parameter Table)</h2>
+            <p>Una <strong>tabla paramétrica</strong> es una tabla que creas en tu modelo de datos, pero que generalmente no tiene relaciones directas con tus tablas de hechos o dimensiones principales. Su propósito es proporcionar una lista de valores que el usuario puede seleccionar para influir dinámicamente en los cálculos de tus medidas DAX o en la visualización de datos.</p>
+
+            <h3>¿Por qué usar Tablas Paramétricas?</h3>
+            <ul>
+                <li>Interactividad Mejorada</li>
+                <li>Flexibilidad en Cálculos</li>
+                <li>Simplificación de Medidas</li>
+                <li>Escenarios "What-if"</li>
+            </ul>
+
+            <h3>¿Cómo se crean y utilizan?</h3>
+            <p>Existen varias formas de crear una tabla paramétrica:</p>
+            <ol>
+                <li><strong>Introducir Datos Manualmente (Enter Data):</strong> Para listas pequeñas y fijas de opciones.</li>
+                <li><strong>Usando DAX para generar una tabla (Nueva Tabla):</strong>
+                    <ul>
+                        <li>Ejemplo para crear una tabla con porcentajes del 0% al 100% en incrementos de 5%:
+                            <pre><code>Tabla Parametrica Incremento % =
+GENERATESERIES(0, 1, 0.05) // Genera una columna [Value]</code></pre>
+                        </li>
+                        <li>Ejemplo para una tabla de selección de medidas:
+                            <pre><code>Tabla Seleccion Metrica =
+DATATABLE (
+    "ID Metrica", INTEGER,
+    "Nombre Metrica", STRING,
+    {
+        { 1, "Ventas Totales" },
+        { 2, "Costo Total" },
+        { 3, "Beneficio Bruto" }
+    }
+)</code></pre>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Desde un Origen Externo (Excel, SQL, etc.):</strong> Si los parámetros se gestionan externamente.</li>
+            </ol>
+
+            <h3>Uso en Medidas DAX:</h3>
+            <p>La función principal es <strong>SELECTEDVALUE()</strong>.</p>
+            <ul>
+                <li><strong>Ejemplo 1: Cambiar la Métrica Mostrada</strong>
+                    <pre><code>Metrica Seleccionada =
+VAR IdSeleccionado = SELECTEDVALUE('Tabla Seleccion Metrica'[ID Metrica])
+RETURN
+    SWITCH (
+        TRUE(),
+        IdSeleccionado = 1, SUM('Ventas'[Importe]),
+        IdSeleccionado = 2, SUM('Ventas'[Costo]),
+        IdSeleccionado = 3, SUM('Ventas'[Importe]) - SUM('Ventas'[Costo]),
+        BLANK() // O una métrica por defecto
+    )</code></pre>
+                </li>
+                <li><strong>Ejemplo 2: Análisis "What-if" de Incremento de Ventas</strong>
+                    <pre><code>Ventas Proyectadas =
+VAR IncrementoSeleccionado = SELECTEDVALUE('Parametro Incremento %'[Value], 0) // Default 0%
+VAR VentasActuales = SUM('Ventas'[Importe])
+RETURN
+    VentasActuales * (1 + IncrementoSeleccionado)</code></pre>
+                </li>
+                <li><strong>Ejemplo 3: Top N Dinámico (visto en Patrones DAX)</strong>
+                    <pre><code>Ventas Top N Productos =
+VAR NSeleccionado = SELECTEDVALUE('Parametro TopN'[Valor N], 5) // Default 5
+VAR TablaTopNProductos = TOPN(NSeleccionado, VALUES('Productos'[NombreProducto]), CALCULATE(SUM('Ventas'[Importe])), DESC)
+RETURN
+    CALCULATE(
+        SUM('Ventas'[Importe]),
+        KEEPFILTERS(TablaTopNProductos)
+    )</code></pre>
+                </li>
+            </ul>
+            <div class="note">Las tablas paramétricas son una técnica poderosa para hacer tus informes de Power BI mucho más dinámicos e interactivos, poniendo más control analítico en manos del usuario final.</div>
+        </section>
+
+
+
+        <section id="totalAcumulado" class="pagina">
+            <h2>Total Acumulado (Running Total)</h2>
+            <p>Un <strong>total acumulado</strong>, también conocido como total móvil o suma acumulada, es un cálculo que muestra la suma de una métrica a lo largo del tiempo (o a lo largo de otra secuencia ordenada, como categorías de productos ordenadas por ventas). A medida que avanzas en la secuencia, el total acumulado incluye todos los valores anteriores más el valor actual.</p>
+
+            <h3>Importancia del Total Acumulado:</h3>
+            <ul>
+                <li>Análisis de Tendencias</li>
+                <li>Seguimiento del Progreso</li>
+                <li>Comparaciones</li>
+            </ul>
+
+            <h3>Cálculo de Totales Acumulados en DAX:</h3>
+            <h4>1. Funciones de Inteligencia de Tiempo Estándar (para acumulados de tiempo):</h4>
+            <ul>
+                <li><strong>TOTALYTD:</strong>
+                    <pre><code>Ventas YTD = TOTALYTD(SUM('Ventas'[Importe]), 'Calendario'[Fecha])</code></pre>
+                </li>
+                <li><strong>TOTALQTD:</strong>
+                    <pre><code>Ventas QTD = TOTALQTD(SUM('Ventas'[Importe]), 'Calendario'[Fecha])</code></pre>
+                </li>
+                <li><strong>TOTALMTD:</strong>
+                    <pre><code>Ventas MTD = TOTALMTD(SUM('Ventas'[Importe]), 'Calendario'[Fecha])</code></pre>
+                </li>
+            </ul>
+
+            <h4>2. Uso de CALCULATE y FILTER para Acumulados Personalizados (más flexible):</h4>
+            <ul>
+                <li><strong>Patrón General para Acumulados sobre una Dimensión Ordenada (ej. Tiempo):</strong>
+                    <pre><code>Total Acumulado Personalizado =
+VAR FechaMaximaVisible = MAX('Calendario'[Fecha]) // O la categoría máxima visible
+RETURN
+    CALCULATE(
+        SUM('Ventas'[Importe]), // O cualquier otra expresión base
+        FILTER(
+            ALLSELECTED('Calendario'[Fecha]), // O ALL('Calendario'[Fecha])
+            'Calendario'[Fecha] <= FechaMaximaVisible
+        )
+    )</code></pre>
+                </li>
+                <li><strong>Acumulado sobre una Categoría no Temporal:</strong>
+                    <pre><code>Acumulado por Categoria =
+VAR IndiceMaximoVisible = MAX('Productos'[IndiceCategoria])
+RETURN
+    CALCULATE(
+        SUM('Ventas'[Importe]),
+        FILTER(
+            ALLSELECTED('Productos'[NombreCategoria], 'Productos'[IndiceCategoria]),
+            'Productos'[IndiceCategoria] <= IndiceMaximoVisible
+        )
+    )</code></pre>
+                </li>
+            </ul>
+            <div class="note">Los totales acumulados son una herramienta estándar en el reporting y análisis. Dominar sus diferentes formas de cálculo en DAX te permitirá presentar la información de manera mucho más efectiva.</div>
+        </section>
+
+
+
+        <section id="clasificacionAbc" class="pagina">
+            <h2>Clasificación ABC (Análisis ABC)</h2>
+            <p>La <strong>Clasificación ABC</strong> es un método de categorización de elementos (como productos, clientes, artículos de inventario) en tres clases (A, B y C) basado en su importancia relativa según un criterio específico.</p>
+            <ul>
+                <li><strong>Clase A:</strong> Un pequeño porcentaje de elementos que representan un gran porcentaje del valor total (ej. el 20% de los productos que generan el 80% de las ventas).</li>
+                <li><strong>Clase B:</strong> Un porcentaje intermedio de elementos que representan un porcentaje medio del valor (ej. el siguiente 30% de los productos que generan el 15% de las ventas).</li>
+                <li><strong>Clase C:</strong> Un gran porcentaje de elementos que representan un pequeño porcentaje del valor (ej. el 50% de los productos que generan solo el 5% de las ventas).</li>
+            </ul>
+
+            <h3>Implementación de la Clasificación ABC en DAX:</h3>
+            <p>Pasos Típicos (ejemplo para clasificar Productos por Ventas):</p>
+            <ol>
+                <li><strong>Calcular la Métrica por Elemento:</strong>
+                    <pre><code>// Medida de Ventas
+Total Ventas = SUM('Ventas'[Importe])</code></pre>
+                </li>
+                <li><strong>Calcular el Valor Acumulado de la Métrica:</strong>
+                    <pre><code>// Columna Calculada en la tabla 'Productos'
+Ventas Acumuladas Producto =
+VAR VentasProductoActual =
+    CALCULATE(SUM('Ventas'[Importe]), 'Productos'[IDProducto] = EARLIER('Productos'[IDProducto]))
+RETURN
+    CALCULATE(
+        SUMX(
+            FILTER(
+                ALL('Productos'),
+                CALCULATE(SUM('Ventas'[Importe]), ALLEXCEPT('Productos', 'Productos'[IDProducto])) >= VentasProductoActual
+            ),
+            CALCULATE(SUM('Ventas'[Importe]), ALLEXCEPT('Productos', 'Productos'[IDProducto]))
+        )
+    )</code></pre>
+                </li>
+                <li><strong>Calcular el Porcentaje Acumulado del Valor Total:</strong>
+                    <pre><code>// Medida o Variable (si se usa dentro de una columna calculada más grande)
+Ventas Globales = CALCULATE(SUM('Ventas'[Importe]), ALL('Productos'))</code></pre>
+                    <pre><code>// Columna Calculada en la tabla 'Productos'
+Porcentaje Ventas Acumuladas =
+VAR VentasDelProductoActual = CALCULATE(SUM('Ventas'[Importe]))
+VAR VentasGlobalesTotales = CALCULATE(SUM('Ventas'[Importe]), ALL('Productos'))
+VAR VentasAcumuladasHastaEsteProducto =
+    SUMX(
+        FILTER(
+            ALL('Productos'),
+            CALCULATE(SUM('Ventas'[Importe]), ALLEXCEPT('Productos', 'Productos'[IDProducto])) >= VentasDelProductoActual
+        ),
+        CALCULATE(SUM('Ventas'[Importe]), ALLEXCEPT('Productos', 'Productos'[IDProducto]))
+    )
+RETURN
+    DIVIDE(VentasAcumuladasHastaEsteProducto, VentasGlobalesTotales)</code></pre>
+                    <strong>Un Enfoque Alternativo y más Robusto (usando Ranking):</strong>
+                    <pre><code>// Columna Calculada en 'Productos'
+Ranking Ventas Producto =
+RANKX(
+    ALL('Productos'),
+    CALCULATE(SUM('Ventas'[Importe])),
+    , DESC, DENSE
+)</code></pre>
+                    <pre><code>// Columna Calculada en 'Productos'
+Porcentaje Acumulado por Ranking =
+VAR RankingActual = 'Productos'[Ranking Ventas Producto]
+VAR VentasTotalesGlobales = CALCULATE(SUM('Ventas'[Importe]), ALL('Productos'))
+VAR VentasAcumuladas =
+    SUMX(
+        FILTER(
+            ALL('Productos'),
+            'Productos'[Ranking Ventas Producto] <= RankingActual
+        ),
+        CALCULATE(SUM('Ventas'[Importe]))
+    )
+RETURN
+    DIVIDE(VentasAcumuladas, VentasTotalesGlobales)</code></pre>
+                </li>
+                <li><strong>Asignar la Clase ABC:</strong>
+                    <pre><code>// Columna Calculada en la tabla 'Productos'
+Clase ABC =
+VAR PorcentajeAcum = 'Productos'[Porcentaje Acumulado por Ranking]
+RETURN
+    SWITCH(
+        TRUE(),
+        PorcentajeAcum <= 0.80, "A",
+        PorcentajeAcum <= 0.95, "B",
+        "C"
+    )</code></pre>
+                </li>
+            </ol>
+            <div class="note">La Clasificación ABC es un patrón DAX potente que combina varias técnicas (iteradores, ranking, lógica condicional) para obtener información valiosa.</div>
+        </section>
+
+
+
+        <section id="calculosTiempo" class="pagina">
+            <h2>Cálculos con Funciones de Tiempo (Inteligencia de Tiempo)</h2>
+            <p>La <strong>inteligencia de tiempo</strong> en DAX se refiere al conjunto de funciones y técnicas utilizadas para realizar cálculos y comparaciones a lo largo de periodos de tiempo.</p>
+
+            <h3>Requisito Fundamental: La Tabla de Calendario (Tabla de Fechas)</h3>
+            <p>Es imprescindible tener una tabla de calendario bien construida en tu modelo de datos. Debe cumplir con:</p>
+            <ul>
+                <li>Columna de Fecha Única</li>
+                <li>Fechas Contiguas</li>
+                <li>Cobertura Completa</li>
+                <li>Marcar como Tabla de Fechas</li>
+                <li>Columnas Adicionales Útiles</li>
+            </ul>
+
+            <h3>Funciones de Inteligencia de Tiempo Comunes:</h3>
+            <ol>
+                <li><strong>Acumulados (repaso rápido):</strong> TOTALYTD(), TOTALQTD(), TOTALMTD()</li>
+                <li><strong>Comparaciones con Periodos Anteriores:</strong>
+                    <ul>
+                        <li>SAMEPERIODLASTYEAR():
+                            <pre><code>Ventas Año Anterior = CALCULATE(SUM('Ventas'[Importe]), SAMEPERIODLASTYEAR('Calendario'[Fecha]))</code></pre>
+                        </li>
+                        <li>PREVIOUSYEAR(), PREVIOUSQUARTER(), PREVIOUSMONTH(), PREVIOUSDAY():
+                            <pre><code>Ventas Mes Anterior = CALCULATE(SUM('Ventas'[Importe]), PREVIOUSMONTH('Calendario'[Fecha]))</code></pre>
+                        </li>
+                        <li>PARALLELPERIOD():
+                            <pre><code>CALCULATE(SUM('Ventas'[Importe]), PARALLELPERIOD('Calendario'[Fecha], -3, YEAR))</code></pre>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Desplazamiento de Fechas (Shifting Dates):</strong>
+                    <ul>
+                        <li>DATEADD():
+                            <pre><code>CALCULATE(SUM('Ventas'[Importe]), DATEADD('Calendario'[Fecha], -7, DAY))</code></pre>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Selección de Rangos de Fechas:</strong>
+                    <ul>
+                        <li>DATESINPERIOD():
+                            <pre><code>CALCULATE(SUM('Ventas'[Importe]), DATESINPERIOD('Calendario'[Fecha], MAX('Calendario'[Fecha]), -30, DAY))</code></pre>
+                        </li>
+                        <li>DATESBETWEEN():
+                            <pre><code>CALCULATE(SUM('Ventas'[Importe]), DATESBETWEEN('Calendario'[Fecha], DATE(2023,1,1), DATE(2023,3,31)))</code></pre>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Obtener la Primera/Última Fecha con Datos:</strong> FIRSTDATE(), LASTDATE(), FIRSTNONBLANK(), LASTNONBLANK()</li>
+            </ol>
+
+            <h3>Ejemplos de Cálculos Comunes:</h3>
+            <ul>
+                <li><strong>Crecimiento Año sobre Año (YoY Growth %):</strong>
+                    <pre><code>Ventas YoY % =
+VAR VentasActuales = SUM('Ventas'[Importe])
+VAR VentasAnioAnterior =
+    CALCULATE(
+        SUM('Ventas'[Importe]),
+        SAMEPERIODLASTYEAR('Calendario'[Fecha])
+    )
+RETURN
+    IF(
+        NOT ISBLANK(VentasAnioAnterior),
+        DIVIDE(VentasActuales - VentasAnioAnterior, VentasAnioAnterior),
+        BLANK()
+    )</code></pre>
+                </li>
+                <li><strong>Crecimiento Mes sobre Mes (MoM Growth %):</strong>
+                    <pre><code>Ventas MoM % =
+VAR VentasMesActual = SUM('Ventas'[Importe])
+VAR VentasMesAnterior =
+    CALCULATE(
+        SUM('Ventas'[Importe]),
+        DATEADD('Calendario'[Fecha], -1, MONTH) // O PREVIOUSMONTH('Calendario'[Fecha])
+    )
+RETURN
+    IF(
+        NOT ISBLANK(VentasMesAnterior),
+        DIVIDE(VentasMesActual - VentasMesAnterior, VentasMesAnterior),
+        BLANK()
+    )</code></pre>
+                </li>
+                <li><strong>Promedio Móvil (ej. 3 meses):</strong>
+                    <pre><code>Promedio Movil Ventas 3M =
+VAR UltimaFechaVisible = MAX('Calendario'[Fecha])
+VAR PeriodoTresMeses =
+    DATESINPERIOD(
+        'Calendario'[Fecha],
+        UltimaFechaVisible,
+        -3,
+        MONTH
+    )
+RETURN
+    CALCULATE(
+        AVERAGEX(
+            PeriodoTresMeses,
+            CALCULATE(SUM('Ventas'[Importe]))
+        ),
+        REMOVEFILTERS('Calendario')
+    )</code></pre>
+                    Una forma más robusta y común para promedios móviles que se muestran en un gráfico de línea a lo largo del tiempo sería:
+                    <pre><code>Promedio Movil Ventas 3M (Gráfico) =
+AVERAGEX(
+    DATESINPERIOD(
+        'Calendario'[Fecha],
+        LASTDATE('Calendario'[Fecha]),
+        -3,
+        MONTH
+    ),
+    CALCULATE(SUM('Ventas'[Importe]))
+)</code></pre>
+                </li>
+            </ul>
+            <div class="note">Dominar las funciones de inteligencia de tiempo te permitirá realizar análisis temporales profundos y significativos en tus informes de Power BI. Son una de las áreas más poderosas de DAX.</div>
+        </section>
+<section id="quiz" class="pagina">
             <h2>
                 <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
                 Quiz Final: Pon a Prueba tus Conocimientos de DAX 🧠

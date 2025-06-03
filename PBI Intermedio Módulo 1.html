@@ -418,12 +418,7 @@ Ventas Por Producto = CALCULATE(SUM('Ventas'[Ingreso Total]))</code></pre>
             <h3>Variables en DAX (VAR ... RETURN)</h3>
             <p>Mejoran legibilidad, rendimiento y depuración.</p>
             <h4>Sintaxis:</h4>
-            <pre><code class="language-dax">NombreMedida =
-VAR NombreVariable1 = -- Expresión para la variable 1
-VAR NombreVariable2 = -- Expresión para la variable 2
-RETURN
-    -- Expresión final que usa las variables
-    IF(NombreVariable1 > 0, NombreVariable2 * 1.1, 0)</code></pre>
+            NombreDeMedida&nbsp;=<br><span class="Keyword" style="color:#035aca">VAR</span>&nbsp;<span class="Variable" style="color:#49b0af">NombreVariable1</span>&nbsp;=&nbsp;Expresion1<br><span class="Keyword" style="color:#035aca">VAR</span>&nbsp;<span class="Variable" style="color:#49b0af">NombreVariable2</span>&nbsp;=&nbsp;Expresion2&nbsp;<span class="Comment" style="color:#39a03b">--&nbsp;Puedes&nbsp;declarar&nbsp;múltiples&nbsp;variables</span><br><span class="Keyword" style="color:#035aca">RETURN</span><br><span class="indent4">&nbsp;&nbsp;&nbsp;&nbsp;</span>ExpresionFinalQueUsaLasVariables<br>
         </section>
 
         <section id="patronesDax" class="pagina">

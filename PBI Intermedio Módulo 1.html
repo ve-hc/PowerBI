@@ -5,30 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Power BI Nivel Intermedio - Módulo I: Lenguaje DAX</title>
     <style>
-.code-container {
-    background-color: #282c34; /* Fondo oscuro */
-    color: #abb2bf; /* Texto claro */
-    padding: 15px;
-    border-radius: 5px;
-    overflow-x: auto; /* Permite scroll horizontal si el código es muy largo */
-    margin-bottom: 20px;
-    font-size: 0.9em;
-}
-.code-container pre {
-    margin: 0;
-    white-space: pre-wrap; /* Envuelve líneas largas */
-    word-wrap: break-word;
-}
-.code-container code {
-    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', monospace; /* Fuente monoespaciada */
-}
-/* Opcional: Resaltado de sintaxis básico con clases */
-.highlight { color: #61afef; } /* Ejemplo: funciones, palabras clave */
-.string { color: #98c379; } /* Ejemplo: texto entre comillas */
-.number { color: #d19a66; } /* Ejemplo: números */
-.comment { color: #5c6370; font-style: italic; } /* Ejemplo: comentarios */
-</style>
-    <style>
         :root {
             --primary-color: #F2C811; /* Amarillo Power BI */
             --secondary-color: #2A2E30; /* Gris oscuro Power BI */
@@ -398,7 +374,7 @@
     <main>
         <section id="portada" class="pagina activa">
             <div class="module-icon">
-                <svg class="icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M51.93 4H12.07C7.62 4 4 7.62 4 12.07V51.93C4 56.38 7.62 60 12.07 60H51.93C56.38 60 60 56.38 60 51.93V12.07C60 7.62 56.38 4 51.93 4zM49 16H15v-3h34v3zm0 6H15v-3h34v3zm-15.32 10.95l-7.55 7.55-7.55-7.55-2.12 2.12 7.55 7.55-7.55 7.55 2.12 2.12 7.55-7.55 7.55 7.55 2.12-2.12-7.55-7.55 7.55-7.55-2.12-2.12zM49 38H37.23v-3H49v3z" fill-rule="nonzero"/></svg>
+                <svg class="icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"><path d="M51.93 4H12.07C7.62 4 4 7.62 4 12.07V51.93C4 56.38 7.62 60 12.07 60H51.93C56.38 60 60 56.38 60 51.93V12.07C60 7.62 56.38 4 51.93 4zM49 16H15v-3h34v3zm0 6H15v-3h34v3zm-15.32 10.95l-7.55 7.55-7.55-7.55-2.12 2.12 7.55 7.55-7.55 7.55 2.12 2.12 7.55-7.55 7.55-7.55-2.12-2.12zM49 38H37.23v-3H49v3z" fill-rule="nonzero"/></svg>
             </div>
             <h2>Power BI Nivel Intermedio</h2>
             <h3>Módulo I: Lenguaje DAX (Data Analysis Expressions) 📊</h3>
@@ -415,7 +391,7 @@
                 <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
                 Contexto de Fila y Contexto de Filtro 🧐
             </h2>
-            <p>Entender los contextos de evaluación es <strong>crucial</strong> en DAX. Son la base sobre la cual todas tus fórmulas operan.</p>
+            <p>Entender los contextos de evaluación es **crucial** en DAX. Son la base sobre la cual todas tus fórmulas operan.</p>
             <h3>Contexto de Fila (Row Context)</h3>
             <p>El contexto de fila "itera" sobre las filas de una tabla, una por una. Permite acceder a los valores de las columnas de la fila actual durante el cálculo.</p>
             <h4>Ejemplo: Columna Calculada</h4>
@@ -513,8 +489,8 @@ CALCULATE(
     SUM('Ventas'[MontoVenta]),
     FILTER(
         ALL('Calendario'[Fecha]), 
-        'Calendario'[Fecha] &lt;= MAX('Calendario'[Fecha]) && 
-        'Calendario'[Año] = MAX('Calendario'[Año])     
+        'Calendario'[Fecha] <= MAX('Calendario'[Fecha]) && 
+        'Calendario'[Año] = MAX('Calendario'[Año])    
     )
 )</code></pre>
         </section>
@@ -544,7 +520,7 @@ VAR VentasAcumuladas =
         [Total Ventas],
         FILTER(
             ALL('Productos'),
-            [Ranking Ventas Prod] &lt;= RankingActual
+            [Ranking Ventas Prod] <= RankingActual
         )
     )
 VAR VentasGlobales = CALCULATE([Total Ventas], ALL('Productos'))
@@ -556,9 +532,9 @@ RETURN
 VAR PctAcumulado = [% Acumulado Ventas (con Rank)] 
 RETURN
     SWITCH(TRUE(),
-        PctAcumulado &lt;= 0.70, "A", 
-        PctAcumulado &lt;= 0.90, "B", 
-        "C"                      
+        PctAcumulado <= 0.70, "A", 
+        PctAcumulado <= 0.90, "B", 
+        "C"                          
     )</code></pre>
         </section>
 
@@ -595,8 +571,7 @@ RETURN
             <p>¡Es hora de ver cuánto has aprendido sobre DAX! Selecciona la respuesta que consideres correcta.</p>
             <form id="quizForm">
                 <div class="quiz-container">
-                    <!-- Preguntas se insertarán aquí por JS -->
-                </div>
+                    </div>
                 <button type="button" id="quiz-submit-btn">Verificar Respuestas</button>
                 <div id="quiz-result" style="display: none;"></div>
             </form>
@@ -636,19 +611,45 @@ RETURN
         function highlightDaxCode() {
             const daxCodeBlocks = document.querySelectorAll('pre code.language-dax');
             daxCodeBlocks.forEach(block => {
-                let code = block.innerHTML; 
+                // Get the raw text content of the block
+                let code = block.textContent;
+
+                // Escape HTML characters to prevent issues when adding span tags
                 code = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-                code = code.replace(/(--.*?)(\n|$|&lt;)/g, '<span class="comment">$1</span>$2');
-                code = code.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$1</span>');
-                code = code.replace(/(".*?")/g, '<span class="string">$1</span>');
-                code = code.replace(/\b(VAR|RETURN|TRUE|FALSE|BLANK|AND|OR|NOT|IN|ASC|DESC|YEAR|MONTH|QUARTER|DAY)\b/gi, '<span class="keyword">$&</span>');
+                // Apply syntax highlighting
+                // Comments
+                code = code.replace(/(--.*?)(\n|$)/g, '<span class="comment">$&</span>'); // Single line comments
+                code = code.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="comment">$&</span>'); // Multi-line comments
+                
+                // Strings (ensure strings are processed before operators that might look like parts of strings)
+                code = code.replace(/(".*?")/g, '<span class="string">$&</span>');
+                code = code.replace(/('.*?')/g, '<span class="string">$&</span>'); // For table and column names with spaces
+
+                // Keywords (case-insensitive, whole word match)
+                code = code.replace(/\b(VAR|RETURN|TRUE|FALSE|BLANK|AND|OR|NOT|IN|ASC|DESC)\b/gi, '<span class="keyword">$&</span>');
+                
+                // Functions (case-insensitive, whole word match, before column/table names)
                 code = code.replace(/\b(SUM|SUMX|AVERAGE|AVERAGEX|MIN|MINX|MAX|MAXX|COUNT|COUNTROWS|DISTINCTCOUNT|CALCULATE|FILTER|ALL|ALLEXCEPT|ALLSELECTED|KEEPFILTERS|RELATED|RELATEDTABLE|DIVIDE|VALUES|SELECTEDVALUE|GENERATESERIES|TOTALYTD|TOTALMTD|TOTALQTD|SAMEPERIODLASTYEAR|PREVIOUSYEAR|PREVIOUSMONTH|PREVIOUSQUARTER|DATEADD|DATESBETWEEN|DATESINPERIOD|STARTOFYEAR|ENDOFYEAR|RANKX|ADDCOLUMNS|SUMMARIZE|USERELATIONSHIP|FORMAT|IF|SWITCH|ISBLANK|IFERROR|REMOVEFILTERS)\b/gi, '<span class="function">$&</span>');
-                code = code.replace(/(<span class="keyword">VAR<\/span>\s+)(\w+)/gi, '$1<span class="variableName">$2</span>');
-                code = code.replace(/('[\w\s\$\%\&\*\@\#\.\-\/\\]+?')(?=\[|&lt;\/span&gt;\s*\(|&lt;\/span&gt;\s*,|\s*\(|\s*,|\s*$|\s*\)|&lt;\/code&gt;)/g, '<span class="table">$1</span>');
-                code = code.replace(/(\[[\w\s\$\%\&\*\@\#\.\-\/\\]+?\])/g, '<span class="column">$1</span>');
-                code = code.replace(/\b(\d+\.?\d*|\.\d+)\b/g, '<span class="number">$1</span>');
-                code = code.replace(/(&amp;&amp;|\|\||&lt;=|&gt;=|[=+\-*\/&lt;&gt;%^&amp;])/g, '<span class="operator">$1</span>');
+
+                // Table and Column Names (process after functions, before variables if they look similar)
+                // Tables: 'TableName' (single quotes)
+                code = code.replace(/('[\w\s\$\%\&\*\@\#\.\-\/\\]+')/g, '<span class="table">$&</span>'); 
+                // Columns: [Column Name] (square brackets)
+                code = code.replace(/(\[[\w\s\$\%\&\*\@\#\.\-\/\\]+?\])/g, '<span class="column">$&</span>');
+
+                // Variable names (after VAR keyword, can be tricky with `$&` in regex)
+                // Look for 'VAR ' followed by a word, but not if it's already a keyword or function.
+                // This one needs careful handling as `$&` can refer to the whole match.
+                // Let's refine the variable replacement to be more specific.
+                code = code.replace(/(<span class="keyword">VAR<\/span>)((\s+)([a-zA-Z_]\w*))/g, '$1$3<span class="variableName">$4</span>');
+                
+                // Numbers
+                code = code.replace(/\b(\d+\.?\d*|\.\d+)\b/g, '<span class="number">$&</span>');
+                
+                // Operators (ensure special characters are escaped in regex)
+                code = code.replace(/(&amp;&amp;|\|\||&lt;=|&gt;=|[=+\-*\/%^&amp;])/g, '<span class="operator">$&</span>');
+
 
                 block.innerHTML = code;
             });
@@ -738,7 +739,7 @@ RETURN
                 quizHTML += `
                         </div>
                         <div class="feedback" id="feedback-${index}">
-                           <strong>Explicación:</strong> ${q.explanation}
+                            <strong>Explicación:</strong> ${q.explanation}
                         </div>
                     </div>
                 `;
@@ -754,13 +755,15 @@ RETURN
             
             radioButtons.forEach(radio => {
                 radio.addEventListener('change', () => {
+                    // Hide feedback and reset styles when a new option is selected
                     feedbackDiv.style.display = 'none';
                     feedbackDiv.classList.remove('correct', 'incorrect');
-                    radioButtons.forEach(rb => rb.disabled = true);
-
-                    document.querySelectorAll(`input[name="question${index}"]`).forEach(rb => {
+                    
+                    radioButtons.forEach(rb => {
+                        rb.disabled = true; // Disable all radio buttons for this question after one selection
                         rb.parentElement.style.backgroundColor = '#f0f0f0';
                         rb.parentElement.style.border = 'none';
+                        rb.parentElement.style.fontWeight = 'normal'; // Reset font-weight
                     });
 
                     if (radio.value === q.answer ) { 
@@ -771,6 +774,7 @@ RETURN
                         feedbackDiv.classList.add('incorrect');
                         radio.parentElement.style.backgroundColor = '#f8d7da';
                         radio.parentElement.style.border = '2px solid var(--danger-color)';
+                        // Highlight the correct answer if the selected one is incorrect
                         radioButtons.forEach(rb => {
                             if (rb.value === q.answer) {
                                 rb.parentElement.style.backgroundColor = '#d4edda';
@@ -789,13 +793,18 @@ RETURN
                 const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
                 const feedbackDiv = document.getElementById(`feedback-${index}`);
                 
-                if (selectedOption) {
-                    if (selectedOption.value === q.answer) {
-                        score++;
-                    }
+                // Show feedback for all questions when submit is clicked, even if not answered
+                if (selectedOption && selectedOption.value === q.answer) {
+                    score++;
                 }
+                
+                // Ensure feedback is displayed for all questions
                 if (feedbackDiv.style.display !== 'block'){
-                     feedbackDiv.style.display = 'block';
+                    // If no option was selected, mark it as incorrect (or handle as 'unanswered')
+                    if (!selectedOption) {
+                        feedbackDiv.classList.add('incorrect'); // Assume incorrect if not answered
+                        feedbackDiv.style.display = 'block';
+                    }
                 }
             });
 

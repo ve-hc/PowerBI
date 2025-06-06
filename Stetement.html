@@ -91,6 +91,25 @@
             color: #2d3748;
             background-color: #f7fafc;
         }
+        
+        /* --- Accordion Styles --- */
+        .collapsible td {
+            cursor: pointer;
+        }
+        .collapsible:hover td {
+            background-color: #f1f1f1;
+        }
+        .accordion-icon {
+            float: right;
+            font-weight: bold;
+            margin-right: 10px;
+            color: #718096;
+        }
+        .hidden {
+            display: none;
+        }
+        /* --- End Accordion Styles --- */
+
 
         .financial-table .total-row td {
             font-weight: bold;
@@ -178,24 +197,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="category-header">
-                        <td colspan="5">INGRESOS</td>
+                    <tr class="category-header collapsible" data-toggle="ingresos-items">
+                        <td colspan="5">INGRESOS<span class="accordion-icon">-</span></td>
                     </tr>
-                    <tr>
+                    <tr class="ingresos-items">
                         <td class="indented">Ventas de Productos</td>
                         <td class="text-right">850.000 €</td>
                         <td class="text-right">780.000 €</td>
                         <td class="text-right">800.000 €</td>
                         <td class="text-right positive">+6.3%</td>
                     </tr>
-                    <tr>
+                    <tr class="ingresos-items">
                         <td class="indented">Ventas de Servicios</td>
                         <td class="text-right">320.000 €</td>
                         <td class="text-right">290.000 €</td>
                         <td class="text-right">350.000 €</td>
                         <td class="text-right negative">-8.6%</td>
                     </tr>
-                    <tr>
+                    <tr class="ingresos-items">
                         <td class="indented">Otros Ingresos</td>
                         <td class="text-right">45.000 €</td>
                         <td class="text-right">40.000 €</td>
@@ -210,17 +229,17 @@
                         <td class="text-right positive">+1.3%</td>
                     </tr>
 
-                    <tr class="category-header">
-                        <td colspan="5">COSTOS DE VENTAS</td>
+                    <tr class="category-header collapsible" data-toggle="costos-items">
+                        <td colspan="5">COSTOS DE VENTAS<span class="accordion-icon">-</span></td>
                     </tr>
-                    <tr>
+                    <tr class="costos-items">
                         <td class="indented">Costo de Productos Vendidos</td>
                         <td class="text-right">-520.000 €</td>
                         <td class="text-right">-480.000 €</td>
                         <td class="text-right">-500.000 €</td>
                         <td class="text-right positive">+4.0%</td>
                     </tr>
-                    <tr>
+                    <tr class="costos-items">
                         <td class="indented">Costo de Servicios</td>
                         <td class="text-right">-180.000 €</td>
                         <td class="text-right">-165.000 €</td>
@@ -345,6 +364,36 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Find all collapsible headers
+            const collapsibleHeaders = document.querySelectorAll('.collapsible');
+
+            collapsibleHeaders.forEach(header => {
+                header.addEventListener('click', function () {
+                    // Get the target class from the data-toggle attribute
+                    const targetClass = this.dataset.toggle;
+                    const itemsToToggle = document.querySelectorAll(`.${targetClass}`);
+                    
+                    // Find the icon within the clicked header
+                    const icon = this.querySelector('.accordion-icon');
+
+                    // Toggle visibility for each item
+                    itemsToToggle.forEach(item => {
+                        item.classList.toggle('hidden');
+                    });
+
+                    // Update the icon
+                    if (itemsToToggle[0].classList.contains('hidden')) {
+                        icon.textContent = '+';
+                    } else {
+                        icon.textContent = '-';
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>

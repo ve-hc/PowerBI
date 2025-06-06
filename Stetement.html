@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Financiero</title>
+    <style>
+        /* --- General Styles --- */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- Main Container --- */
+        .dashboard-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        /* --- Header --- */
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #1a202c;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #718096;
+            margin: 4px 0 24px 0;
+        }
+        
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #e2e8f0;
+            margin: 24px 0;
+        }
+
+        /* --- Section Titles --- */
+        .section-title h2 {
+            font-size: 20px;
+            margin: 0;
+            color: #1a202c;
+        }
+
+        .section-title p {
+            font-size: 14px;
+            color: #718096;
+            margin: 4px 0 16px 0;
+        }
+
+        /* --- Financial Table --- */
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .financial-table th, .financial-table td {
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .financial-table th {
+            color: #718096;
+            font-weight: normal;
+        }
+        
+        .financial-table td {
+            color: #2d3748;
+        }
+
+        .financial-table .text-right {
+            text-align: right;
+        }
+
+        /* Table Row Styles */
+        .financial-table .category-header td {
+            font-weight: bold;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+
+        .financial-table .total-row td {
+            font-weight: bold;
+        }
+        
+        .financial-table .indented {
+            padding-left: 24px;
+        }
+        
+        /* Variance Styles */
+        .variance {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .positive {
+            color: #2f855a;
+        }
+        
+        .negative {
+            color: #c53030;
+        }
+        
+        .highlight {
+            color: #2f855a;
+            background-color: #c6f6d5;
+            border: 1px solid #9ae6b4;
+            display: inline-block;
+        }
+        
+        /* --- Margins Section --- */
+        .margins-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .margin-card {
+            flex: 1;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .margin-card .label {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+        
+        .margin-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a202c;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Dashboard Financiero</h1>
+            <p>Estado de Resultados - Análisis Financiero Detallado</p>
+        </div>
+
+        <div class="income-statement">
+            <div class="section-title">
+                <h2>Estado de Resultados</h2>
+                <p>Período: Enero - Diciembre 2024</p>
+            </div>
+
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th class="text-right">Actual</th>
+                        <th class="text-right">1 Año Atrás</th>
+                        <th class="text-right">Presupuesto</th>
+                        <th class="text-right">Var. vs Ppto.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="category-header">
+                        <td colspan="5">INGRESOS</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Ventas de Productos</td>
+                        <td class="text-right">850.000 €</td>
+                        <td class="text-right">780.000 €</td>
+                        <td class="text-right">800.000 €</td>
+                        <td class="text-right positive">+6.3%</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Ventas de Servicios</td>
+                        <td class="text-right">320.000 €</td>
+                        <td class="text-right">290.000 €</td>
+                        <td class="text-right">350.000 €</td>
+                        <td class="text-right negative">-8.6%</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Otros Ingresos</td>
+                        <td class="text-right">45.000 €</td>
+                        <td class="text-right">40.000 €</td>
+                        <td class="text-right">50.000 €</td>
+                        <td class="text-right negative">-10.0%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>TOTAL INGRESOS</td>
+                        <td class="text-right">1.215.000 €</td>
+                        <td class="text-right">1.110.000 €</td>
+                        <td class="text-right">1.200.000 €</td>
+                        <td class="text-right positive">+1.3%</td>
+                    </tr>
+
+                    <tr class="category-header">
+                        <td colspan="5">COSTOS DE VENTAS</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Costo de Productos Vendidos</td>
+                        <td class="text-right">-520.000 €</td>
+                        <td class="text-right">-480.000 €</td>
+                        <td class="text-right">-500.000 €</td>
+                        <td class="text-right positive">+4.0%</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Costo de Servicios</td>
+                        <td class="text-right">-180.000 €</td>
+                        <td class="text-right">-165.000 €</td>
+                        <td class="text-right">-190.000 €</td>
+                        <td class="text-right negative">-5.3%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>TOTAL COSTOS</td>
+                        <td class="text-right">-700.000 €</td>
+                        <td class="text-right">-645.000 €</td>
+                        <td class="text-right">-690.000 €</td>
+                        <td class="text-right positive">+1.4%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>UTILIDAD BRUTA</td>
+                        <td class="text-right">515.000 €</td>
+                        <td class="text-right">465.000 €</td>
+                        <td class="text-right">510.000 €</td>
+                        <td class="text-right positive">+1.0%</td>
+                    </tr>
+
+                    <tr class="category-header">
+                        <td colspan="5">GASTOS OPERATIVOS</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Gastos Administrativos</td>
+                        <td class="text-right">-125.000 €</td>
+                        <td class="text-right">-120.000 €</td>
+                        <td class="text-right">-130.000 €</td>
+                        <td class="text-right negative">-3.8%</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Gastos de Ventas</td>
+                        <td class="text-right">-95.000 €</td>
+                        <td class="text-right">-88.000 €</td>
+                        <td class="text-right">-90.000 €</td>
+                        <td class="text-right positive">+5.6%</td>
+                    </tr>
+                    <tr>
+                        <td class="indented">Gastos de Marketing</td>
+                        <td class="text-right">-68.000 €</td>
+                        <td class="text-right">-65.000 €</td>
+                        <td class="text-right">-70.000 €</td>
+                        <td class="text-right negative">-2.9%</td>
+                    </tr>
+                     <tr>
+                        <td class="indented">Gastos de Personal</td>
+                        <td class="text-right">-180.000 €</td>
+                        <td class="text-right">-170.000 €</td>
+                        <td class="text-right">-175.000 €</td>
+                        <td class="text-right positive">+2.9%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>TOTAL GASTOS OPERATIVOS</td>
+                        <td class="text-right">-468.000 €</td>
+                        <td class="text-right">-443.000 €</td>
+                        <td class="text-right">-465.000 €</td>
+                        <td class="text-right positive">+0.6%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>UTILIDAD OPERATIVA</td>
+                        <td class="text-right">47.000 €</td>
+                        <td class="text-right">22.000 €</td>
+                        <td class="text-right">45.000 €</td>
+                        <td class="text-right positive">+4.4%</td>
+                    </tr>
+                    
+                    <tr class="category-header">
+                        <td colspan="5">GASTOS FINANCIEROS</td>
+                    </tr>
+                     <tr>
+                        <td class="indented">Intereses</td>
+                        <td class="text-right">-25.000 €</td>
+                        <td class="text-right">-28.000 €</td>
+                        <td class="text-right">-30.000 €</td>
+                        <td class="text-right negative">-16.7%</td>
+                    </tr>
+                     <tr>
+                        <td class="indented">Comisiones Bancarias</td>
+                        <td class="text-right">-8000 €</td>
+                        <td class="text-right">-7500 €</td>
+                        <td class="text-right">-8500 €</td>
+                        <td class="text-right negative">-5.9%</td>
+                    </tr>
+                     <tr class="total-row">
+                        <td>TOTAL GASTOS FINANCIEROS</td>
+                        <td class="text-right">-33.000 €</td>
+                        <td class="text-right">-35.500 €</td>
+                        <td class="text-right">-38.500 €</td>
+                        <td class="text-right negative">-14.3%</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>UTILIDAD NETA</td>
+                        <td class="text-right">14.000 €</td>
+                        <td class="text-right">13.500 €</td>
+                        <td class="text-right">6500 €</td>
+                        <td class="text-right"><span class="variance highlight">+115.4%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <hr>
+
+        <div class="margin-analysis">
+             <div class="section-title">
+                <h2>Análisis de Márgenes</h2>
+            </div>
+            <div class="margins-container">
+                <div class="margin-card">
+                    <div class="label">Margen Bruto</div>
+                    <div class="value">42.4%</div>
+                </div>
+                <div class="margin-card">
+                    <div class="label">Margen Operativo</div>
+                    <div class="value">3.9%</div>
+                </div>
+                <div class="margin-card">
+                    <div class="label">Margen Neto</div>
+                    <div class="value">1.2%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

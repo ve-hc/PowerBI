@@ -237,8 +237,12 @@
                         <td class="text-right positive">+1.3%</td>
                     </tr>
 
-                    <tr class="category-header collapsible" data-toggle="costos-items">
-                        <td colspan="5">COSTOS DE VENTAS<span class="accordion-icon">+</span></td>
+                    <tr class="category-header collapsible" data-toggle="costos-items" data-total-row-id="total-costos-row">
+                        <td>COSTOS DE VENTAS<span class="accordion-icon">+</span></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
                     </tr>
                     <tr class="costos-items hidden">
                         <td class="indented">Costo de Productos Vendidos</td>
@@ -254,7 +258,7 @@
                         <td class="text-right">-190.000 €</td>
                         <td class="text-right negative">-5.3%</td>
                     </tr>
-                    <tr class="total-row">
+                    <tr class="total-row hidden" id="total-costos-row">
                         <td>TOTAL COSTOS</td>
                         <td class="text-right">-700.000 €</td>
                         <td class="text-right">-645.000 €</td>
@@ -269,8 +273,12 @@
                         <td class="text-right positive">+1.0%</td>
                     </tr>
 
-                    <tr class="category-header collapsible" data-toggle="operativos-items">
-                        <td colspan="5">GASTOS OPERATIVOS<span class="accordion-icon">+</span></td>
+                    <tr class="category-header collapsible" data-toggle="operativos-items" data-total-row-id="total-operativos-row">
+                        <td>GASTOS OPERATIVOS<span class="accordion-icon">+</span></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
                     </tr>
                     <tr class="operativos-items hidden">
                         <td class="indented">Gastos Administrativos</td>
@@ -300,7 +308,7 @@
                         <td class="text-right">-175.000 €</td>
                         <td class="text-right positive">+2.9%</td>
                     </tr>
-                    <tr class="total-row">
+                    <tr class="total-row hidden" id="total-operativos-row">
                         <td>TOTAL GASTOS OPERATIVOS</td>
                         <td class="text-right">-468.000 €</td>
                         <td class="text-right">-443.000 €</td>
@@ -315,8 +323,12 @@
                         <td class="text-right positive">+4.4%</td>
                     </tr>
                     
-                    <tr class="category-header collapsible" data-toggle="financieros-items">
-                        <td colspan="5">GASTOS FINANCIEROS<span class="accordion-icon">+</span></td>
+                    <tr class="category-header collapsible" data-toggle="financieros-items" data-total-row-id="total-financieros-row">
+                        <td>GASTOS FINANCIEROS<span class="accordion-icon">+</span></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
                     </tr>
                      <tr class="financieros-items hidden">
                         <td class="indented">Intereses</td>
@@ -332,7 +344,7 @@
                         <td class="text-right">-8500 €</td>
                         <td class="text-right negative">-5.9%</td>
                     </tr>
-                     <tr class="total-row">
+                     <tr class="total-row hidden" id="total-financieros-row">
                         <td>TOTAL GASTOS FINANCIEROS</td>
                         <td class="text-right">-33.000 €</td>
                         <td class="text-right">-35.500 €</td>
@@ -377,12 +389,14 @@
         document.addEventListener('DOMContentLoaded', function () {
             const collapsibleHeaders = document.querySelectorAll('.collapsible');
 
-            // --- Función para inicializar los acordeones especiales al cargar la página ---
             function initializeSpecialAccordions() {
-                const specialHeader = document.querySelector('[data-total-row-id="total-ingresos-row"]');
-                if (specialHeader) {
-                    const totalRow = document.getElementById(specialHeader.dataset.totalRowId);
-                    const headerDataCells = specialHeader.querySelectorAll('.collapsible-total');
+                const specialHeaders = document.querySelectorAll('[data-total-row-id]');
+                specialHeaders.forEach(header => {
+                    const totalRow = document.getElementById(header.dataset.totalRowId);
+                    if (!totalRow) return;
+
+                    const headerFirstCell = header.querySelector('td');
+                    const headerDataCells = header.querySelectorAll('.collapsible-total');
                     const totalRowDataCells = totalRow.querySelectorAll('td');
 
                     // Copiar datos del total al encabezado
@@ -391,59 +405,50 @@
                         headerDataCells[i - 1].classList.remove('hidden');
                     }
                     
-                    // Ocultar la fila de TOTAL INGRESOS
                     totalRow.classList.add('hidden');
-                    
-                    // Asegurar que el colspan del encabezado es 1
-                    specialHeader.querySelector('td').colSpan = 1;
-                }
+                    headerFirstCell.colSpan = 1;
+                });
             }
             
-            // --- Event Listener para los Clics ---
             collapsibleHeaders.forEach(header => {
                 header.addEventListener('click', function () {
                     const targetClass = this.dataset.toggle;
                     const itemsToToggle = document.querySelectorAll(`.${targetClass}`);
                     const icon = this.querySelector('.accordion-icon');
+                    if (!itemsToToggle.length) return;
+                    
                     const isExpanding = itemsToToggle[0].classList.contains('hidden');
-
-                    // Lógica para todos los acordeones: mostrar/ocultar items y cambiar ícono
+                    
                     itemsToToggle.forEach(item => item.classList.toggle('hidden'));
                     icon.textContent = isExpanding ? '-' : '+';
 
-                    // --- LÓGICA ESPECIAL SÓLO PARA INGRESOS ---
                     if (this.hasAttribute('data-total-row-id')) {
                         const totalRow = document.getElementById(this.dataset.totalRowId);
+                        if (!totalRow) return;
+
                         const headerFirstCell = this.querySelector('td');
                         const headerDataCells = this.querySelectorAll('.collapsible-total');
                         const totalRowDataCells = totalRow.querySelectorAll('td');
 
-                        if (isExpanding) { // --- Si se está expandiendo ---
-                            // Ocultar los totales del encabezado y limpiar su contenido
+                        if (isExpanding) {
                             headerDataCells.forEach(cell => {
                                 cell.classList.add('hidden');
                                 cell.textContent = '';
                             });
-                            // Restaurar el colspan del encabezado
                             headerFirstCell.colSpan = 5;
-                            // Mostrar la fila de TOTAL INGRESOS
                             totalRow.classList.remove('hidden');
-                        } else { // --- Si se está colapsando ---
-                            // Copiar los datos de la fila de total a las celdas del encabezado
+                        } else {
                             for (let i = 1; i < totalRowDataCells.length; i++) {
                                 headerDataCells[i - 1].innerHTML = totalRowDataCells[i].innerHTML;
                                 headerDataCells[i - 1].classList.remove('hidden');
                             }
-                            // Ocultar la fila de TOTAL INGRESOS
                             totalRow.classList.add('hidden');
-                            // Quitar el colspan del encabezado para que se muestren las celdas
                             headerFirstCell.colSpan = 1;
                         }
                     }
                 });
             });
 
-            // --- Ejecutar la inicialización al cargar la página ---
             initializeSpecialAccordions();
         });
     </script>

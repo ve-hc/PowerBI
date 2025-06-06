@@ -108,6 +108,10 @@
         .hidden {
             display: none;
         }
+        /* Celda especial para mostrar totales en el encabezado */
+        .collapsible-total {
+            font-weight: bold;
+        }
         /* --- End Accordion Styles --- */
 
 
@@ -197,31 +201,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="category-header collapsible" data-toggle="ingresos-items">
-                        <td colspan="5">INGRESOS<span class="accordion-icon">-</span></td>
+                    <tr class="category-header collapsible" data-toggle="ingresos-items" data-total-row-id="total-ingresos-row">
+                        <td>INGRESOS<span class="accordion-icon">+</span></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
+                        <td class="text-right collapsible-total hidden"></td>
                     </tr>
-                    <tr class="ingresos-items">
+                    <tr class="ingresos-items hidden">
                         <td class="indented">Ventas de Productos</td>
                         <td class="text-right">850.000 €</td>
                         <td class="text-right">780.000 €</td>
                         <td class="text-right">800.000 €</td>
                         <td class="text-right positive">+6.3%</td>
                     </tr>
-                    <tr class="ingresos-items">
+                    <tr class="ingresos-items hidden">
                         <td class="indented">Ventas de Servicios</td>
                         <td class="text-right">320.000 €</td>
                         <td class="text-right">290.000 €</td>
                         <td class="text-right">350.000 €</td>
                         <td class="text-right negative">-8.6%</td>
                     </tr>
-                    <tr class="ingresos-items">
+                    <tr class="ingresos-items hidden">
                         <td class="indented">Otros Ingresos</td>
                         <td class="text-right">45.000 €</td>
                         <td class="text-right">40.000 €</td>
                         <td class="text-right">50.000 €</td>
                         <td class="text-right negative">-10.0%</td>
                     </tr>
-                    <tr class="total-row">
+                    <tr class="total-row hidden" id="total-ingresos-row">
                         <td>TOTAL INGRESOS</td>
                         <td class="text-right">1.215.000 €</td>
                         <td class="text-right">1.110.000 €</td>
@@ -230,16 +238,16 @@
                     </tr>
 
                     <tr class="category-header collapsible" data-toggle="costos-items">
-                        <td colspan="5">COSTOS DE VENTAS<span class="accordion-icon">-</span></td>
+                        <td colspan="5">COSTOS DE VENTAS<span class="accordion-icon">+</span></td>
                     </tr>
-                    <tr class="costos-items">
+                    <tr class="costos-items hidden">
                         <td class="indented">Costo de Productos Vendidos</td>
                         <td class="text-right">-520.000 €</td>
                         <td class="text-right">-480.000 €</td>
                         <td class="text-right">-500.000 €</td>
                         <td class="text-right positive">+4.0%</td>
                     </tr>
-                    <tr class="costos-items">
+                    <tr class="costos-items hidden">
                         <td class="indented">Costo de Servicios</td>
                         <td class="text-right">-180.000 €</td>
                         <td class="text-right">-165.000 €</td>
@@ -262,30 +270,30 @@
                     </tr>
 
                     <tr class="category-header collapsible" data-toggle="operativos-items">
-                        <td colspan="5">GASTOS OPERATIVOS<span class="accordion-icon">-</span></td>
+                        <td colspan="5">GASTOS OPERATIVOS<span class="accordion-icon">+</span></td>
                     </tr>
-                    <tr class="operativos-items">
+                    <tr class="operativos-items hidden">
                         <td class="indented">Gastos Administrativos</td>
                         <td class="text-right">-125.000 €</td>
                         <td class="text-right">-120.000 €</td>
                         <td class="text-right">-130.000 €</td>
                         <td class="text-right negative">-3.8%</td>
                     </tr>
-                    <tr class="operativos-items">
+                    <tr class="operativos-items hidden">
                         <td class="indented">Gastos de Ventas</td>
                         <td class="text-right">-95.000 €</td>
                         <td class="text-right">-88.000 €</td>
                         <td class="text-right">-90.000 €</td>
                         <td class="text-right positive">+5.6%</td>
                     </tr>
-                    <tr class="operativos-items">
+                    <tr class="operativos-items hidden">
                         <td class="indented">Gastos de Marketing</td>
                         <td class="text-right">-68.000 €</td>
                         <td class="text-right">-65.000 €</td>
                         <td class="text-right">-70.000 €</td>
                         <td class="text-right negative">-2.9%</td>
                     </tr>
-                     <tr class="operativos-items">
+                     <tr class="operativos-items hidden">
                         <td class="indented">Gastos de Personal</td>
                         <td class="text-right">-180.000 €</td>
                         <td class="text-right">-170.000 €</td>
@@ -308,16 +316,16 @@
                     </tr>
                     
                     <tr class="category-header collapsible" data-toggle="financieros-items">
-                        <td colspan="5">GASTOS FINANCIEROS<span class="accordion-icon">-</span></td>
+                        <td colspan="5">GASTOS FINANCIEROS<span class="accordion-icon">+</span></td>
                     </tr>
-                     <tr class="financieros-items">
+                     <tr class="financieros-items hidden">
                         <td class="indented">Intereses</td>
                         <td class="text-right">-25.000 €</td>
                         <td class="text-right">-28.000 €</td>
                         <td class="text-right">-30.000 €</td>
                         <td class="text-right negative">-16.7%</td>
                     </tr>
-                     <tr class="financieros-items">
+                     <tr class="financieros-items hidden">
                         <td class="indented">Comisiones Bancarias</td>
                         <td class="text-right">-8000 €</td>
                         <td class="text-right">-7500 €</td>
@@ -367,31 +375,76 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Find all collapsible headers
             const collapsibleHeaders = document.querySelectorAll('.collapsible');
 
+            // --- Función para inicializar los acordeones especiales al cargar la página ---
+            function initializeSpecialAccordions() {
+                const specialHeader = document.querySelector('[data-total-row-id="total-ingresos-row"]');
+                if (specialHeader) {
+                    const totalRow = document.getElementById(specialHeader.dataset.totalRowId);
+                    const headerDataCells = specialHeader.querySelectorAll('.collapsible-total');
+                    const totalRowDataCells = totalRow.querySelectorAll('td');
+
+                    // Copiar datos del total al encabezado
+                    for (let i = 1; i < totalRowDataCells.length; i++) {
+                        headerDataCells[i - 1].innerHTML = totalRowDataCells[i].innerHTML;
+                        headerDataCells[i - 1].classList.remove('hidden');
+                    }
+                    
+                    // Ocultar la fila de TOTAL INGRESOS
+                    totalRow.classList.add('hidden');
+                    
+                    // Asegurar que el colspan del encabezado es 1
+                    specialHeader.querySelector('td').colSpan = 1;
+                }
+            }
+            
+            // --- Event Listener para los Clics ---
             collapsibleHeaders.forEach(header => {
                 header.addEventListener('click', function () {
-                    // Get the target class from the data-toggle attribute
                     const targetClass = this.dataset.toggle;
                     const itemsToToggle = document.querySelectorAll(`.${targetClass}`);
-                    
-                    // Find the icon within the clicked header
                     const icon = this.querySelector('.accordion-icon');
+                    const isExpanding = itemsToToggle[0].classList.contains('hidden');
 
-                    // Toggle visibility for each item
-                    itemsToToggle.forEach(item => {
-                        item.classList.toggle('hidden');
-                    });
+                    // Lógica para todos los acordeones: mostrar/ocultar items y cambiar ícono
+                    itemsToToggle.forEach(item => item.classList.toggle('hidden'));
+                    icon.textContent = isExpanding ? '-' : '+';
 
-                    // Update the icon
-                    if (itemsToToggle[0].classList.contains('hidden')) {
-                        icon.textContent = '+';
-                    } else {
-                        icon.textContent = '-';
+                    // --- LÓGICA ESPECIAL SÓLO PARA INGRESOS ---
+                    if (this.hasAttribute('data-total-row-id')) {
+                        const totalRow = document.getElementById(this.dataset.totalRowId);
+                        const headerFirstCell = this.querySelector('td');
+                        const headerDataCells = this.querySelectorAll('.collapsible-total');
+                        const totalRowDataCells = totalRow.querySelectorAll('td');
+
+                        if (isExpanding) { // --- Si se está expandiendo ---
+                            // Ocultar los totales del encabezado y limpiar su contenido
+                            headerDataCells.forEach(cell => {
+                                cell.classList.add('hidden');
+                                cell.textContent = '';
+                            });
+                            // Restaurar el colspan del encabezado
+                            headerFirstCell.colSpan = 5;
+                            // Mostrar la fila de TOTAL INGRESOS
+                            totalRow.classList.remove('hidden');
+                        } else { // --- Si se está colapsando ---
+                            // Copiar los datos de la fila de total a las celdas del encabezado
+                            for (let i = 1; i < totalRowDataCells.length; i++) {
+                                headerDataCells[i - 1].innerHTML = totalRowDataCells[i].innerHTML;
+                                headerDataCells[i - 1].classList.remove('hidden');
+                            }
+                            // Ocultar la fila de TOTAL INGRESOS
+                            totalRow.classList.add('hidden');
+                            // Quitar el colspan del encabezado para que se muestren las celdas
+                            headerFirstCell.colSpan = 1;
+                        }
                     }
                 });
             });
+
+            // --- Ejecutar la inicialización al cargar la página ---
+            initializeSpecialAccordions();
         });
     </script>
 

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual: Power BI Nivel Básico</title>
+    <style>
+        :root {
+            --primary-color: #0078D4; /* Azul corporativo, más adecuado para un curso básico */
+            --secondary-color: #2A2E30; /* Gris oscuro del ejemplo */
+            --accent-color: #FCD116; /* Amarillo Power BI */
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #dee2e6;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --code-font-family: 'Consolas', 'Courier New', Courier, monospace;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.5em 2em;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        header h1 svg {
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            fill: var(--primary-color);
+        }
+
+        nav {
+            background-color: var(--card-bg-color);
+            padding: 1em 0;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto; 
+            white-space: nowrap; 
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0 1em; 
+            margin: 0;
+            display: flex;
+            flex-wrap: nowrap; 
+        }
+
+        nav li {
+            margin: 0.5em 0.8em; 
+            flex-shrink: 0; 
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: bold;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 0.9em; 
+        }
+        
+        nav a svg {
+            width: 18px; 
+            height: 18px;
+            margin-right: 6px;
+            fill: var(--secondary-color);
+            transition: fill 0.3s;
+        }
+
+        nav a:hover, nav a.active-nav {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        nav a:hover svg, nav a.active-nav svg {
+            fill: white;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 2em;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pagina {
+            display: none;
+            background-color: var(--card-bg-color);
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .pagina.activa {
+            display: block;
+        }
+        
+        #portada { text-align: center; }
+        #portada h2 { font-size: 2.5em; color: var(--secondary-color); }
+        #portada h3 { font-size: 1.8em; color: var(--primary-color); margin-top: 0.5em; margin-bottom: 1em; }
+        #portada .module-icon svg { width: 100px; height: 100px; fill: var(--secondary-color); margin-bottom: 1em; }
+        #portada .brand-mention { margin-top: 1.5em; font-size: 1.1em; color: var(--text-color); opacity: 0.8; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pagina h2 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5em;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+        }
+        
+        .pagina h2 svg {
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+            fill: var(--secondary-color);
+        }
+
+        .pagina h3 { color: var(--secondary-color); opacity: 0.9; margin-top: 1.5em; font-size: 1.4em; }
+        .pagina h4 { color: var(--primary-color); margin-top: 1.2em; font-size: 1.1em; }
+
+        p, li { font-size: 1.05em; margin-bottom: 1em; }
+        ul, ol { padding-left: 20px; }
+
+        code { 
+            background-color: #e0e0e0; 
+            color: #1a1a1a;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 0.9em;
+            border-radius: 3px;
+            font-family: var(--code-font-family);
+        }
+
+        pre {
+            background-color: #2d2d2d; 
+            color: #f2f2f2; 
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: var(--code-font-family);
+            font-size: 0.95em;
+            margin: 1em 0;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .tip {
+            background-color: #e7f3fe; 
+            border-left: 5px solid var(--primary-color);
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 4px;
+        }
+        .tip strong { color: var(--primary-color); opacity: 0.8;}
+
+        .quiz-container { margin-top: 2em; }
+        .question-block { margin-bottom: 2em; padding: 1.5em; border: 1px solid var(--border-color); border-radius: 6px; background-color: #fdfdff;}
+        .question-block p { font-weight: bold; margin-bottom: 1em;}
+        .options label { display: block; margin-bottom: 0.8em; padding: 0.8em; border-radius: 4px; background-color: #f0f0f0; cursor: pointer; transition: background-color 0.2s;}
+        .options label:hover { background-color: #e0e0e0;}
+        .options input[type="radio"] { margin-right: 10px; vertical-align: middle;}
+        .feedback { padding: 0.8em; margin-top: 1em; border-radius: 4px; font-weight: bold; display: none; }
+        .feedback.correct { background-color: #d4edda; color: var(--success-color); border: 1px solid #c3e6cb;}
+        .feedback.incorrect { background-color: #f8d7da; color: var(--danger-color); border: 1px solid #f5c6cb;}
+        
+        footer {
+            text-align: center;
+            padding: 1.5em;
+            background-color: var(--secondary-color);
+            color: #adb5bd;
+            margin-top: auto;
+            font-size: 0.9em;
+        }
+        footer .brand-name { color: var(--primary-color); font-weight: bold; }
+
+        .icon { fill: currentColor; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 17.27V20h2.73L17.27 9.46l-2.73-2.73L4 17.27zM6.18 18H5v-1.18l8.04-8.04 1.18 1.18L6.18 18z"/><path d="M20.71 6.73l-2.44-2.44a.996.996 0 00-1.41 0l-1.83 1.83 2.73 2.73 1.83-1.83a.996.996 0 000-1.41zM4 4h2v10H4V4zm5 3h2v7H9V7zm5-2h2v9h-2V5z"/></svg>
+            Power BI Nivel Básico
+        </h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" data-target="portada" class="active-nav"><svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Portada</a></li>
+            <li><a href="#" data-target="modulo1"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>Módulo I: Introducción</a></li>
+            <li><a href="#" data-target="modulo2"><svg class="icon" viewBox="0 0 24 24"><path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"/></svg>Módulo II: Obtención de Datos</a></li>
+            <li><a href="#" data-target="modulo3"><svg class="icon" viewBox="0 0 24 24"><path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zM8 11h8v2H8v-2z"/></svg>Módulo III: Modelado</a></li>
+            <li><a href="#" data-target="modulo4"><svg class="icon" viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>Módulo IV: Visualización</a></li>
+            <li><a href="#" data-target="quiz"><svg class="icon" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>Quiz Final</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="portada" class="pagina activa">
+            <div class="module-icon">
+                <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2"><path d="M32 2 L32 10 M32 54 L32 62 M2 32 L10 32 M54 32 L62 32 M10.4 10.4 L16 16 M48 48 L53.6 53.6 M10.4 53.6 L16 48 M48 16 L53.6 10.4"/><path d="M52 32 C 52 43.04 43.04 52 32 52 20.96 52 12 43.04 12 32 12 20.96 20.96 12 32 12 43.04 12 52 20.96 52 32 Z"/><path d="M22 22 L42 42 M22 42 L42 22"/></svg>
+            </div>
+            <h2>Power BI Nivel Básico</h2>
+            <h3>La base para el análisis de datos 📊</h3>
+            <p>¡Bienvenido/a al curso de iniciación a Power BI!</p>
+            <p>En este manual encontrarás los conceptos fundamentales para comenzar tu viaje en el mundo del Business Intelligence. Aprenderás a conectar y transformar datos, a modelarlos para obtener información de valor y a crear visualizaciones interactivas y atractivas. ¡Es hora de convertir datos en decisiones! 🚀</p>
+            <div class="brand-mention">
+                <p><strong>Elaborado por: Reinventa Consultoría y Capacitación</strong></p>
+            </div>
+        </section>
+
+        <section id="modulo1" class="pagina">
+            <h2><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>Módulo I: Introducción a Power BI</h2>
+            <h3>🤔 ¿Qué es Power BI?</h3>
+            <p>Imagina que todos los datos de tu empresa (ventas, finanzas, operaciones) son piezas de un rompecabezas gigante. Power BI es la herramienta que te permite unir todas esas piezas para ver la imagen completa. Es un servicio de análisis de negocio de Microsoft que transforma datos sin procesar en información coherente, visualmente inmersiva e interactiva. ¡Es como un Excel con superpoderes para contar historias con datos!</p>
+            
+            <h3>🛠️ Componentes de Power BI</h3>
+            <p>El ecosistema de Power BI se compone de tres elementos principales que trabajan juntos:</p>
+            <h4>Power BI Desktop</h4>
+            <p>Es la aplicación gratuita para PC donde ocurre la magia. Aquí te conectas a los datos, los transformas, creas el modelo y diseñas los informes visuales.</p>
+            <h4>Power BI Service</h4>
+            <p>Es la versión online (SaaS - Software como Servicio). Aquí publicas tus informes para compartirlos, crear dashboards y colaborar con tu equipo de forma segura.</p>
+            <h4>Power BI Mobile</h4>
+            <p>Son las apps para iOS y Android. Te permiten acceder a tus informes y dashboards desde cualquier lugar, optimizados para tu teléfono o tablet.</p>
+
+            <div class="tip">
+                <strong>💡 Conceptos Clave de Business Intelligence (BI):</strong> BI es el proceso de usar tecnologías para analizar datos y presentar información útil que ayude a tomar decisiones de negocio más informadas. Power BI es una de las herramientas de BI más populares del mundo.
+            </div>
+
+            <h3>✅ Beneficios de usar Power BI</h3>
+            <ul>
+                <li>Visualiza tus datos de forma interactiva y atractiva.</li>
+                <li>Conecta cientos de fuentes de datos en un solo lugar.</li>
+                <li>Comparte informes y dashboards de forma segura con quien quieras.</li>
+                <li>Toma decisiones basadas en datos actualizados en tiempo real.</li>
+                <li>Es accesible y se integra perfectamente con otras herramientas de Microsoft (Excel, Azure, etc.).</li>
+            </ul>
+        </section>
+        
+        <section id="modulo2" class="pagina">
+            <h2><svg viewBox="0 0 24 24"><path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"/></svg>Módulo II: Obtención y Transformación</h2>
+            <p>Antes de poder visualizar, necesitamos obtener y limpiar los datos. Aquí es donde brilla <strong>Power Query</strong>, el motor de transformación de datos de Power BI.</p>
+            
+            <h3>🌐 Conexión a Fuentes de Datos</h3>
+            <p>Power BI puede conectarse a una enorme variedad de fuentes. El proceso siempre comienza en Power BI Desktop con el botón <code>Obtener datos</code>. Algunas fuentes comunes son:</p>
+            <ul>
+                <li><strong>Archivos Locales:</strong> Excel, CSV, JSON, XML, carpetas enteras.</li>
+                <li><strong>Bases de Datos:</strong> SQL Server, Oracle, MySQL, PostgreSQL.</li>
+                <li><strong>Servicios en la Nube:</strong> Azure, SharePoint, Dynamics 365, Salesforce.</li>
+            </ul>
+
+            <h3>🛁 Transformación y Limpieza de Datos</h3>
+            <p>Rara vez los datos están listos para usarse. Power Query te ofrece una interfaz visual para limpiarlos. Cada cambio que haces se registra como un paso en "Pasos Aplicados", que puedes editar o eliminar.</p>
+            <h4>Acciones de transformación comunes:</h4>
+            <ul>
+                <li><strong>Quitar columnas o filas:</strong> Elimina información innecesaria.</li>
+                <li><strong>Cambiar tipo de dato:</strong> Asegura que los números sean números y las fechas, fechas.</li>
+                <li><strong>Dividir columnas:</strong> Separa "Nombre Apellido" en dos columnas.</li>
+                <li><strong>Reemplazar valores:</strong> Corrige errores tipográficos (ej: "Méjico" por "México").</li>
+                <li><strong>Filtrar datos:</strong> Quédate solo con los datos que te interesan (ej: ventas del último año).</li>
+                <li><strong>Anular dinamización de columnas:</strong> Transforma tablas anchas en tablas largas, ideal para análisis.</li>
+            </ul>
+
+            <div class="tip">
+                <strong>🔍 ¿Qué es una consulta?</strong> En Power Query, cada tabla de datos conectada se llama "consulta". Puedes duplicar, fusionar o anexar consultas para combinar datos de diferentes fuentes y crear la tabla perfecta para tu análisis.
+            </div>
+        </section>
+
+        <section id="modulo3" class="pagina">
+            <h2><svg viewBox="0 0 24 24"><path d="M17 7h-4v2h4c1.65 0 3 1.35 3 3s-1.35 3-3 3h-4v2h4c2.76 0 5-2.24 5-5s-2.24-5-5-5zm-6 8H7c-1.65 0-3-1.35-3-3s1.35-3 3-3h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-2zM8 11h8v2H8v-2z"/></svg>Módulo III: Modelado de Datos</h2>
+            <p>Una vez que tienes tus datos limpios en consultas separadas, el siguiente paso es enseñar a Power BI cómo se relacionan entre sí. Esto es el <strong>modelado de datos</strong>, que se realiza en la "Vista de Modelo".</p>
+
+            <h3>🔗 Creación de Relaciones entre Tablas</h3>
+            <p>El objetivo es crear un <strong>Modelo Estrella</strong>: una tabla central de "hechos" (números, como ventas) rodeada de tablas de "dimensiones" (descripciones, como productos, clientes o fechas).</p>
+            <p>Creas relaciones arrastrando un campo clave (como <code>ProductID</code>) desde una tabla a la otra. Esto permite que, al filtrar por un producto, se filtren automáticamente las ventas correspondientes.</p>
+            
+            <h3>📊 Introducción a DAX: Medidas y Columnas Calculadas</h3>
+            <p><strong>DAX (Data Analysis Expressions)</strong> es el lenguaje de fórmulas de Power BI. Es similar a las fórmulas de Excel, pero mucho más potente.</p>
+            <h4>Medidas</h4>
+            <p>Calculan un valor agregado sobre un conjunto de datos (ej: el total, el promedio). No se almacenan, se calculan al momento de usarlas en un gráfico. ¡Son más eficientes!</p>
+            <pre><code>Total Ventas = SUM(Ventas[Importe])</code></pre>
+            
+            <h4>Columnas Calculadas</h4>
+            <p>Calculan un valor para cada fila de una tabla y se almacena en el modelo. Usa columnas calculadas cuando necesites filtrar o segmentar por el resultado.</p>
+            <pre><code>Precio con IVA = Ventas[Precio] * 1.21</code></pre>
+
+            <h3>⚙️ Optimización del Modelo</h3>
+            <p>Un buen modelo es clave para un informe rápido.</p>
+            <ul>
+                <li>Oculta columnas que no usarás en los informes (como las claves de relación).</li>
+                <li>Usa los tipos de datos correctos (números enteros en vez de decimales si no son necesarios).</li>
+                <li>Prefiere el Modelo Estrella a modelos complejos.</li>
+                <li>Siempre que sea posible, <strong>prefiere las Medidas sobre las Columnas Calculadas</strong>.</li>
+            </ul>
+        </section>
+
+        <section id="modulo4" class="pagina">
+            <h2><svg viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z"/></svg>Módulo IV: Visualización de Datos</h2>
+            <p>¡La parte más divertida! Aquí es donde tus datos cobran vida. En la "Vista de Informe", arrastras y sueltas campos en el lienzo para crear objetos visuales.</p>
+
+            <h3>📈 Tipos de Visualizaciones</h3>
+            <p>Power BI ofrece docenas de visualizaciones. La clave es elegir la correcta para contar tu historia.</p>
+            <h4>Gráficos de Barras y Columnas 📊</h4>
+            <p>Ideales para comparar categorías (Ej: Ventas por Producto).</p>
+            <h4>Gráficos de Líneas y Área 📈</h4>
+            <p>Perfectos para mostrar tendencias a lo largo del tiempo (Ej: Ventas por Mes).</p>
+            <h4>Mapas 🗺️</h4>
+            <p>Para visualizar datos geográficos (Ej: Ventas por País o Ciudad).</p>
+            <h4>Tarjetas y KPIs 💡</h4>
+            <p>Para destacar un número importante (Total de Ventas, Crecimiento %).</p>
+            
+            <h3>🎨 Formato Condicional</h3>
+            <p>Es una técnica poderosa para resaltar información importante automáticamente. Puedes cambiar el color de fondo, el color de la fuente o añadir iconos basados en reglas.</p>
+            <p>Por ejemplo, en una tabla de ventas por producto, puedes hacer que los valores por encima del objetivo se muestren en verde y los que están por debajo en rojo. ¡Esto llama la atención al instante!</p>
+
+            <div class="tip">
+                <strong>Dashboard vs. Informe:</strong> Un <strong>informe</strong> en Power BI Desktop es una o más páginas con visualizaciones. Un <strong>dashboard</strong> es una vista de una sola página, a menudo creada en Power BI Service, que presenta los puntos más destacados de uno o varios informes. Son como el resumen ejecutivo de tus datos.
+            </div>
+        </section>
+
+        <section id="quiz" class="pagina">
+            <h2><svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>Quiz Final: Pon a Prueba tus Conocimientos</h2>
+            <p>Estas preguntas están diseñadas para ser un desafío. ¡Mucha suerte!</p>
+            <form id="quizForm">
+                <div class="quiz-container">
+                    <!-- Las preguntas se insertarán aquí por JavaScript -->
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Manual Power BI Básico. Un recurso de <span class="brand-name">Reinventa Consultoría y Capacitación</span>.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // SPA Navigation
+            const navLinks = document.querySelectorAll('nav a');
+            const pages = document.querySelectorAll('.pagina');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+
+                    pages.forEach(page => page.classList.remove('activa'));
+                    document.getElementById(targetId).classList.add('activa');
+
+                    navLinks.forEach(navLink => navLink.classList.remove('active-nav'));
+                    link.classList.add('active-nav');
+                    
+                    window.scrollTo({ top: document.querySelector('main').offsetTop - 20, behavior: 'smooth' });
+                });
+            });
+
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Quiz Logic
+            const quizData = [
+                {
+                    question: "¿Cuál es el lenguaje de fórmulas utilizado principalmente para crear agregaciones complejas y medidas dinámicas en Power BI?",
+                    options: ["A) M", "B) SQL", "C) DAX", "D) Python"],
+                    answer: "C) DAX",
+                    explanation: "DAX (Data Analysis Expressions) es el lenguaje de fórmulas de Power BI para crear medidas. El lenguaje M se usa en Power Query para la transformación de datos."
+                },
+                {
+                    question: "En el modelado de datos, estás conectando una tabla de 'Productos' (con un ProductID único por fila) a una tabla de 'Ventas' (donde cada ProductID puede aparecer muchas veces). ¿Qué tipo de cardinalidad de relación es la más apropiada y eficiente?",
+                    options: ["A) Varios a Varios (*:*)", "B) Uno a Uno (1:1)", "C) Uno a Varios (1:*)", "D) No es necesaria una relación, se puede usar una función LOOKUPVALUE"],
+                    answer: "C) Uno a Varios (1:*)",
+                    explanation: "Un producto (en la tabla de dimensiones 'uno') se relaciona con muchas ventas (en la tabla de hechos 'varios'). Esta es la base de un modelo estrella eficiente."
+                },
+                {
+                    question: "¿Qué componente de Power BI es el más adecuado para limpiar, dar forma y transformar datos de múltiples fuentes antes de cargarlos al modelo de datos?",
+                    options: ["A) El editor de relaciones en la Vista de Modelo", "B) Power Query Editor", "C) El panel de visualizaciones", "D) Power BI Service"],
+                    answer: "B) Power Query Editor",
+                    explanation: "Power Query Editor es la herramienta específica para ETL (Extraer, Transformar, Cargar) dentro de Power BI Desktop."
+                },
+                {
+                    question: "¿Cuál es la diferencia fundamental entre una Columna Calculada y una Medida en DAX?",
+                    options: [
+                        "A) No hay diferencia, son dos nombres para lo mismo.",
+                        "B) La Columna Calculada se calcula para cada fila y se almacena en el modelo, mientras que la Medida se calcula dinámicamente sobre un conjunto de datos.",
+                        "C) La Medida se calcula para cada fila y se almacena, mientras que la Columna Calculada es dinámica.",
+                        "D) Las Columnas Calculadas solo pueden usar datos de una tabla, las Medidas pueden usar datos de múltiples tablas."
+                    ],
+                    answer: "B) La Columna Calculada se calcula para cada fila y se almacena en el modelo, mientras que la Medida se calcula dinámicamente sobre un conjunto de datos.",
+                    explanation: "Esta es una distinción clave: las columnas calculadas consumen memoria y tamaño de archivo, mientras que las medidas consumen CPU al momento del cálculo, lo que las hace más flexibles y eficientes para agregaciones."
+                },
+                {
+                    question: "Para compartir un informe de forma segura con un colega para que pueda interactuar con él (filtrar, explorar) pero no editarlo, ¿cuál es el paso principal que debes realizar?",
+                    options: [
+                        "A) Enviarle el archivo .PBIX por correo electrónico.",
+                        "B) Publicar el informe en Power BI Service y compartirle el enlace desde allí.",
+                        "C) Hacer una captura de pantalla del informe y enviársela.",
+                        "D) Exportar los datos a Excel y compartirlos."
+                    ],
+                    answer: "B) Publicar el informe en Power BI Service y compartirle el enlace desde allí.",
+                    explanation: "Power BI Service es la plataforma diseñada para compartir y colaborar de forma segura. Enviar el archivo .PBIX da acceso completo para editar el modelo y el informe, lo que no es deseable en este caso."
+                }
+            ];
+
+            const quizContainer = document.querySelector('.quiz-container');
+
+            function renderQuiz() {
+                let quizHTML = '';
+                quizData.forEach((q, index) => {
+                    quizHTML += `
+                        <div class="question-block" id="question-${index}">
+                            <p>${index + 1}. ${q.question}</p>
+                            <div class="options">`;
+                    q.options.forEach(optionText => {
+                        quizHTML += `
+                            <label>
+                                <input type="radio" name="question${index}" value="${optionText}"> 
+                                ${optionText}
+                            </label>`;
+                    });
+                    quizHTML += `
+                            </div>
+                            <div class="feedback" id="feedback-${index}">
+                               <strong>Explicación:</strong> ${q.explanation}
+                            </div>
+                        </div>`;
+                });
+                quizContainer.innerHTML = quizHTML;
+                attachQuizListeners();
+            }
+
+            function attachQuizListeners() {
+                quizData.forEach((q, index) => {
+                    const radioButtons = document.querySelectorAll(`input[name="question${index}"]`);
+                    const feedbackDiv = document.getElementById(`feedback-${index}`);
+                    
+                    radioButtons.forEach(radio => {
+                        radio.addEventListener('change', () => {
+                            radioButtons.forEach(rb => rb.disabled = true);
+
+                            if (radio.value === q.answer) {
+                                feedbackDiv.classList.add('correct');
+                                radio.parentElement.style.border = '2px solid var(--success-color)';
+                            } else {
+                                feedbackDiv.classList.add('incorrect');
+                                radio.parentElement.style.border = '2px solid var(--danger-color)';
+                                // Highlight the correct answer
+                                radioButtons.forEach(rb => {
+                                    if (rb.value === q.answer) {
+                                        rb.parentElement.style.backgroundColor = '#d4edda';
+                                    }
+                                });
+                            }
+                            feedbackDiv.style.display = 'block';
+                        });
+                    });
+                });
+            }
+
+            renderQuiz();
+        });
+    </script>
+</body>
+</html>

@@ -56,6 +56,17 @@
             font-weight: bold;
             color: #007bff;
         }
+        .contenedor-imagen {
+  /* Puedes definir un ancho máximo o un tamaño específico para el contenedor si lo deseas */
+          max-width: 800px; /* Ejemplo de un ancho máximo */
+          margin: auto; /* Para centrar el contenedor en la página */
+        }
+        .contenedor-imagen img {
+  /* Esta es la parte clave para el autoajuste */
+          width: 100%;
+          height: auto;
+          display: block; /* Elimina el espacio extra debajo de la imagen */
+        }
     </style>
 </head>
 <body>
@@ -106,7 +117,9 @@
                 <li class="list-item">4. Aprobadores firman electrónicamente.</li>
                 <li class="list-item">5. El sistema libera el pago automáticamente.</li>
             </ul>
-        <img src="diagrama.jpg" alt="Prototipo">
+        <div class="contenedor-imagen">
+            <img src="diagrama.jpg" alt="Prototipo">
+        </div>
         </div>
     </div>
 

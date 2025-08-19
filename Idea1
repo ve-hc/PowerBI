@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Digitalización de Solicitudes de Pago</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .infographic-container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #0056b3;
+            font-size: 2em;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .list-item {
+            margin-bottom: 10px;
+        }
+        .sub-section {
+            margin-top: 15px;
+            margin-left: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .strong-point {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="infographic-container">
+    <div class="header">
+        <h1>📊 Proyecto de Innovación: Digitalización de Solicitudes de Pago en SAP S/4HANA</h1>
+        <p><strong>Nombre del equipo o número:</strong> [Insertar Nombre o Número del Equipo]</p>
+        <p><strong>Participantes:</strong> [Nombre del Participante 1], [Nombre del Participante 2], [Nombre del Participante 3], [... y así sucesivamente]</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">1. Justificación de Innovación Alineada a la Visión Estratégica</div>
+        <p>El proyecto se centra en la digitalización y automatización de las solicitudes de pago, actualmente manuales y en papel, transformando un proceso burocrático en uno <span class="strong-point">lean y digital</span> a través de workflows en SAP S/4HANA.</p>
+        <div class="sub-section">
+            <h3>¿Por qué se considera innovación?</h3>
+            <ul>
+                <li class="list-item">✅ <span class="strong-point">Transformación de procesos:</span> Convierte un proceso manual en un sistema digital y automatizado.</li>
+                <li class="list-item">✅ <span class="strong-point">Sostenibilidad:</span> Disminuye el uso de papel.</li>
+                <li class="list-item">✅ <span class="strong-point">Eficiencia:</span> Reduce tiempos de autorización, errores y el riesgo de pérdida de documentos.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">2. Alineación a Necesidades Reales del Cliente</div>
+        <p>Basado en una investigación cualitativa y cuantitativa con clientes internos (requisitores y tesorería).</p>
+        <div class="sub-section">
+            <h3>Hallazgos Clave</h3>
+            <ul>
+                <li class="list-item">📝 <span class="strong-point">Frustraciones:</span> Excesivo tiempo de espera, alto riesgo de errores manuales y múltiples impresiones.</li>
+                <li class="list-item">📈 <span class="strong-point">Volumen:</span> 30 solicitudes por semana.</li>
+                <li class="list-item">📄 <span class="strong-point">Consumo de papel:</span> 6,240 hojas/año.</li>
+                <li class="list-item">⏳ <span class="strong-point">Tiempo de autorización:</span> Se reduce de 5-7 días a un promedio de 2 días.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">3. Ideación y Prototipo</div>
+        <p>Se exploraron varias opciones para encontrar la mejor solución.</p>
+        <div class="sub-section">
+            <h3>Prototipo Seleccionado</h3>
+            <p>Se eligió un prototipo que representa el flujo digital del proceso:</p>
+            <ul>
+                <li class="list-item">1. Requisitor carga la factura.</li>
+                <li class="list-item">2. El sistema genera un workflow de aprobación.</li>
+                <li class="list-item">3. Se notifica a los aprobadores digitalmente.</li>
+                <li class="list-item">4. Aprobadores firman electrónicamente.</li>
+                <li class="list-item">5. El sistema libera el pago automáticamente.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">4. Resultados y Proyecciones Financieras</div>
+        <p>El proyecto generará ahorros significativos y un retorno de inversión positivo.</p>
+        <div class="sub-section">
+            <h3>Inversión y Retorno</h3>
+            <ul>
+                <li class="list-item">💰 <span class="strong-point">Inversión:</span> Estimado de $300,000 MXN.</li>
+                <li class="list-item">📈 <span class="strong-point">Ahorros Anuales:</span> Aprox. $25,000 MXN en costos de papel.</li>
+                <li class="list-item">📊 <span class="strong-point">ROI Estimado:</span> Recuperación en menos de 12 meses, con un retorno proyectado del 150% en 2 años.</li>
+                <li class="list-item">⏰ <span class="strong-point">Tiempo de Implementación:</span> 4 meses.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">5. Conclusiones</div>
+        <p>Este proyecto representa una iniciativa de innovación con visión estratégica que soluciona problemas reales, se alinea a la visión organizacional y genera beneficios tangibles.</p>
+    </div>
+
+</div>
+
+</body>
+</html>

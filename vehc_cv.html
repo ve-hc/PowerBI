@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV | Victor Emmanuel Hernandez Cano | Head of BI & Data Strategy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+
+        :root {
+            --primary-color: #0d47a1; /* Azul oscuro corporativo */
+            --secondary-color: #1976d2; /* Azul medio */
+            --accent-color: #ff9800; /* Naranja para acentos */
+            --light-gray: #f4f4f4;
+            --dark-gray: #333;
+            --text-color: #555;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            margin: 10px 0 0;
+            font-size: 1.3em;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .left-column, .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* --- General Section Styling --- */
+        .section {
+            padding-bottom: 15px;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+
+        /* --- Left Column --- */
+        .contact-info ul { list-style: none; padding: 0; margin: 0; }
+        .contact-info li { margin-bottom: 15px; display: flex; align-items: center; }
+        .contact-info i { color: var(--secondary-color); margin-right: 15px; width: 20px; text-align: center; }
+        
+        .skills-list .skill { margin-bottom: 15px; }
+        .skill p { margin: 0 0 5px; font-weight: 700; }
+        .skill-bar { background-color: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; }
+        .skill-level { height: 100%; background-color: var(--secondary-color); border-radius: 5px; animation: fill-bar 2s ease-in-out; }
+        @keyframes fill-bar { from { width: 0; } }
+        
+        .leadership-skills ul { list-style: none; padding-left: 0; }
+        .leadership-skills li { margin-bottom: 10px; padding-left: 25px; position: relative; }
+        .leadership-skills li::before {
+            font-family: 'Font Awesome 6 Free';
+            content: '\f00c'; /* check */
+            font-weight: 900;
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        /* --- Right Column --- */
+        #summary p { margin: 0; font-style: italic; }
+
+        .achievements-list .achievement {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .achievements-list .achievement::before {
+            font-family: 'Font Awesome 6 Free';
+            content: '\f091'; /* trophy */
+            font-weight: 900;
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+        .achievements-list h4 { margin: 0 0 5px; color: var(--dark-gray); }
+        .achievements-list p { margin: 0; }
+        
+        .timeline { position: relative; }
+        .timeline-item {
+            padding-left: 30px;
+            border-left: 2px solid var(--secondary-color);
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px; top: 0;
+            width: 16px; height: 16px;
+            background: #fff;
+            border: 3px solid var(--secondary-color);
+            border-radius: 50%;
+        }
+        .timeline-item h3 { margin: 0; color: var(--dark-gray); font-size: 1.2em; }
+        .timeline-item .job-title { color: var(--primary-color); font-weight: 700; }
+        .timeline-item .date { font-size: 0.9em; color: #777; margin-bottom: 10px; display: block; }
+        .timeline-item ul { list-style-type: none; padding-left: 0; margin-top: 10px; }
+        .timeline-item li { margin-bottom: 8px; position: relative; padding-left: 20px; }
+        .timeline-item li::before {
+            content: '\f105'; /* right angle */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--accent-color);
+            position: absolute;
+            left: 0; top: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+            .header { padding: 30px; }
+            .header h1 { font-size: 2.2em; }
+            .main-content { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <h1>Victor Emmanuel Hernandez Cano</h1>
+        <h2>Head of Business Intelligence & Data Strategy</h2>
+    </header>
+
+    <main class="main-content">
+        <aside class="left-column">
+            <section class="section contact-info">
+                <h3 class="section-title"><i class="fas fa-user-circle"></i> Contacto</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i><span>+52 614 124 0930</span></li>
+                    <li><i class="fas fa-envelope"></i><span>ve_hc@hotmail.com</span></li>
+                    <li><i class="fab fa-linkedin"></i><span>linkedin.com/in/emmanuel-h</span></li>
+                </ul>
+            </section>
+            
+            <section class="section leadership-skills">
+                 <h3 class="section-title"><i class="fas fa-brain"></i> Competencias de Liderazgo</h3>
+                 <ul>
+                     <li>Planeación y Visión Estratégica</li>
+                     <li>Liderazgo y Desarrollo de Equipos</li>
+                     <li>Gobernanza y Calidad de Datos</li>
+                     <li>Gestión de Proyectos</li>
+                     <li>Comunicación Ejecutiva</li>
+                     <li>Fomento de Cultura Data-Driven</li>
+                 </ul>
+            </section>
+            
+            <section class="section">
+                <h3 class="section-title"><i class="fas fa-tools"></i> Plataformas y Tecnologías</h3>
+                <div class="skills-list">
+                    <div class="skill"><p>Power BI, Tableau, & Looker</p><div class="skill-bar"><div class="skill-level" style="width: 95%;"></div></div></div>
+                    <div class="skill"><p>Python</p><div class="skill-bar"><div class="skill-level" style="width: 80%;"></div></div></div>
+                    <div class="skill"><p>Data Warehousing (SQL Server, Snowflake)</p><div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div></div>
+                    <div class="skill"><p>ETL (Airflow, n8n, MagueAI</p><div class="skill-bar"><div class="skill-level" style="width: 80%;"></div></div></div>
+                    <div class="skill"><p>Excel Avanzado & VBA</p><div class="skill-bar"><div class="skill-level" style="width: 100%;"></div></div></div>
+                </div>
+            </section>
+        </aside>
+
+        <div class="right-column">
+            <section class="section" id="summary">
+                <h3 class="section-title"><i class="fas fa-bullseye"></i> Perfil Profesional</h3>
+                <p>
+                   Líder de Business Intelligence con amplia experiencia en la definición de la estrategia de datos para alinearla con los objetivos de negocio. Combino una fuerte visión estratégica para la toma de decisiones ejecutivas con un profundo dominio técnico en análisis, visualización y modelado de datos para dirigir equipos de alto rendimiento y entregar soluciones de BI que generan un impacto positivo.
+                </p>
+            </section>
+
+            <section class="section achievements-list">
+                <h3 class="section-title"><i class="fas fa-star"></i> Logros Destacados</h3>
+                <div class="achievement">
+                    <h4>Creación de Departamento de BI</h4>
+                    <p>Fundé el área de Business Intelligence, definiendo su estructura, gobernanza y el stack tecnológico, resultando en la centralización y democratización de los datos.</p>
+                </div>
+                <div class="achievement">
+                    <h4>Optimización de Inventario con ML</h4>
+                    <p>Desarrollé e implementé modelos de pronóstico en Python que mejoraron la precisión de la planificación de la demanda y optimizaron los niveles de inventario.</p>
+                </div>
+                 <div class="achievement">
+                    <h4>Dirección de Proyectos de Transformación</h4>
+                    <p>Gestioné un portafolio de más de 10 proyectos de BI trimestrales, logrando mejoras de eficiencia y ROI en áreas clave como operaciones y finanzas.</p>
+                </div>
+            </section>
+            
+            <section class="section">
+                <h3 class="section-title"><i class="fas fa-briefcase"></i> Experiencia Profesional</h3>
+                <div class="timeline">
+                    
+                    <div class="timeline-item">
+                        <h3><span class="job-title">Head of Business Intelligence</span> en CIMA</h3>
+                        <span class="date">mar. 2023 - actualidad </span>
+                        <ul>
+                            <li>Diseñé la estrategia y el roadmap para la creación del departamento de BI, alineando las iniciativas con los objetivos ejecutivos.</li>
+                            <li>Lidero un equipo de especialistas, gestionando el portafolio de proyectos de BI y fomentando su desarrollo profesional.</li>
+                            <li>Dirijo la implementación de KPIs y sistemas de seguimiento para la alta dirección, optimizando procesos críticos del negocio.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3><span class="job-title">Supply Chain & Inventory Optimization Specialist</span> en INTERCERAMIC</h3>
+                        <span class="date">jul. 2022 - ene. 2023 | Chihuahua, México</span>
+                        <ul>
+                            <li>Lideré proyectos de optimización de inventario aplicando Supply Chain Guru, Tableau y Python.</li>
+                            <li>Construí algoritmos de Machine Learning para el pronóstico de ventas, mejorando la precisión de la planificación.</li>
+                            <li>Diseñé y mantuve dashboards ejecutivos en Power BI y Tableau para la monitorización de KPIs logísticos.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <h3><span class="job-title">Systems and Information Administrator</span> en INTERCERAMIC</h3>
+                        <span class="date">ago. 2019 - ene. 2023 | México</span>
+                        <ul>
+                            <li>Administré la plataforma de Tableau Server, garantizando la integridad y disponibilidad de los datos para la organización.</li>
+                            <li>Automaticé informes y métricas para la cadena de suministro, mejorando la eficiencia y la toma de decisiones.</li>
+                            <li>Apoyé en la planificación de inventario y la generación de sugerencias de compra para franquicias.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV | Victor Emmanuel Hernandez Cano | Head of BI & Data Strategy</title>
+    <title>CV | Victor Emmanuel Hernandez Cano | Diseño Final</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css');
 
         :root {
-            --primary-color: #0d47a1; /* Azul oscuro corporativo */
-            --secondary-color: #1976d2; /* Azul medio */
-            --accent-color: #ff9800; /* Naranja para acentos */
-            --light-gray: #f4f4f4;
-            --dark-gray: #333;
+            --primary-color: #2c3e50; /* Azul Pizarra */
+            --secondary-color: #34495e; /* Azul Pizarra más claro */
+            --accent-color: #27ae60; /* Verde Esmeralda */
+            --bg-color: #ecf0f1;
+            --card-bg-color: #ffffff;
             --text-color: #555;
+            --heading-color: #2c3e50;
+        }
+
+        /* --- Animación de Entrada --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         body {
@@ -22,259 +35,290 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: var(--light-gray);
+            background-color: var(--bg-color);
             color: var(--text-color);
         }
 
         .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background: #fff;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
         }
+        
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--heading-color); }
+
+        /* --- Elementos Animados --- */
+        .animated-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .header { animation-delay: 0.1s; }
+        .profile-card { animation-delay: 0.2s; }
+        .achievements-card { animation-delay: 0.3s; }
+        .leadership-card { animation-delay: 0.4s; }
+        .timeline-title { animation-delay: 0.5s; }
+        .timeline-event { animation-delay: calc(0.5s + var(--i, 0) * 0.1s); }
+        .tech-card { animation-delay: 0.9s; }
+        .certs-card { animation-delay: 1.0s; }
+
 
         /* --- Header --- */
         .header {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: #fff;
-            padding: 40px;
-            text-align: center;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            transition: all 0.3s ease-in-out;
         }
-
-        .header h1 {
-            margin: 0;
-            font-size: 2.8em;
-            font-weight: 700;
+        .header:hover {
+            box-shadow: 0 12px 35px rgba(44, 62, 80, 0.2);
+            transform: translateY(-8px) scale(1.02); /* <-- NUEVA ANIMACIÓN */
         }
+        .header-info h1 { margin: 0; font-size: 2.5em; color: #fff; }
+        .header-info h2 { margin: 5px 0 0; font-size: 1.4em; font-weight: 400; color: var(--accent-color); }
+        .contact-info { display: flex; flex-direction: column; gap: 5px; font-size: 0.9em; }
+        .contact-info a { color: #fff; text-decoration: none; transition: color 0.3s ease; opacity: 0.9; }
+        .contact-info a:hover { color: var(--accent-color); opacity: 1;}
+        .contact-info i { margin-right: 8px; }
 
-        .header h2 {
-            margin: 10px 0 0;
-            font-size: 1.3em;
-            font-weight: 300;
-            letter-spacing: 1px;
+        /* --- Secciones de Grid --- */
+        .top-section-grid, .bottom-section-grid {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: stretch;
         }
-
-        /* --- Main Content --- */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            padding: 40px;
-        }
-
-        .left-column, .right-column {
+        .left-column, .right-column, .bottom-left, .bottom-right {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 30px;
         }
-        
-        /* --- General Section Styling --- */
-        .section {
-            padding-bottom: 15px;
+        .achievements-card, .certs-card {
+            flex-grow: 1; 
         }
 
-        .section-title {
-            color: var(--primary-color);
-            font-size: 1.4em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid var(--accent-color);
-            display: flex;
-            align-items: center;
+        /* --- Estilos de Tarjetas --- */
+        .styled-card { 
+            background: var(--card-bg-color); 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease-in-out;
         }
+        .styled-card:hover {
+            transform: translateY(-8px) scale(1.02); /* <-- NUEVA ANIMACIÓN */
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+        .styled-card h3 { 
+            margin-top: 0; 
+            font-size: 1.5em; 
+            padding-bottom: 10px; 
+            border-bottom: 3px solid var(--accent-color); 
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .styled-card:hover h3 { border-bottom-color: var(--primary-color); }
+        .styled-card:hover i.fa-bullseye, .styled-card:hover i.fa-star, .styled-card:hover i.fa-brain, .styled-card:hover i.fa-tools, .styled-card:hover i.fa-certificate {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+        .styled-card h3 i { transition: all 0.3s ease; }
+        .styled-card p { margin: 0; }
+        .achievement { margin-bottom: 15px; }
+        .achievement h4 { margin: 0 0 5px; font-size: 1.1em; }
         
-        .section-title i {
-            margin-right: 12px;
-            font-size: 1.2em;
+        /* --- Vertical Timeline --- */
+        .timeline-section h2 { text-align: center; font-size: 2em; margin-bottom: 50px; }
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 10px; top: 5px; height: 100%; width: 4px; background-color: var(--secondary-color); border-radius: 2px;
         }
+        .timeline-event { position: relative; margin-bottom: 30px; }
+        .timeline:hover .timeline-event:not(:hover) { opacity: 0.6; }
+        .marker-dot {
+            width: 20px; height: 20px; border-radius: 50%; background: var(--bg-color); border: 4px solid var(--accent-color); position: absolute; left: -23px; top: 5px; z-index: 1; transition: transform 0.3s ease;
+        }
+        .timeline-event:hover .marker-dot { transform: scale(1.2); }
+        .timeline-content {
+            background: var(--card-bg-color); padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .timeline-event:hover .timeline-content {
+            transform: translateY(-8px) scale(1.02); /* <-- NUEVA ANIMACIÓN */
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+        .job-title { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.2em; }
+        .date { font-size: 0.9em; color: var(--accent-color); font-weight: 600; margin: 4px 0 15px; }
+        .timeline-content ul { padding-left: 20px; margin: 0; font-size: 0.95em; }
+        .timeline-content ul li { margin-bottom: 8px; }
 
-        /* --- Left Column --- */
-        .contact-info ul { list-style: none; padding: 0; margin: 0; }
-        .contact-info li { margin-bottom: 15px; display: flex; align-items: center; }
-        .contact-info i { color: var(--secondary-color); margin-right: 15px; width: 20px; text-align: center; }
+        /* --- Estilos para Competencias y Certificaciones --- */
+        .styled-card ul { padding-left: 0; margin: 0; list-style: none; }
+        .styled-card li { margin-bottom: 10px; }
+        .skill-category { margin-top: 15px; font-weight: bold; color: var(--primary-color); }
+        .skill-category:first-child { margin-top: 0; }
+        .skill-category + ul { padding-left: 20px; list-style: disc; }
+        .skill-category + ul li { margin-bottom: 5px; }
         
-        .skills-list .skill { margin-bottom: 15px; }
-        .skill p { margin: 0 0 5px; font-weight: 700; }
-        .skill-bar { background-color: #e0e0e0; height: 10px; border-radius: 5px; overflow: hidden; }
-        .skill-level { height: 100%; background-color: var(--secondary-color); border-radius: 5px; animation: fill-bar 2s ease-in-out; }
-        @keyframes fill-bar { from { width: 0; } }
-        
-        .leadership-skills ul { list-style: none; padding-left: 0; }
-        .leadership-skills li { margin-bottom: 10px; padding-left: 25px; position: relative; }
-        .leadership-skills li::before {
-            font-family: 'Font Awesome 6 Free';
-            content: '\f00c'; /* check */
-            font-weight: 900;
-            color: var(--accent-color);
-            position: absolute;
-            left: 0;
-        }
-        
-        /* --- Right Column --- */
-        #summary p { margin: 0; font-style: italic; }
+        .certification-item { margin-bottom: 18px; }
+        .certification-item:last-child { margin-bottom: 0; }
+        .certification-item h4 { margin: 0 0 2px; font-size: 1em; font-weight: 600; }
+        .certification-item p { margin: 0; font-size: 0.9em; display: flex; justify-content: space-between; align-items: center; }
+        .certification-item em { color: #777; }
+        .certification-item a { color: var(--accent-color); text-decoration: none; font-size: 1.1em; }
+        .certification-item a:hover { color: var(--primary-color); }
 
-        .achievements-list .achievement {
-            margin-bottom: 15px;
-            padding-left: 25px;
-            position: relative;
-        }
-        .achievements-list .achievement::before {
-            font-family: 'Font Awesome 6 Free';
-            content: '\f091'; /* trophy */
-            font-weight: 900;
-            color: var(--accent-color);
-            position: absolute;
-            left: 0;
-        }
-        .achievements-list h4 { margin: 0 0 5px; color: var(--dark-gray); }
-        .achievements-list p { margin: 0; }
-        
-        .timeline { position: relative; }
-        .timeline-item {
-            padding-left: 30px;
-            border-left: 2px solid var(--secondary-color);
-            position: relative;
-            margin-bottom: 30px;
-        }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -9px; top: 0;
-            width: 16px; height: 16px;
-            background: #fff;
-            border: 3px solid var(--secondary-color);
-            border-radius: 50%;
-        }
-        .timeline-item h3 { margin: 0; color: var(--dark-gray); font-size: 1.2em; }
-        .timeline-item .job-title { color: var(--primary-color); font-weight: 700; }
-        .timeline-item .date { font-size: 0.9em; color: #777; margin-bottom: 10px; display: block; }
-        .timeline-item ul { list-style-type: none; padding-left: 0; margin-top: 10px; }
-        .timeline-item li { margin-bottom: 8px; position: relative; padding-left: 20px; }
-        .timeline-item li::before {
-            content: '\f105'; /* right angle */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: var(--accent-color);
-            position: absolute;
-            left: 0; top: 2px;
-        }
-        
+        /* --- Responsive Design --- */
         @media (max-width: 768px) {
-            .main-content { grid-template-columns: 1fr; }
-            .header { padding: 30px; }
-            .header h1 { font-size: 2.2em; }
-            .main-content { padding: 30px; }
+            .top-section-grid, .bottom-section-grid { flex-direction: column; }
+            .header { flex-direction: column; text-align: center; }
+            .header-info { margin-bottom: 20px; }
+            .contact-info { align-items: center; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header class="header">
-        <h1>Victor Emmanuel Hernandez Cano</h1>
-        <h2>Head of Business Intelligence & Data Strategy</h2>
+    <header class="header animated-card">
+        <div class="header-info">
+            <h1>Victor Emmanuel Hernandez Cano</h1>
+            <h2>Head of Business Intelligence & Data Strategy</h2>
+        </div>
+        <div class="contact-info">
+            <a href="tel:+526141240930"><i class="fas fa-phone"></i>+52 614 124 0930</a>
+            <a href="mailto:ve_hc@hotmail.com"><i class="fas fa-envelope"></i>ve_hc@hotmail.com</a>
+            <a href="https://linkedin.com/in/emmanuel-h" target="_blank"><i class="fab fa-linkedin"></i>/in/emmanuel-h</a>
+        </div>
     </header>
 
-    <main class="main-content">
-        <aside class="left-column">
-            <section class="section contact-info">
-                <h3 class="section-title"><i class="fas fa-user-circle"></i> Contacto</h3>
+    <section class="top-section-grid">
+        <div class="left-column">
+            <div class="styled-card animated-card profile-card">
+                <h3><i class="fas fa-bullseye"></i> Perfil Profesional</h3>
+                <p>Líder de Business Intelligence con amplia experiencia en la definición de la estrategia de datos para alinearla con los objetivos de negocio. Combino una fuerte visión estratégica para la toma de decisiones ejecutivas con un profundo dominio técnico en análisis, visualización y modelado de datos para dirigir equipos de alto rendimiento y entregar soluciones de BI que generan un impacto positivo.</p>
+            </div>
+            <div class="styled-card animated-card leadership-card">
+                <h3><i class="fas fa-brain"></i> Competencias de Liderazgo</h3>
                 <ul>
-                    <li><i class="fas fa-phone"></i><span>+52 614 124 0930</span></li>
-                    <li><i class="fas fa-envelope"></i><span>ve_hc@hotmail.com</span></li>
-                    <li><i class="fab fa-linkedin"></i><span>linkedin.com/in/emmanuel-h</span></li>
+                    <li>Planeación y Visión Estratégica</li>
+                    <li>Liderazgo y Desarrollo de Equipos</li>
+                    <li>Gobernanza y Calidad de Datos</li>
+                    <li>Gestión de Proyectos</li>
+                    <li>Comunicación Ejecutiva</li>
+                    <li>Fomento de Cultura Data-Driven</li>
                 </ul>
-            </section>
-            
-            <section class="section leadership-skills">
-                 <h3 class="section-title"><i class="fas fa-brain"></i> Competencias de Liderazgo</h3>
-                 <ul>
-                     <li>Planeación y Visión Estratégica</li>
-                     <li>Liderazgo y Desarrollo de Equipos</li>
-                     <li>Gobernanza y Calidad de Datos</li>
-                     <li>Gestión de Proyectos</li>
-                     <li>Comunicación Ejecutiva</li>
-                     <li>Fomento de Cultura Data-Driven</li>
-                 </ul>
-            </section>
-            
-            <section class="section">
-                <h3 class="section-title"><i class="fas fa-tools"></i> Plataformas y Tecnologías</h3>
-                <div class="skills-list">
-                    <div class="skill"><p>Power BI, Tableau, & Looker</p><div class="skill-bar"><div class="skill-level" style="width: 95%;"></div></div></div>
-                    <div class="skill"><p>Python</p><div class="skill-bar"><div class="skill-level" style="width: 80%;"></div></div></div>
-                    <div class="skill"><p>Data Warehousing (SQL Server, Snowflake)</p><div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div></div>
-                    <div class="skill"><p>ETL (Airflow, n8n, MagueAI</p><div class="skill-bar"><div class="skill-level" style="width: 80%;"></div></div></div>
-                    <div class="skill"><p>Excel Avanzado & VBA</p><div class="skill-bar"><div class="skill-level" style="width: 100%;"></div></div></div>
-                </div>
-            </section>
-        </aside>
-
+            </div>
+        </div>
         <div class="right-column">
-            <section class="section" id="summary">
-                <h3 class="section-title"><i class="fas fa-bullseye"></i> Perfil Profesional</h3>
-                <p>
-                   Líder de Business Intelligence con amplia experiencia en la definición de la estrategia de datos para alinearla con los objetivos de negocio. Combino una fuerte visión estratégica para la toma de decisiones ejecutivas con un profundo dominio técnico en análisis, visualización y modelado de datos para dirigir equipos de alto rendimiento y entregar soluciones de BI que generan un impacto positivo.
-                </p>
-            </section>
-
-            <section class="section achievements-list">
-                <h3 class="section-title"><i class="fas fa-star"></i> Logros Destacados</h3>
+             <div class="styled-card animated-card achievements-card">
+                <h3><i class="fas fa-star"></i> Logros Destacados</h3>
                 <div class="achievement">
                     <h4>Creación de Departamento de BI</h4>
-                    <p>Fundé el área de Business Intelligence, definiendo su estructura, gobernanza y el stack tecnológico, resultando en la centralización y democratización de los datos.</p>
+                    <p>Fundé el área de Business Intelligence, definiendo su estructura, gobernanza y el stack tecnológico.</p>
                 </div>
                 <div class="achievement">
                     <h4>Optimización de Inventario con ML</h4>
-                    <p>Desarrollé e implementé modelos de pronóstico en Python que mejoraron la precisión de la planificación de la demanda y optimizaron los niveles de inventario.</p>
+                    <p>Desarrollé e implementé modelos de pronóstico en Python para optimizar la planificación de la demanda.</p>
                 </div>
-                 <div class="achievement">
+                <div class="achievement">
                     <h4>Dirección de Proyectos de Transformación</h4>
-                    <p>Gestioné un portafolio de más de 10 proyectos de BI trimestrales, logrando mejoras de eficiencia y ROI en áreas clave como operaciones y finanzas.</p>
+                    <p>Gestioné portafolios de proyectos de BI logrando mejoras de eficiencia y ROI en operaciones y finanzas.</p>
                 </div>
-            </section>
-            
-            <section class="section">
-                <h3 class="section-title"><i class="fas fa-briefcase"></i> Experiencia Profesional</h3>
-                <div class="timeline">
-                    
-                    <div class="timeline-item">
-                        <h3><span class="job-title">Head of Business Intelligence</span> en CIMA</h3>
-                        <span class="date">mar. 2023 - actualidad </span>
-                        <ul>
-                            <li>Diseñé la estrategia y el roadmap para la creación del departamento de BI, alineando las iniciativas con los objetivos ejecutivos.</li>
-                            <li>Lidero un equipo de especialistas, gestionando el portafolio de proyectos de BI y fomentando su desarrollo profesional.</li>
-                            <li>Dirijo la implementación de KPIs y sistemas de seguimiento para la alta dirección, optimizando procesos críticos del negocio.</li>
-                        </ul>
-                    </div>
-
-                    <div class="timeline-item">
-                        <h3><span class="job-title">Supply Chain & Inventory Optimization Specialist</span> en INTERCERAMIC</h3>
-                        <span class="date">jul. 2022 - ene. 2023 | Chihuahua, México</span>
-                        <ul>
-                            <li>Lideré proyectos de optimización de inventario aplicando Supply Chain Guru, Tableau y Python.</li>
-                            <li>Construí algoritmos de Machine Learning para el pronóstico de ventas, mejorando la precisión de la planificación.</li>
-                            <li>Diseñé y mantuve dashboards ejecutivos en Power BI y Tableau para la monitorización de KPIs logísticos.</li>
-                        </ul>
-                    </div>
-
-                    <div class="timeline-item">
-                        <h3><span class="job-title">Systems and Information Administrator</span> en INTERCERAMIC</h3>
-                        <span class="date">ago. 2019 - ene. 2023 | México</span>
-                        <ul>
-                            <li>Administré la plataforma de Tableau Server, garantizando la integridad y disponibilidad de los datos para la organización.</li>
-                            <li>Automaticé informes y métricas para la cadena de suministro, mejorando la eficiencia y la toma de decisiones.</li>
-                            <li>Apoyé en la planificación de inventario y la generación de sugerencias de compra para franquicias.</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+            </div>
         </div>
-    </main>
+    </section>
+
+    <section class="timeline-section">
+        <h2 class="animated-card timeline-title"><i class="fas fa-briefcase"></i> Experiencia Profesional</h2>
+        <div class="timeline">
+            <div class="timeline-event animated-card" style="--i: 1;">
+                <div class="marker-dot"></div>
+                <div class="timeline-content">
+                    <div class="job-title">Head of Business Intelligence</div>
+                    <div class="date">CIMA | mar. 2023 - actualidad</div>
+                    <ul>
+                        <li>Diseñé la estrategia y el roadmap para la creación del departamento de BI, alineando las iniciativas con los objetivos ejecutivos.</li>
+                        <li>Lidero un equipo de especialistas, gestionando el portafolio de proyectos de BI y fomentando su desarrollo profesional.</li>
+                        <li>Dirijo la implementación de KPIs y sistemas de seguimiento para la alta dirección, optimizando procesos críticos del negocio.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-event animated-card" style="--i: 2;">
+                <div class="marker-dot"></div>
+                <div class="timeline-content">
+                    <div class="job-title">Supply Chain & Inventory Optimization Specialist</div>
+                    <div class="date">INTERCERAMIC | jul. 2022 - ene. 2023</div>
+                    <ul>
+                        <li>Lideré proyectos de optimización de inventario aplicando Supply Chain Guru, Tableau y Python.</li>
+                        <li>Construí algoritmos de Machine Learning para el pronóstico de ventas, mejorando la precisión de la planificación.</li>
+                        <li>Diseñé y mantuve dashboards ejecutivos en Power BI y Tableau para la monitorización de KPIs logísticos.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="timeline-event animated-card" style="--i: 3;">
+                <div class="marker-dot"></div>
+                <div class="timeline-content">
+                    <div class="job-title">Systems and Information Administrator</div>
+                    <div class="date">INTERCERAMIC | ago. 2019 - ene. 2023</div>
+                    <ul>
+                        <li>Administré la plataforma de Tableau Server, garantizando la integridad y disponibilidad de los datos para la organización.</li>
+                        <li>Automaticé informes y métricas para la cadena de suministro, mejorando la eficiencia y la toma de decisiones.</li>
+                        <li>Apoyé en la planificación de inventario y la generación de sugerencias de compra para franquicias.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bottom-section-grid">
+        <div class="bottom-left">
+            <div class="styled-card animated-card tech-card">
+                <h3><i class="fas fa-tools"></i> Plataformas y Tecnologías</h3>
+                <ul>
+                    <li class="skill-category">Visualización</li>
+                    <ul><li>Power BI, Tableau, & Looker</li></ul>
+                    <li class="skill-category">Análisis y Datos</li>
+                    <ul><li>Python (Pandas, Scikit-learn)</li><li>Data Warehousing (SQL Server, Snowflake)</li></ul>
+                    <li class="skill-category">ETL & Orquestación</li>
+                    <ul><li>Airflow, n8n, MageAI</li></ul>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-right">
+            <div class="styled-card animated-card certs-card">
+                <h3><i class="fas fa-certificate"></i> Certificaciones</h3>
+                <ul>
+                    <li class="certification-item">
+                        <h4>Data Science: Machine Learning</h4>
+                        <p><em>Harvard Online</em> <a href="https://courses.edx.org/certificates/cfb820aa5b474b64ba04df413e564dbc" target="_blank" title="Ver Credencial"><i class="fas fa-external-link-alt"></i></a></p>
+                    </li>
+                    <li class="certification-item">
+                        <h4>Analyzing and Visualizing Data with Excel</h4>
+                        <p><em>Microsoft</em> <a href="https://courses.edx.org/certificates/8cc66f96c63e4124934a7198d29501d9" target="_blank" title="Ver Credencial"><i class="fas fa-external-link-alt"></i></a></p>
+                    </li>
+                     <li class="certification-item">
+                        <h4>Building ETL and Data Pipelines</h4>
+                        <p><em>IBM</em> <a href="https://courses.edx.org/certificates/8d3c455ede624d6b86d168ce63fafda1" target="_blank" title="Ver Credencial"><i class="fas fa-external-link-alt"></i></a></p>
+                    </li>
+                     <li class="certification-item">
+                        <h4>SQL, ETL and BI Fundamentals</h4>
+                        <p><em>IBM</em> <a href="https://credentials.edx.org/credentials/b6aa86729c10403f87d1d3904bec0384/" target="_blank" title="Ver Credencial"><i class="fas fa-external-link-alt"></i></a></p>
+                    </li>
+                     <li class="certification-item">
+                        <h4>Data Warehousing and BI Analytics</h4>
+                        <p><em>IBM</em> <a href="https://courses.edx.org/certificates/b9a3f01963f44fb490facabee09e0758" target="_blank" title="Ver Credencial"><i class="fas fa-external-link-alt"></i></a></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
 </div>
 
 </body>
